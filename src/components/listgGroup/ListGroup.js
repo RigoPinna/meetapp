@@ -19,6 +19,10 @@ const participants = [
     {
         uid:4,
         image:'https://comunidav.org/php/api/Images/avatar.jpg',
+    },
+    {
+        uid:5,
+        image:'https://comunidav.org/php/api/Images/avatar.jpg',
     }
 ]
 const imgG = 'http://www.99naturewallpapers.com/admin/assets/images/wallpapers/1366/nepal--himalayas_1366x768.png'
@@ -53,7 +57,7 @@ const groupsExamples = [
     },
 ]
 export const ListGroup = ({ navigation }) => {
-    const [groups, setGroups] = useState( [] );
+    const [groups, setGroups] = useState( groupsExamples );
     return (
         <>
             {

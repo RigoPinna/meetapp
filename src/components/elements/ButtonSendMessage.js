@@ -1,7 +1,7 @@
 import React from 'react'
 import { TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
 import{ LinearGradient } from 'expo-linear-gradient'
-import { stylesChat } from '../../theme/appTheme'
+import { styles, stylesChat } from '../../theme/appTheme'
 import { IconSendMessage } from '../icons/IconSendMessage'
 
 export const ButtonSendMessage = () => {
@@ -29,7 +29,7 @@ export const ButtonSendMessage = () => {
             >
             <View style = {styles.buttonCamara}
             >
-                <LinearGradient colors={['#48C6EF','#6F86D6']} style={stylesChat. bgSendMessage} />
+                <LinearGradient colors={['#48C6EF','#6F86D6']} style={stylesChat.bgSendMessage} />
                 <IconSendMessage />
             </View>
             
