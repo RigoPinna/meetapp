@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
     settingsBackground:{
         height:'100%',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'flex-end'
     },
     fab:{
         backgroundColor: COLORS_APP.beige,
@@ -271,11 +271,13 @@ export const styles2 = StyleSheet.create({
     textInput: {
         width: '100%',
         height:50,
-        borderRadius: 100,
-        backgroundColor:'#F0F0F0',
+        // borderRadius: 100,
+        // backgroundColor:'#F0F0F0',
         paddingLeft:30,
-        borderWidth:1,
-        borderColor:'#F0F0F0'
+        // borderWidth:1,
+        // borderColor:'#F0F0F0',
+        paddingLeft: 37,
+        
     },
     textSelect: {
         width: '100%',

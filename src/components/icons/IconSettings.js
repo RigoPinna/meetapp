@@ -7,7 +7,7 @@ export const IconSettings = ({pathColor= COLORS_APP.black3}) => {
         <Svg
         width="27" 
         height="27" 
-        fill="none" 
+        fill="none"
         viewBox="0 0 24 24" >
             <Path 
             stroke-linecap="round" 
