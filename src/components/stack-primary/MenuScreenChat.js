@@ -4,6 +4,7 @@ import { ButtonGradient } from '../elements/ButtonGradient'
 import { IconCreateEvent } from '../icons/IconCreateEvent'
 
 export const MenuScreenChat = () => {
+    const hanldeNavigatorChat = () => navigation.navigate('ModalScreenCreateEvent');
     return (
         <View style = {{flexDirection: 'row'}}>
             
@@ -14,6 +15,7 @@ export const MenuScreenChat = () => {
                 styleButton = {{height:35, marginRight:2}}
                 sizeGradient={{width:150, height:100}}
                 IconLeft ={ IconCreateEvent }
+                hanldeOnPress = { hanldeNavigatorChat }
             />
             
         </View>

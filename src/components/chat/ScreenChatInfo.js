@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
-import { Button, View } from 'react-native'
+import { Button, Image, View } from 'react-native'
+import { styleListGroups } from '../../theme/appTheme'
 import { Textapp } from '../elements/Textapp'
 import { ListParticipants } from '../listgGroup/ListParticipants'
 import { MenuScreenChat } from '../stack-primary/MenuScreenChat'
@@ -18,6 +19,12 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     return (
         <View style={{ flex: 1}}>
             <View style={{alignItems: 'center'}}>
+            <Image style = {{
+                width: 150,
+                height: 150,
+                borderRadius: 100,
+                margin: 10}} 
+                source = {{ uri:route.params.imageGroup }} />
                 <Textapp 
                     size = { TEXTS_SIZE.long } 
                     weight='bold' 

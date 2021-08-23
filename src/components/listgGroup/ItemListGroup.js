@@ -10,7 +10,7 @@ import { ListParticipants } from './ListParticipants'
 export const ItemListGroup = ({imageGroup,nameGroup='',createdat='', participants = [], navigation}) => {
 
 
-    const hanldeNavigatorChat = () => navigation.navigate('ScreenChatInfo',{imageGroup,nameGroup, participants});
+    const hanldeNavigatorChat = () => navigation.navigate('ScreenChatInfo',{imageGroup,nameGroup, participants, imageGroup});
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } >
             <View style ={ {...styleListGroups.wrapperItem,...{backgroundColor:'#EEEEEC' }} }>
