@@ -4,8 +4,10 @@ import { Textapp } from '../elements/Textapp'
 import { ListParticipants } from '../listgGroup/ListParticipants'
 import { MenuScreenChat } from '../stack-primary/MenuScreenChat'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
+import { AlertEvent } from './AlertEvent'
 
 export const ScreenChatInfo = ({ navigation, route }) => {
+    const eventNew = false;
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (<MenuScreenChat  />),
@@ -32,11 +34,15 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     size = { TEXTS_SIZE.medium } 
                     weight='bold' 
                     text ={'Participants'} 
-                    styles={{width:'90%', padding: 10}} 
+                    styles={{marginLeft: 10,padding: 10}} 
                 />
-            <View style={{backgroundColor: 'red', marginRight: 270, }}>
+            <View style={{marginRight: 260, paddingTop: 30}}>
                 <ListParticipants participants={ route.params.participants } colorColorBordersAvatars = {'#EEEEEC'} />
             </View>
+            {
+                (eventNew) && <AlertEvent/>
+            }
+            
             
         </View>
     )

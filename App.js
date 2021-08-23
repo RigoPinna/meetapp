@@ -9,6 +9,7 @@ import { PrincipalScreen } from './src/components/personalGroups/PrincipalScreen
 import { SettingsScreen } from './src/components/settings/SettingsScreen';
 import { StackNavigatorPrimary } from './src/components/stack-primary/StackNavigatorPrimary';
 import { TabNavigator } from './src/components/TabNavigator';
+import { styles } from './src/theme/appTheme';
 
 
 

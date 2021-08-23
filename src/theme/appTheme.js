@@ -344,7 +344,7 @@ export const styleListGroups = {
         width:40, 
         height:40, 
         borderWidth:2, 
-        borderRadius:40, 
+        borderRadius:40,
         marginLeft:-10
     }
 }

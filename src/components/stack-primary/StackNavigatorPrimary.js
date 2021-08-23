@@ -6,18 +6,21 @@ import { COLORS_APP } from '../ui/COLORS_APP';
 import { ScreenListGroups } from '../listgGroup/ScreenListGroups';
 import { ScreenChatInfo } from '../chat/ScreenChatInfo';
 import { HeaderDecoration } from '../auth/HeaderDecoration';
-import { Button } from 'react-native';
+import { Button, Image, ImageBackground } from 'react-native';
 
 const Stack = createNativeStackNavigator();
 
 export const StackNavigatorPrimary = () => {
     return (
         <>
-        
+            {/* <ImageBackground source={require('../../assets/RectangleBackground.png')} 
+            resizeMode="cover" style={{ width: "100%", height: 200, justifyContent: "center"}}/> */}
             <Stack.Navigator
-                screenOptions = {{       
+                screenOptions = {{
+                    headerStyle:{background: 'transparent'},    
                     cardStyle: { backgroundColor:'white'},
-                    headerBackImage: {HeaderDecoration}
+                    
+                    // headerBackImage: {HeaderDecoration}
                 }}
             >
 
@@ -35,8 +38,12 @@ export const StackNavigatorPrimary = () => {
                     }}
                     component={ ScreenListGroups } />
                 <Stack.Screen 
-                    name="ScreenChatInfo" 
-                    options={{headerTitle: ''}}
+                    name="ScreenChatInfo"
+
+                    options={{
+                        headerTitle: ''
+                    }
+                }
                     // options={{
                     //     headerLargeTitle:true,
                     //     title:'Chat',
