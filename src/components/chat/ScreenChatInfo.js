@@ -57,7 +57,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 <Textapp 
                         size = { TEXTS_SIZE.small } 
                         weight='bold' 
-                        text ={'Participants'} 
+                        text ={'Participantsss'} 
                         styles={{padding:13}} 
                     />
                 <View style={{justifyContent:'flex-start', paddingTop: 30,width:140}}>
