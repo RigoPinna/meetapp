@@ -7,6 +7,7 @@ import { ScreenListGroups } from '../listgGroup/ScreenListGroups';
 import { ScreenChatInfo } from '../chat/ScreenChatInfo';
 import { HeaderDecoration } from '../auth/HeaderDecoration';
 import { Button, Image, ImageBackground } from 'react-native';
+import { ModalScreenCreateEvent } from '../chat/ModalScreenCreateEvent';
 
 const Stack = createNativeStackNavigator();
 
@@ -57,6 +58,15 @@ export const StackNavigatorPrimary = () => {
                     //     // headerBackTitleVisible: true
                     // }} 
                     component={ ScreenChatInfo } />
+                    <Stack.Screen
+                        name="ModalCreateEvent"
+                        component={ModalScreenCreateEvent}
+                        options={{
+                            headerTransparent: true,
+                            headerShadowVisible: false,
+                            presentation: 'transparentModal',
+                        headerTitle: '', headerBackVisible: false}}
+                    />
             </Stack.Navigator>
         </>
     )

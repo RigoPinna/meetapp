@@ -3,8 +3,8 @@ import { Image, View } from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { IconCreateEvent } from '../icons/IconCreateEvent'
 
-export const MenuScreenChat = () => {
-    const hanldeNavigatorChat = () => navigation.navigate('ModalScreenCreateEvent');
+export const MenuScreenChat = ({navigation}) => {
+    const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent');
     return (
         <View style = {{flexDirection: 'row'}}>
             

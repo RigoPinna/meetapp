@@ -11,7 +11,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const eventNew = false;
     useEffect(() => {
         navigation.setOptions({
-            headerRight: () => (<MenuScreenChat  />),
+            headerRight: () => (<MenuScreenChat navigation={navigation} />),
             
         })
 
