@@ -17,8 +17,7 @@ export const StackNavigatorPrimary = () => {
             {/* <ImageBackground source={require('../../assets/RectangleBackground.png')} 
             resizeMode="cover" style={{ width: "100%", height: 200, justifyContent: "center"}}/> */}
             <Stack.Navigator
-                screenOptions = {{
-                    headerStyle:{background: 'transparent'},    
+                screenOptions = {{   
                     cardStyle: { backgroundColor:'white'},
                     
                     // headerBackImage: {HeaderDecoration}
@@ -32,7 +31,6 @@ export const StackNavigatorPrimary = () => {
                         title:'Your groups', 
                         headerTitleAlign:'left',
                         headerTitleStyle:{ 
-                            fontSize:24, 
                             fontWeight:'bold', 
                         },
                         headerStyle:{ height:80}
@@ -42,7 +40,8 @@ export const StackNavigatorPrimary = () => {
                     name="ScreenChatInfo"
 
                     options={{
-                        headerTitle: ''
+                        headerTitle: 'info', 
+                        headerShown:false,
                     }
                 }
                     // options={{
