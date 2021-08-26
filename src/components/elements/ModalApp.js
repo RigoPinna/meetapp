@@ -1,20 +1,17 @@
-import { useTheme } from '@react-navigation/native'
-import { useCardAnimation } from '@react-navigation/stack'
 import React, { useEffect, useRef, useState } from 'react'
-import { Modal, View, Animated, Pressable, Text, Button } from 'react-native'
+import { Modal, View, Animated, TouchableOpacity, Image, ScrollView } from 'react-native'
 import { styles } from '../../theme/appTheme'
-import { Buttonapp } from './Buttonapp'
-import { ButtonGradient } from './ButtonGradient'
+import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { Textapp } from './Textapp'
 
-export const ModalApp = ({navigation,visible,children}) => {
-    const [showModal, setShowModal] = useState(visible);
+export const ModalApp = ({navigation,children,textTitle}) => {
+    const [showModal, setShowModal] = useState(true);
     const scaleValue = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         toggleModal();
-    }, [visible]);
+    }, [showModal]);
     const toggleModal = () => {
-        if (visible) {
+        if (showModal) {
         setShowModal(true);
         Animated.spring(scaleValue, {
             toValue: 1,
@@ -35,9 +32,25 @@ export const ModalApp = ({navigation,visible,children}) => {
             <View style={{justifyContent:'center', alignItems: 'center', flex: 1}}>
                 <Animated.View
                 style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
-                {children}
+                    <View style={{alignItems: 'center'}}>
+                        <View style={styles.header}>
+                            <Textapp
+                                size={TEXTS_SIZE.medium}
+                                text={textTitle}
+                                weight={'bold'}
+                            />
+                            <TouchableOpacity onPress={() => {setShowModal(false), navigation.goBack()}}>
+                                <Image
+                                    source={require('../../assets/x.png')}
+                                    style={{height: 30, width: 30}}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    {children}
                 </Animated.View>
-            </View>
+            </View>    
         </Modal>
+ 
     );
 }

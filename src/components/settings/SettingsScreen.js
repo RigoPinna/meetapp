@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { Image, View } from 'react-native'
 import { styles } from '../../theme/appTheme'
-import { Buttonapp } from '../elements/Buttonapp'
 import { ButtonCamera } from '../elements/ButtonCamera'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { Textapp } from '../elements/Textapp'
@@ -43,7 +42,19 @@ export const SettingsScreen = ({ navigation }) => {
                     IconPerson={IconUser}
                     placeholder={'Your name'}
                     value={ userData.name } 
-                    onChange = { handleOnChange }/>
+                    onChange = { handleOnChange }
+                    marginTopT={50}
+                    paddingLeftT={35}
+                    styleT={{ 
+                        height: 50,
+                        position: 'relative',
+                        alignItems: 'center',
+                        marginTop: 50,
+                        marginHorizontal: 20,
+                        flexDirection:'row',
+                        borderRadius: 100,
+                    }}
+                />
             </View>
             <Textapp 
                 size= {TEXTS_SIZE.medium} 
@@ -70,7 +81,7 @@ export const SettingsScreen = ({ navigation }) => {
                     weight={'bold'}
                 />
             </View>
-            <View style = {{marginTop: 150,width:'100%', alignItems:'center', padding:20, alignSelf: 'flex-end'}}>
+            <View style = {{flex: .7,justifyContent: 'flex-end', marginBottom: 20}}>
                 <ButtonGradient
                     gradient={['#0BA360','#3CBA92']}
                     sizeGradient = {{width:400, height:60}}

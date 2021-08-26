@@ -113,9 +113,11 @@ export const styles = StyleSheet.create({
         paddingBottom: 30
     },
     settingsBackground:{
+        flex: 1,
         height:'100%',
         alignItems: 'center',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        backgroundColor: 'white'
     },
     fab:{
         backgroundColor: COLORS_APP.beige,
@@ -202,12 +204,14 @@ export const styles = StyleSheet.create({
     modalBackGround: {
         flex: 1,
         backgroundColor: 'red',
-        // backgroundColor: 'rgba(0,0,0,0.5)',
         justifyContent: 'center',
         alignItems: 'center',
       },
       modalContainer: {
-        width: '80%',
+        width: '95%',
+        height: '95%',
+        justifyContent:'flex-end',
+        alignItems: 'center',
         backgroundColor: 'white',
         paddingHorizontal: 20,
         paddingVertical: 30,
@@ -215,10 +219,11 @@ export const styles = StyleSheet.create({
         elevation: 20,
       },
       header: {
-        width: '100%',
-        height: 40,
-        alignItems: 'flex-end',
-        justifyContent: 'center',
+        flexDirection: 'row',
+        width: 374,
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: -20,
       },
 });
 
@@ -291,13 +296,8 @@ export const styles2 = StyleSheet.create({
     },
     textInput: {
         width: '100%',
-        height:50,
-        // borderRadius: 100,
-        // backgroundColor:'#F0F0F0',
-        paddingLeft:30,
-        // borderWidth:1,
-        // borderColor:'#F0F0F0',
-        paddingLeft: 37,
+    },
+    textInputContainer: {
         
     },
     textSelect: {
