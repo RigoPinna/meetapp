@@ -4,9 +4,10 @@ import { COLORS_APP } from '../ui/COLORS_APP';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 
 
-export const Textapp = ({ size = (TEXTS_SIZE.extraSmall), weight = 'normal', color = (COLORS_APP.black1), text,styles={},hanldeOnPress=()=>{}}) => {
+export const Textapp = ({ size = (TEXTS_SIZE.extraSmall), weight = 'normal', color = (COLORS_APP.black1), text,styles={},hanldeOnPress=()=>{},keyT}) => {
     return (
-        <Text 
+        <Text
+        key={keyT}
         onPress={hanldeOnPress}
         style={{
             fontSize:size,

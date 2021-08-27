@@ -100,8 +100,8 @@ export const SettingsScreen = ({ navigation }) => {
                         gradient={['#0BA360','#3CBA92']}
                         sizeGradient = {{width:400, height:50}}
                         textButton={`Save`}
-                        styleText={{color:'white', fontWeight:'bold',}}
-                        styleButton={{width:'100%',height:50}}
+                        styleText={{color:'white', fontWeight:'bold'}}
+                        styleButton={{width:400,height:50, justifyContent:'center'}}
                         IconLeft = { IconSave }
                         // hanldeOnPress = { hanldeGoToNextStep }
                     />

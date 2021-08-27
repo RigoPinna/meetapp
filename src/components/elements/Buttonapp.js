@@ -4,21 +4,25 @@ import { styles2 } from '../../theme/appTheme'
 import { IconArrowRight } from '../icons/IconArrowRight'
 import { IconEdit } from '../icons/IconEdit'
 
-export const Buttonapp = ({ text , onPress = ()=>{}, typeButton = 'primary',disabled = false ,icon = 'arrow'}) => {
+export const Buttonapp = ({ text , onPress = ()=>{}, typeButton = 'primary',disabled = false ,Icon,styleT}) => {
     const ios = () => {
         return (
             <TouchableOpacity
                 onPress={ onPress }
                 disabled={ disabled }
             >
-                <View style = { ( typeButton === 'primary' ) ? styles2.buttonPrimary: styles2.buttonSeconday }>
+                <View style = { 
+                        ( typeButton === 'primary' ) 
+                            ? {...styles2.buttonPrimary,
+                                ...styleT}
+                            : styles2.buttonSeconday }>
                     <Text 
                         style = {( typeButton === 'primary' ? styles2.textButtonPrimary : styles2.textSeconday)}
                         >
                             {text}
                     </Text>
                      
-                     {(icon === 'save') ? <IconEdit/> : <IconArrowRight/>}
+                    { !!Icon && <Icon pathColor={colorIcon}/>}
                      
                 </View>
             </TouchableOpacity>
@@ -33,7 +37,8 @@ export const Buttonapp = ({ text , onPress = ()=>{}, typeButton = 'primary',disa
                 <View 
                     style = {
                                 ( typeButton === 'primary' ) 
-                                    ? styles2.buttonPrimary 
+                                    ? {...styles2.buttonPrimary,
+                                        ...styleT} 
                                     : styles2.buttonSeconday 
                         }>
                     <Text 
@@ -41,8 +46,7 @@ export const Buttonapp = ({ text , onPress = ()=>{}, typeButton = 'primary',disa
                         >
                             {text}
                     </Text>
-                     
-                     {(icon === 'save') ? <IconEdit/> : <IconArrowRight/>}
+                     { !!Icon && <Icon pathColor={colorIcon}/>}
                      
                 </View>
             </TouchableNativeFeedback>

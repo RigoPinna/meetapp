@@ -43,6 +43,8 @@ export const ScreenChatGroup = ({ route }) => {
                     <ItemMessage image={img} isMyMessage = { false } message={'findsdklfsdhfsdhfdsjkf sdjfsdkjfhjsdkhfdsj sdjfhsdkhfjdshfjkds dhfkdshfjsdhkjfsk'}/>
                     <ItemMessage message={'what?'}/>
                     <ItemMessage message={'afaskfasjf skjfhskhfsakjh kshksh'}/>
+                    <ItemMessage image={img2} isMyMessage = { false } message={'find'}/>
+                    <ItemMessage image={img2} isMyMessage = { false } message={'find'}/>
                 </ScrollView>
             </View>
            

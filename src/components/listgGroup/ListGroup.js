@@ -7,18 +7,26 @@ const participants = [
     {
         uid:1,
         image:'https://comunidav.org/php/api/Images/avatar.jpg',
+        name: 'Ralph Edwards',
+        phone: '(480) 555-0103'
     },
     {
         uid:2,
         image:'https://comunidav.org/php/api/Images/avatar.jpg',
+        name: 'Brooklyn Simmons',
+        phone: '(406) 555-0120'
     },
     {
         uid:3,
         image:'https://comunidav.org/php/api/Images/avatar.jpg',
+        name: 'Savannah Nguyen',
+        phone: '(671) 555-0110'
     },
     {
         uid:4,
         image:'https://comunidav.org/php/api/Images/avatar.jpg',
+        name: 'Jenny Wilson',
+        phone: '(505) 555-0125'
     },
 ]
 const imgG = 'http://www.99naturewallpapers.com/admin/assets/images/wallpapers/1366/nepal--himalayas_1366x768.png'

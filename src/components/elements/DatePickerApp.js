@@ -16,13 +16,18 @@ export const DatePickerApp = ({eventData, setEventData}) => {
     
 
     const onChange = ( event, selectedDate ) => {
-        const currentDate = selectedDate || date
-        let tempDate = new Date( currentDate )
-        let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
-        setVisible( false )
-        setText( fDate )
-        setDate( currentDate )
-        setEventData( fDate )
+        if(event.type == "set") {
+            const currentDate = selectedDate || date
+            let tempDate = new Date( currentDate )
+            let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
+            setVisible( false )
+            setText( fDate )
+            setDate( currentDate )
+            setEventData( fDate )
+        } else {
+            setVisible(false)
+        }
+        
       };
     return(
         <>

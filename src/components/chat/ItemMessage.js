@@ -10,7 +10,7 @@ export const ItemMessage = ({ image,name,message, isMyMessage=true }) => {
                 ? stylesChat.wrapperItemMessageSended
                 : stylesChat.wrapperItemMessage }
         >
-            { ( !isMyMessage ) && <Image style = { stylesChat.avatar } source = {{ url:image }} /> }
+            { ( !isMyMessage ) && <Image style = { stylesChat.avatar } source = {{ uri:image }} /> }
             <View style={{ height:'100%'}}>
                 <View style = {( isMyMessage ) 
                         ? stylesChat.wrapperTextSended  

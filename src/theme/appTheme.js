@@ -361,12 +361,20 @@ export const styleListGroups = {
         paddingLeft:5
     },
     avatarListItemGroup: {
-        resizeMode: 'contain', 
+        resizeMode: 'cover', 
         width:40, 
         height:40, 
         borderWidth:2, 
         borderRadius:40,
         marginLeft:-10
+    },
+    avatarListItemParticipants: {
+        resizeMode: 'cover', 
+        width:60, 
+        height:60, 
+        borderRadius:100,
+        marginLeft:10,
+        marginTop: 10
     }
 }
 export const  stylesChat = {
@@ -406,7 +414,7 @@ export const  stylesChat = {
         width:50, 
         height:50, 
         borderRadius:50,
-        marginRight:2
+        marginRight:2,
     },
     wrapperMessage:{
         maxWidth:'80%',

@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {  View } from 'react-native'
+import {  Text, View } from 'react-native'
 import { ModalApp } from '../elements/ModalApp'
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
@@ -7,8 +7,12 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { TextInputApp } from '../elements/TextInputApp'
 import { DatePickerApp } from '../elements/DatePickerApp'
 import { ButtonGradient } from '../elements/ButtonGradient'
+import { ParticipantsColumn } from './ParticipantsColumn'
+import { ScrollView } from 'react-native-gesture-handler'
 
-export const ModalScreenCreateEvent = ({navigation}) => {
+export const ModalScreenParticipants = ({navigation,route}) => {
+    const { params } = route;
+    const { name, participants} = params;
     const [ eventData, setEventData ] = useState({nameEvent:'', description:'',startDate:''});
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
@@ -17,8 +21,14 @@ export const ModalScreenCreateEvent = ({navigation}) => {
         setEventData({...eventData, ...{description:text}})
     }
      return (
-        <ModalApp navigation={navigation} textTitle={'Create Event'}>
-                <View>
+        <ModalApp navigation={navigation} textTitle={'Participants'}>
+            <View style={{width:400, height:700}}>
+                <ParticipantsColumn participants={participants} colorColorBordersAvatars = {'white'}/>
+            </View>
+                
+            
+
+                {/* <View>
                     <Textapp 
                         size={TEXTS_SIZE.small}
                         text={'Name Event'}
@@ -78,7 +88,7 @@ export const ModalScreenCreateEvent = ({navigation}) => {
                         styleButton={{justifyContent: 'center',width:350, height:50}}
                         // hanldeOnPress = { hanldeGoToNextStep }
                     />
-                </View>
+                </View> */}
         </ModalApp>
     );
 }

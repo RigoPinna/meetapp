@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Button, Image, ScrollView, View } from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { styleListGroups } from '../../theme/appTheme'
+import { Buttonapp } from '../elements/Buttonapp'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { Textapp } from '../elements/Textapp'
 import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple'
@@ -13,6 +14,11 @@ import { AlertEvent } from './AlertEvent'
 export const ScreenChatInfo = ({ navigation, route }) => {
     const eventNew = false;
     const { top } = useSafeAreaInsets();
+    const hanldeGoToModal = () => {
+        const { params } = route;
+        const { name,participants} = params;
+        navigation.navigate('ModalParticipants',{ name,participants})
+    }
     return (
         <View style={{flex: 1, backgroundColor:'white'}}>
             
@@ -61,8 +67,11 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     />
                 <View style={{justifyContent:'flex-start', paddingTop: 30,width:140}}>
                     <ListParticipants participants={ route.params.participants } colorColorBordersAvatars = {'white'} />
+                    <Buttonapp
+                        styleT={{backgroundColor:'transparent',width:'100%',marginLeft:10,marginTop:-35}}
+                        onPress={hanldeGoToModal}
+                    />
                 </View>
-
             </ScrollView>
             {
                 (eventNew) && <AlertEvent/>
