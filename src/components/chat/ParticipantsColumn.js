@@ -13,14 +13,13 @@ export const ParticipantsColumn = ( list ) => {
             {
                 participants.map( ({ uid, image, name, phone}, i ) => {
 
-                    return ( i <= 4 ) && <View style={{flexDirection:'row'}}>
-                                            <Image key={uid} style = {{...styleListGroups.avatarListItemParticipants,...{borderColor:list.colorColorBordersAvatars}}} source = {{uri: image }} />
+                    return ( i <= 4 ) && <View key={uid} style={{flexDirection:'row'}}>
+                                            <Image style = {{...styleListGroups.avatarListItemParticipants,...{borderColor:list.colorColorBordersAvatars}}} source = {{uri: image }} />
                                             <View>
-                                                <Textapp keyT={uid} text={name} styles={{marginTop:20, marginLeft: 10}} weight={'bold'} size={TEXTS_SIZE.small}/>
-                                                <Textapp keyT={uid} text={phone} styles={{marginLeft: 10}}/>
+                                                <Textapp text={name} styles={{marginTop:20, marginLeft: 10}} weight={'bold'} size={TEXTS_SIZE.small}/>
+                                                <Textapp text={phone} styles={{marginLeft: 10}}/>
                                             </View>
                                         </View>
-                    
                 })
             }
                     

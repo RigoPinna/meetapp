@@ -7,8 +7,10 @@ import { ButtonSendMessage } from '../elements/ButtonSendMessage'
 import { TextInputApp } from '../elements/TextInputApp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { ItemMessage } from './ItemMessage'
+
 const img = 'https://mdbcdn.b-cdn.net/img/new/avatars/4.jpg';
 const img2 = 'https://cuidatuambiente.com/wp-content/uploads/2016/10/6-2.jpg';
+
 export const ScreenChatGroup = ({ route }) => {
     const navigation = useNavigation();
     const handleGoToInfoGroup = () => {

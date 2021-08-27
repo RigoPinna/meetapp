@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { Modal, View, Animated, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { Modal, View, Animated, ScrollView } from 'react-native'
 import { BlurView } from 'expo-blur'
 import { styles } from '../../theme/appTheme'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'

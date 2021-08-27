@@ -14,10 +14,10 @@ import { AlertEvent } from './AlertEvent'
 export const ScreenChatInfo = ({ navigation, route }) => {
     const eventNew = false;
     const { top } = useSafeAreaInsets();
+    const { params } = route;
+    const { name,description,participants, image} = params;
     const hanldeGoToModal = () => {
-        const { params } = route;
-        const { name,participants} = params;
-        navigation.navigate('ModalParticipants',{ name,participants})
+        navigation.navigate('ModalParticipants',{participants})
     }
     return (
         <View style={{flex: 1, backgroundColor:'white'}}>
@@ -31,7 +31,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomLeftRadius:25,
                 borderBottomRightRadius:25,
                }} 
-                source = {{ uri:route.params.image }} />
+                source = {{ uri: image }} />
             <View style={{flexDirection:'row', padding:13, width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>
                 <ButtonGradient 
                     gradient ={['#F3F7FE','#F3F7FE']}
@@ -50,12 +50,12 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     <Textapp 
                         size = { TEXTS_SIZE.medium } 
                         weight='bold' 
-                        text ={route.params.name} 
+                        text ={name} 
                         styles={{width:'100%', textAlign: 'center', padding: 10}} 
                     />
                     <Textapp 
                         size = { TEXTS_SIZE.small } 
-                        text ={route.params.description} 
+                        text ={description} 
                         styles={{width:'100%'}} 
                     />
                 </View>
@@ -66,7 +66,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                         styles={{padding:13}} 
                     />
                 <View style={{justifyContent:'flex-start', paddingTop: 30,width:140}}>
-                    <ListParticipants participants={ route.params.participants } colorColorBordersAvatars = {'white'} />
+                    <ListParticipants participants={ participants } colorColorBordersAvatars = {'white'} />
                     <Buttonapp
                         styleT={{backgroundColor:'transparent',width:'100%',marginLeft:10,marginTop:-35}}
                         onPress={hanldeGoToModal}
