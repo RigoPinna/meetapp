@@ -28,28 +28,32 @@ const groupsExamples = [
         image:imgG,
         name:'Group 1',
         createdat:'18.08.2021',
-        participants: participants
+        participants: participants,
+        description:'Descripcion del grupo'
     },
     {
         gid:'fdhgsdwfdfwrge1231',
         image:imgG,
         name:'Group 2',
         createdat:'18.08.2021',
-        participants: participants
+        participants: participants,
+        description:'Descripcion del grupo'
     },
     {
         gid:'hkyjkfdbfvsryhrtge46456uhrtdg',
         image:imgG,
         name:'Group 3',
         createdat:'18.08.2021',
-        participants: participants
+        participants: participants,
+        description:'Descripcion del grupo'
     },
     {
         gid:'dhrgsefdtth456756865ytfesadwertjhrgw434',
         image:imgG,
         name:'Group 4',
         createdat:'18.08.2021',
-        participants: participants
+        participants: participants,
+        description:'Descripcion del grupo'
     },
 ]
 export const ListGroup = ({ navigation }) => {
@@ -60,14 +64,15 @@ export const ListGroup = ({ navigation }) => {
                 ( groups.length > 0 ) 
                     ? <ScrollView>
                             {
-                                groups.map( ({ gid, name,image,createdat,participants }) =>{
+                                groups.map( ({ gid, name,image,createdat,participants, description }) =>{
                                     return(
                                         <ItemListGroup
                                             key = { gid } 
-                                            imageGroup = { image } 
-                                            nameGroup = { name } 
+                                            image = { image } 
+                                            name = { name } 
                                             createdat = {createdat} 
                                             participants = { participants }
+                                            description = { description}
                                             navigation = { navigation }
                                         />
                                     )

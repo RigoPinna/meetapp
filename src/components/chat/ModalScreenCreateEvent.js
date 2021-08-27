@@ -17,11 +17,9 @@ export const ModalScreenCreateEvent = ({navigation}) => {
     const handleOnChangeDescription = ( text ) => {
         setEventData({...eventData, ...{description:text}})
     }
-  return (
-    <View>
+     return (
         <ModalApp navigation={navigation} textTitle={'Create Event'}>
-            <View style={{marginLeft: -8}}>
-                <View style={{marginTop: 40, }}>
+                <View>
                     <Textapp 
                         size={TEXTS_SIZE.small}
                         text={'Name Event'}
@@ -38,7 +36,7 @@ export const ModalScreenCreateEvent = ({navigation}) => {
                         }}
                     />
                 </View>
-                <View style={{marginTop: 40, }}>
+                <View style={{marginTop: 20, }}>
                     <Textapp 
                         size={TEXTS_SIZE.small}
                         text={'Description'}
@@ -60,7 +58,7 @@ export const ModalScreenCreateEvent = ({navigation}) => {
                         multiline={true}
                     />
                 </View>
-                <View style={{marginTop: 40, }}>
+                <View style={{marginTop: 20, }}>
                     <Textapp 
                         size={TEXTS_SIZE.small}
                         text={'Start Date'}
@@ -68,20 +66,20 @@ export const ModalScreenCreateEvent = ({navigation}) => {
                         weight={'bold'}
                     />
                 </View>
-                <DatePickerApp eventData= {eventData} setEventData={setEventData}/>
-                <View style={{justifyContent: 'center',flex: 1}}>
+                <DatePickerApp 
+                    eventData= {eventData} 
+                    setEventData={setEventData}
+                    />
+                <View style={{ flex: 1,justifyContent: 'center', alignItems:'flex-end',marginTop: 25, paddingBottom:10}}>
                     <ButtonGradient
                         gradient={['#48C6EF','#6F86D6']}
                         sizeGradient = {{width:350, height:50}}
                         textButton={`Create Event`}
                         styleText={{color:'white', fontWeight:'bold',}}
-                        styleButton={{justifyContent: 'center',width:350, height:50, backgroundColor:'pink'}}
+                        styleButton={{justifyContent: 'center',width:350, height:50}}
                         // hanldeOnPress = { hanldeGoToNextStep }
                     />
                 </View>
-            </View>
         </ModalApp>
-      </View>
-
-  );
+    );
 }

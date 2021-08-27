@@ -1,55 +1,62 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { Modal, View, Animated, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { BlurView } from 'expo-blur'
 import { styles } from '../../theme/appTheme'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { Textapp } from './Textapp'
+import { ButtonGradient } from './ButtonGradient'
+import { IconClose } from '../icons/IconClose'
+import { COLORS_APP } from '../ui/COLORS_APP'
 
 export const ModalApp = ({navigation,children,textTitle}) => {
-    const [showModal, setShowModal] = useState(true);
+    const [ showModal, setShowModal ] = useState(true);
     const scaleValue = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         toggleModal();
     }, [showModal]);
     const toggleModal = () => {
-        if (showModal) {
-        setShowModal(true);
-        Animated.spring(scaleValue, {
-            toValue: 1,
-            duration: 300,
-            useNativeDriver: true,
-        }).start();
+        if ( showModal ) {
+            setShowModal(true);
+                Animated.spring(scaleValue, {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: true,
+                }).start();
+
         } else {
-        setTimeout(() => setShowModal(false), 200);
-        Animated.timing(scaleValue, {
-            toValue: 0,
-            duration: 300,
-            useNativeDriver: true,
-        }).start();
+            setTimeout(() => setShowModal(false), 200);
+                Animated.timing(scaleValue, {
+                    toValue: 0,
+                    duration: 300,
+                    useNativeDriver: true,
+                }).start();
         }
     };
     return (
-        <Modal transparent visible={showModal} style={{justifyContent: 'center'}}>
-            <View style={{justifyContent:'center', alignItems: 'center', flex: 1}}>
-                <Animated.View
-                style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
-                    <View style={{alignItems: 'center'}}>
-                        <View style={styles.header}>
-                            <Textapp
-                                size={TEXTS_SIZE.medium}
-                                text={textTitle}
-                                weight={'bold'}
-                            />
-                            <TouchableOpacity onPress={() => {setShowModal(false), navigation.goBack()}}>
-                                <Image
-                                    source={require('../../assets/x.png')}
-                                    style={{height: 30, width: 30}}
-                                />
-                            </TouchableOpacity>
-                        </View>
+        <Modal transparent visible={showModal} >
+            <BlurView intensity={85} style={[{justifyContent:'center', alignItems: 'center', flex: 1, justifyContent:'flex-end'}]}>
+                <Animated.View style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
+                    <View style={styles.header}>
+                        <Textapp
+                            size={ TEXTS_SIZE.medium }
+                            text={ textTitle }
+                            weight={'bold'}
+                        />
+                        <ButtonGradient 
+                            gradient={['#F3F7FE','#F3F7FE']}
+                            sizeGradient = {{ width:35, height:35 }}
+                            styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
+                            IconLeft = { IconClose }
+                            hanldeOnPress = { () => {setShowModal(false), navigation.goBack()} }
+                            colorIcon = {COLORS_APP.black2}
+
+                        />
                     </View>
-                    {children}
+                    <ScrollView style={{flex:1}}>
+                            {children}
+                    </ScrollView>
                 </Animated.View>
-            </View>    
+            </BlurView>
         </Modal>
  
     );

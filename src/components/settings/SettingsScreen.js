@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useEffect } from 'react'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { Image, View } from 'react-native'
 import { styles } from '../../theme/appTheme'
 import { ButtonCamera } from '../elements/ButtonCamera'
@@ -10,20 +10,36 @@ import { IconSave } from '../icons/IconSave'
 import { IconUser } from '../icons/IconUser'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
+import { fetchGetFlagCountry } from '../../services/fetchGetFlagCountry'
+import { useEffect } from 'react'
 
 export const SettingsScreen = ({ navigation }) => {
-    const [ userData, setUserData ] = useState({image:'', name:''});
+    const [ userData, setUserData ] = useState({image:'', name:'',flag:'https://www.countryflags.io/mx/flat/64.png'});
+    const { top } = useSafeAreaInsets();
     const handleOnChange = ( text ) => {
         setUserData({...userData, ...{name:text}})
     }
-    useEffect(()=>{
-        navigation.setOptions({
-            headerShow:false,
-            title:'Settings'
-        })
-    },[])
+    useEffect(() => {
+        const controller = new AbortController();
+        ( async () => {
+            //Se piesa obtener el número de telefono de alguna forma, parcearlo y extraer
+            //código del pais ( 52=Mexico )
+            const flag = await fetchGetFlagCountry( 52 );
+            setUserData({...userData,...{ flag } })
+
+        })();
+        return controller?.abort();
+    }, [])
     return (
         <View style={styles.settingsBackground}>
+             <Textapp 
+                size= {TEXTS_SIZE.long} 
+                styles = {{alignSelf: 'flex-start', marginTop:top}}
+                color = {COLORS_APP.black1}
+                text = {'Settings'}
+                weight={'bold'}
+            />
+
             <View>
                 <Image
                         style={styles.tinyLogo}
@@ -50,7 +66,6 @@ export const SettingsScreen = ({ navigation }) => {
                         position: 'relative',
                         alignItems: 'center',
                         marginTop: 50,
-                        marginHorizontal: 20,
                         flexDirection:'row',
                         borderRadius: 100,
                     }}
@@ -58,40 +73,39 @@ export const SettingsScreen = ({ navigation }) => {
             </View>
             <Textapp 
                 size= {TEXTS_SIZE.medium} 
-                styles = {{marginLeft: 10, marginTop: 20, alignSelf: 'flex-start'}}
+                styles = {{marginTop: 20, alignSelf: 'flex-start'}}
                 color = {COLORS_APP.black2}
                 text = {'Number phone'}
                 weight={'bold'}
             />
-            <View style={{flexDirection: 'row',alignSelf: 'flex-start',marginLeft: 10, alignItems: 'center'}}>
+            <View style={{flexDirection: 'row',alignSelf: 'flex-start',alignItems: 'center'}}>
                 <Image
                     style={{padding: 10,
                         margin: 5,
                         height: 50,
                         width: 50,
-                        resizeMode: 'stretch',
+                        resizeMode: 'cover',
                         }}
-                    source={require('../../assets/flag-mexico.png')}
+                    source={{uri: userData.flag }}
                 />
                  <Textapp 
                     size= {TEXTS_SIZE.small} 
-                    styles = {{marginLeft: 10}}
                     color = {COLORS_APP.black2}
                     text = {'+52 8340248975'}
                     weight={'bold'}
                 />
             </View>
-            <View style = {{flex: .7,justifyContent: 'flex-end', marginBottom: 20}}>
+            <View style={{flex: 1,paddingBottom:10 ,justifyContent:'flex-end', flexDirection:'column'}}>
                 <ButtonGradient
-                    gradient={['#0BA360','#3CBA92']}
-                    sizeGradient = {{width:400, height:60}}
-                    textButton={`Save`}
-                    styleText={{color:'white', fontWeight:'bold',}}
-                    styleButton={{justifyContent: 'center',width:400, height:60, backgroundColor:'pink'}}
-                    IconLeft = { IconSave }
-                    // hanldeOnPress = { hanldeGoToNextStep }
-                />
-            </View>
+                        gradient={['#0BA360','#3CBA92']}
+                        sizeGradient = {{width:400, height:50}}
+                        textButton={`Save`}
+                        styleText={{color:'white', fontWeight:'bold',}}
+                        styleButton={{width:'100%',height:50}}
+                        IconLeft = { IconSave }
+                        // hanldeOnPress = { hanldeGoToNextStep }
+                    />
+            </View>  
         </View>
     )
 }

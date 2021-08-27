@@ -114,10 +114,10 @@ export const styles = StyleSheet.create({
     },
     settingsBackground:{
         flex: 1,
-        height:'100%',
         alignItems: 'center',
-        justifyContent: 'flex-end',
-        backgroundColor: 'white'
+        backgroundColor: 'white',
+        paddingBottom:13,
+        paddingHorizontal:13
     },
     fab:{
         backgroundColor: COLORS_APP.beige,
@@ -208,22 +208,22 @@ export const styles = StyleSheet.create({
         alignItems: 'center',
       },
       modalContainer: {
-        width: '95%',
-        height: '95%',
+        width: '100%',
+        height: '90%',
         justifyContent:'flex-end',
         alignItems: 'center',
-        backgroundColor: 'white',
-        paddingHorizontal: 20,
-        paddingVertical: 30,
-        borderRadius: 20,
+        backgroundColor: '#FFFFFF',
+        paddingHorizontal: 13,
+        paddingTop:10,
+        borderTopRightRadius: 20,
+        borderTopLeftRadius: 20,
         elevation: 20,
       },
       header: {
         flexDirection: 'row',
-        width: 374,
+        width: '100%',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: -20,
       },
 });
 

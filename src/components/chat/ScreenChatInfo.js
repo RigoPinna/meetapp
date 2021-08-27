@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { Button, Image, View } from 'react-native'
+import { Button, Image, ScrollView, View } from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { styleListGroups } from '../../theme/appTheme'
 import { ButtonGradient } from '../elements/ButtonGradient'
@@ -25,7 +25,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomLeftRadius:25,
                 borderBottomRightRadius:25,
                }} 
-                source = {{ uri:route.params.imageGroup }} />
+                source = {{ uri:route.params.image }} />
             <View style={{flexDirection:'row', padding:13, width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>
                 <ButtonGradient 
                     gradient ={['#F3F7FE','#F3F7FE']}
@@ -34,23 +34,22 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     styleButton={{width:35, height:35, backgroundColor:'pink'}}
                     IconRight = { IconArrowLeftSimple }
                     colorIcon = {'#35A8FD'}
-                    hanldeOnPress = { () => navigation.navigate('ScreenListGroups')}
+                    hanldeOnPress = { () => navigation.goBack()}
                     
                 />
                 <MenuScreenChat navigation={navigation} />
             </View>
-            <View style={{flex:1, marginTop:145 }}>
+            <ScrollView style={{flex:1, marginTop:145 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
-                    
                     <Textapp 
                         size = { TEXTS_SIZE.medium } 
                         weight='bold' 
-                        text ={route.params.nameGroup} 
+                        text ={route.params.name} 
                         styles={{width:'100%', textAlign: 'center', padding: 10}} 
                     />
                     <Textapp 
                         size = { TEXTS_SIZE.small } 
-                        text ={'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Massa nisl faucibus dolor non blandit dignissim. Eget orci lectus nullam pellentesque iaculis scelerisque.'} 
+                        text ={route.params.description} 
                         styles={{width:'100%'}} 
                     />
                 </View>
@@ -64,7 +63,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     <ListParticipants participants={ route.params.participants } colorColorBordersAvatars = {'white'} />
                 </View>
 
-            </View>
+            </ScrollView>
             {
                 (eventNew) && <AlertEvent/>
             }

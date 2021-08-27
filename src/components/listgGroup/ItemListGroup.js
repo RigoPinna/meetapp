@@ -7,19 +7,19 @@ import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { ListParticipants } from './ListParticipants'
 
-export const ItemListGroup = ({imageGroup,nameGroup='',createdat='', participants = [], navigation}) => {
+export const ItemListGroup = ({image,name='',createdat='', participants = [],description, navigation}) => {
 
 
-    const hanldeNavigatorChat = () => navigation.navigate('ScreenChatInfo',{imageGroup,nameGroup, participants, imageGroup});
+    const hanldeNavigatorChat = () => navigation.navigate('ScreenChatGroup',{image,name, participants,description});
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } >
             <View style ={ {...styleListGroups.wrapperItem,...{backgroundColor:'#EEEEEC' }} }>
-            <Image style = {styleListGroups. imageGroupItem } source = {{ uri:imageGroup }} />
+            <Image style = {styleListGroups. imageGroupItem } source = {{ uri:image }} />
             <View style = { styleListGroups.wrapperInfoItemGroup }>
                 <Textapp 
                     size = { TEXTS_SIZE.extraMedium } 
                     weight='bold' 
-                    text ={nameGroup} 
+                    text ={name} 
                     styles={{width:'90%'}} 
                 />
                 <Textapp 

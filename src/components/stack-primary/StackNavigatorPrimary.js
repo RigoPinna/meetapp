@@ -3,6 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { ScreenListGroups } from '../listgGroup/ScreenListGroups';
 import { ScreenChatInfo } from '../chat/ScreenChatInfo';
 import { ModalScreenCreateEvent } from '../chat/ModalScreenCreateEvent';
+import { ScreenChatGroup } from '../chat/ScreenChatGroup';
 
 const Stack = createNativeStackNavigator();
 
@@ -14,7 +15,6 @@ export const StackNavigatorPrimary = () => {
                     cardStyle: { backgroundColor:'white'},
                 }}
             >
-
                 <Stack.Screen 
                     name="ScreenListGroups" 
                     options={{
@@ -24,12 +24,14 @@ export const StackNavigatorPrimary = () => {
                         headerTitleStyle:{ 
                             fontWeight:'bold', 
                         },
-                        headerStyle:{ height:80}
                     }}
                     component={ ScreenListGroups } />
+                <Stack.Screen
+                    name = "ScreenChatGroup"
+                    component = { ScreenChatGroup }
+                />
                 <Stack.Screen 
                     name="ScreenChatInfo"
-
                     options={{
                         headerTitle: 'info', 
                         headerShown:false,
@@ -42,7 +44,8 @@ export const StackNavigatorPrimary = () => {
                             headerTransparent: true,
                             headerShadowVisible: false,
                             presentation: 'transparentModal',
-                        headerTitle: '', headerBackVisible: false}}
+                            headerTitle: '', 
+                            headerBackVisible: false}}
                     />
             </Stack.Navigator>
         </>
