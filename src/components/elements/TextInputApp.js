@@ -2,8 +2,10 @@ import React from 'react'
 import { useRef } from 'react'
 import { TextInput, View } from 'react-native'
 import { styles, styles2 } from '../../theme/appTheme'
+import { COLORS_APP } from '../ui/COLORS_APP'
+import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
-export const TextInputApp = ({height=50,onChange, value, placeholder='', type='text', paddingHorizontal=13,IconPerson=undefined,colorIcon='black',styleT, paddingLeftT=20, marginTopT=10, multiline}) => {
+export const TextInputApp = ({size = (TEXTS_SIZE.extraSmall),weight = 'normal', color = (COLORS_APP.black1), height=50,onChange, value, placeholder='', type='text', paddingHorizontal=13,IconPerson=undefined,colorIcon='black',styleT, paddingLeftT=20, marginTopT=10, multiline, editable}) => {
     const inputRef = useRef(null);
     return (
             <View style = {{
@@ -32,8 +34,9 @@ export const TextInputApp = ({height=50,onChange, value, placeholder='', type='t
                             onChangeText = {(text)=> {onChange(text)} }
                             value = { value }
                             placeholder = { placeholder } 
-                            style = {{...styles2.textInput, height: height}}
+                            style = {{...styles2.textInput, height: height, fontSize: size, fontWeight:weight, color: color}}
                             multiline={multiline}
+                            editable={editable}
                         />
                 }
             </View>

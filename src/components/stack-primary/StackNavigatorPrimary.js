@@ -5,6 +5,8 @@ import { ScreenChatInfo } from '../chat/ScreenChatInfo';
 import { ModalScreenCreateEvent } from '../chat/ModalScreenCreateEvent';
 import { ScreenChatGroup } from '../chat/ScreenChatGroup';
 import { ModalScreenParticipants } from '../chat/ModalScreenParticipants';
+import { ModalScreenCreateGroup } from '../listgGroup/ModalScreenCreateGroup';
+import { ModalScreenJoinGroup } from '../listgGroup/ModalScreenJoinGroup';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +53,26 @@ export const StackNavigatorPrimary = () => {
                 <Stack.Screen
                     name="ModalParticipants"
                     component={ModalScreenParticipants}
+                    options={{
+                        headerTransparent: true,
+                        headerShadowVisible: false,
+                        presentation: 'transparentModal',
+                        headerTitle: '', 
+                        headerBackVisible: false}}
+                />
+                <Stack.Screen
+                    name="ModalCreateGroup"
+                    component={ModalScreenCreateGroup}
+                    options={{
+                        headerTransparent: true,
+                        headerShadowVisible: false,
+                        presentation: 'transparentModal',
+                        headerTitle: '', 
+                        headerBackVisible: false}}
+                />
+                <Stack.Screen
+                    name="ModalJoinGroup"
+                    component={ModalScreenJoinGroup}
                     options={{
                         headerTransparent: true,
                         headerShadowVisible: false,

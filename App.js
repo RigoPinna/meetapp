@@ -10,7 +10,7 @@ import { SettingsScreen } from './src/components/settings/SettingsScreen';
 import { StackNavigatorPrimary } from './src/components/stack-primary/StackNavigatorPrimary';
 import { TabNavigator } from './src/components/TabNavigator';
 import { styles } from './src/theme/appTheme';
-
+import { RootSiblingParent } from 'react-native-root-siblings';
 
 
 export default function App() {
@@ -20,9 +20,12 @@ export default function App() {
     //   <StatusBar  barStyle="default" />
       // <PresentationScreen/>
     // </>
-    <NavigationContainer>
+    <RootSiblingParent>
+            <NavigationContainer>
       <TabNavigator />
       {/* <ScreenChatInfo/> */}
     </NavigationContainer>
+    </RootSiblingParent>
+
   );
 }

@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import { Image, View } from 'react-native'
-import { styles, styles2 } from '../../theme/appTheme'
-import { Buttonapp } from '../elements/Buttonapp'
+import { styles } from '../../theme/appTheme'
 import { ButtonCamera } from '../elements/ButtonCamera'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { Textapp } from '../elements/Textapp'

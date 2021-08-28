@@ -296,6 +296,8 @@ export const styles2 = StyleSheet.create({
     },
     textInput: {
         width: '100%',
+        textAlign: 'center',
+        color: 'red'
     },
     textInputContainer: {
         

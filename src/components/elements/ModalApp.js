@@ -34,7 +34,7 @@ export const ModalApp = ({navigation,children,textTitle}) => {
     };
     return (
         <Modal transparent visible={showModal} >
-            <BlurView intensity={85} style={[{justifyContent:'center', alignItems: 'center', flex: 1, justifyContent:'flex-end'}]}>
+            <BlurView intensity={85} style={[{alignItems: 'center', flex: 1, justifyContent:'flex-end'}]}>
                 <Animated.View style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
                     <View style={styles.header}>
                         <Textapp
