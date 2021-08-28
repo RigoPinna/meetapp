@@ -12,7 +12,7 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { AlertEvent } from './AlertEvent'
 
 export const ScreenChatInfo = ({ navigation, route }) => {
-    const eventNew = false;
+    const eventNew = true;
     const { top } = useSafeAreaInsets();
     const { params } = route;
     const { name,description,participants, image} = params;
@@ -72,12 +72,10 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                         onPress={hanldeGoToModal}
                     />
                 </View>
-            </ScrollView>
-            {
+                {
                 (eventNew) && <AlertEvent/>
-            }
-            
-            
+                }
+            </ScrollView>
         </View>
     )
 }
