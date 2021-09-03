@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Image, View } from 'react-native'
+import { ContextRegister } from '../../context-register-user/ContextRegister'
+import { addNameAndImg } from '../../reducers/registerReducer'
 import { styles } from '../../theme/appTheme'
 import { ButtonCamera } from '../elements/ButtonCamera'
 import { ButtonGradient } from '../elements/ButtonGradient'
@@ -9,7 +11,8 @@ import { IconArrowRight } from '../icons/IconArrowRight'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
-export const StepInfoProfile = ({steps, setStep }) => {
+export const StepInfoProfile = ({ steps, setStep }) => {
+    const { dispatch } = useContext( ContextRegister );
 
     const [ userData, setUserData ] = useState({ image:'', name:'' });
 
@@ -17,6 +20,7 @@ export const StepInfoProfile = ({steps, setStep }) => {
         setUserData({...userData, ...{ name:text }})
     }
     const hanldeGoToNextStep = () => {
+        dispatch(addNameAndImg( userData ))
         setStep({...steps, ...{ stepInfoProfile: false, stepVerifyPhone:true }})
     }
     return (
@@ -54,7 +58,13 @@ export const StepInfoProfile = ({steps, setStep }) => {
                 text = {'What is your name ?'}
             />
             <View style={{ width:320}}>
-                <TextInputApp value={ userData.name } onChange = { handleOnChange } type ={'text'} placeholder= {'Your name'}/>
+                <TextInputApp 
+                    value={ userData.name } 
+                    onChange = { handleOnChange } 
+                    type ={'text'} 
+                    placeholder= {'Your name'}
+                    styleT = {{width:'100%', height:50}}
+                    />
             </View>
             {
                 ( userData.name.trim() !== '' )

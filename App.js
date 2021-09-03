@@ -1,5 +1,5 @@
 import { NavigationContainer } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 
 
 import { SafeAreaView, StatusBar } from 'react-native';
@@ -12,20 +12,20 @@ import { TabNavigator } from './src/components/TabNavigator';
 import { styles } from './src/theme/appTheme';
 import { RootSiblingParent } from 'react-native-root-siblings';
 
-
 export default function App() {
+
   return (
 
-    // <>
-    //   <StatusBar  barStyle="default" />
-      // <PresentationScreen/>
-    // </>
-    <RootSiblingParent>
-            <NavigationContainer>
-      <TabNavigator />
-      {/* <ScreenChatInfo/> */}
-    </NavigationContainer>
-    </RootSiblingParent>
+    <>
+      <StatusBar  barStyle="default" />
+      <PresentationScreen/>
+    </>
+    // <RootSiblingParent>
+    //         <NavigationContainer>
+    //   <TabNavigator />
+    //   {/* <ScreenChatInfo/> */}
+    // </NavigationContainer>
+    // </RootSiblingParent>
 
   );
 }

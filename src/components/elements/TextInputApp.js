@@ -15,6 +15,8 @@ export const TextInputApp = ({size = (TEXTS_SIZE.extraSmall),weight = 'normal', 
                 backgroundColor:'#F0F0F0',
                 borderWidth:1,
                 borderColor:'#F0F0F0',
+                overflow:'hidden',
+                borderRadius:100,
                 ...styleT
                 }}
             >
@@ -34,7 +36,7 @@ export const TextInputApp = ({size = (TEXTS_SIZE.extraSmall),weight = 'normal', 
                             onChangeText = {(text)=> {onChange(text)} }
                             value = { value }
                             placeholder = { placeholder } 
-                            style = {{...styles2.textInput, height: height, fontSize: size, fontWeight:weight, color: color}}
+                            style = {{...styles2.textInput, fontSize: size, fontWeight:weight, color: color}}
                             multiline={multiline}
                             editable={editable}
                         />
