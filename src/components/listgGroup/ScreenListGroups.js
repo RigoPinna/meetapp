@@ -13,7 +13,7 @@ export const ScreenListGroups = ({ navigation }) => {
     }, [])
 
     return (
-        <View style={{ flex: 1}}>
+        <View style={{ flex: 1, backgroundColor:'white', padding:10}}>
           <ListGroup navigation = { navigation }/>
         </View>
       

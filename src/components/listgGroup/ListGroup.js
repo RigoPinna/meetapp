@@ -29,7 +29,7 @@ const participants = [
         phone: '(505) 555-0125'
     },
 ]
-const imgG = 'http://www.99naturewallpapers.com/admin/assets/images/wallpapers/1366/nepal--himalayas_1366x768.png'
+const imgG = 'https://images.unsplash.com/photo-1628394457621-b60ba83ebfed?ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDF8Ym84alFLVGFFMFl8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60'
 const groupsExamples = [
     {
         gid:'sdvsafsdgd241erwf',

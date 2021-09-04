@@ -1,14 +1,14 @@
 export const initialState = {
     name:'',
     image:'',
-    phone:'',
-    countryCode:'',
+    phone:0,
+    countryCode:0,
     verificationId:null,
 };
 
-export const addNameAndImg = ({ name, image }) => ({
+export const addPhoneAndVerifyData = ({ phone, countryCode, verificationId, }) => ({
     type:'ADD-DATA',
-    payload: { name, image}
+    payload: { phone, countryCode, verificationId, }
 })
 
 export const registerReducer = ( state = initialState, action ) => {

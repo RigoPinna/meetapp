@@ -9,15 +9,16 @@ export const ButtonGradient = ({styleButton = {}, gradient, textButton='', style
                 flexDirection:'row',
                 borderRadius: 100,
                 justifyContent: 'space-evenly',
-                alignItems:'center',
+                alignItems: 'center',
                 overflow:'hidden',
                 position:'relative',
                 padding:10,
+                opacity:disabled ? 0.2: 1,
                 ...styleButton
                 }}>
                     <LinearGradient colors={ gradient } style={{ flex:1, position:'absolute', top:0, left:0,...sizeGradient }} />
                     { !!IconLeft && <IconLeft pathColor={colorIcon}/>}
-                    <Text style = { styleText }>{ textButton }</Text>
+                    { textButton !='' && <Text style = {{marginHorizontal:5,...styleText} }>{ textButton }</Text>}
                     { !!IconRight && <IconRight pathColor={colorIcon}/>}
             </View>
         </TouchableOpacity>

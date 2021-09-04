@@ -22,7 +22,7 @@ export const StackNavigatorPrimary = () => {
                     name="ScreenListGroups" 
                     options={{
                         headerLargeTitle:true, 
-                        title:'Your groups', 
+                        title:'Messages', 
                         headerTitleAlign:'left',
                         headerTitleStyle:{ 
                             fontWeight:'bold', 
@@ -31,6 +31,7 @@ export const StackNavigatorPrimary = () => {
                     component={ ScreenListGroups } />
                 <Stack.Screen
                     name = "ScreenChatGroup"
+                    options={{ headerShown:false,}}
                     component = { ScreenChatGroup }
                 />
                 <Stack.Screen 

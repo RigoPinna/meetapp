@@ -49,7 +49,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
                                 }
                         
                     />
-                <ButtonCamera onPress={ (uriImage) => { setUserData({...userData,...{image:uriImage}})}}/>
+                <ButtonCamera onPress={ (uriImage) => { setUserData({...userData,...{image:uriImage}})} }/>
             </View>
             <Textapp 
                 size= {TEXTS_SIZE.small} 

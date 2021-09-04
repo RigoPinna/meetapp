@@ -8,7 +8,7 @@ import { ButtonGradient } from './ButtonGradient'
 import { IconClose } from '../icons/IconClose'
 import { COLORS_APP } from '../ui/COLORS_APP'
 
-export const ModalApp = ({navigation,children,textTitle}) => {
+export const ModalApp = ({navigation,children,textTitle, closeModal=true}) => {
     const [ showModal, setShowModal ] = useState(true);
     const scaleValue = useRef(new Animated.Value(0)).current;
     useEffect(() => {
@@ -34,7 +34,7 @@ export const ModalApp = ({navigation,children,textTitle}) => {
     };
     return (
         <Modal transparent visible={showModal} >
-            <BlurView intensity={85} style={[{alignItems: 'center', flex: 1, justifyContent:'flex-end'}]}>
+            <BlurView  tint="dark" intensity={85} style={[{alignItems: 'center', flex: 1, justifyContent:'flex-end',}]}>
                 <Animated.View style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
                     <View style={styles.header}>
                         <Textapp
@@ -42,15 +42,17 @@ export const ModalApp = ({navigation,children,textTitle}) => {
                             text={ textTitle }
                             weight={'bold'}
                         />
-                        <ButtonGradient 
-                            gradient={['#F3F7FE','#F3F7FE']}
-                            sizeGradient = {{ width:35, height:35 }}
-                            styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
-                            IconLeft = { IconClose }
-                            hanldeOnPress = { () => {setShowModal(false), navigation.goBack()} }
-                            colorIcon = {COLORS_APP.black2}
-
-                        />
+                       { 
+                        closeModal &&  <ButtonGradient 
+                                gradient={['#F3F7FE','#F3F7FE']}
+                                sizeGradient = {{ width:35, height:35 }}
+                                styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
+                                IconLeft = { IconClose }
+                                hanldeOnPress = { () => { setShowModal(false); navigation.goBack(); } }
+                                colorIcon = {COLORS_APP.black2}
+                                
+                            />
+                        }
                     </View>
                     <ScrollView style={{flex:1}}>
                             {children}

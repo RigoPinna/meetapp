@@ -16,16 +16,16 @@ export default function App() {
 
   return (
 
-    <>
-      <StatusBar  barStyle="default" />
-      <PresentationScreen/>
-    </>
-    // <RootSiblingParent>
-    //         <NavigationContainer>
-    //   <TabNavigator />
-    //   {/* <ScreenChatInfo/> */}
-    // </NavigationContainer>
-    // </RootSiblingParent>
+    // <>
+    //   <StatusBar  barStyle="default" />
+    //   <PresentationScreen/>
+    // </>
+    <RootSiblingParent>
+            <NavigationContainer>
+      <TabNavigator />
+      {/* <ScreenChatInfo/> */}
+    </NavigationContainer>
+    </RootSiblingParent>
 
   );
 }

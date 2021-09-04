@@ -45,7 +45,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 />
                 <MenuScreenChat navigation={navigation} />
             </View>
-            <ScrollView style={{flex:1, marginTop:145 }}>
+            <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <Textapp 
                         size = { TEXTS_SIZE.medium } 
@@ -62,7 +62,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 <Textapp 
                         size = { TEXTS_SIZE.small } 
                         weight='bold' 
-                        text ={'Participantssss'} 
+                        text ={'Participants'} 
                         styles={{padding:13}} 
                     />
                 <View style={{justifyContent:'flex-start', paddingTop: 30,width:140}}>

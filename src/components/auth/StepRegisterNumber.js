@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef, useContext } from 'react'
 import { firebaseConfig, phoneProvider} from '../../firebase/firebase-config';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 
@@ -11,10 +11,15 @@ import { TextInputApp } from '../elements/TextInputApp';
 import { COLORS_APP } from '../ui/COLORS_APP';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 import { ButtonGradient } from '../elements/ButtonGradient';
+import { ContextRegister } from '../../context-register-user/ContextRegister';
+import { ModalFinallyRegister } from './ModalFinallyRegister';
+import { addPhoneAndVerifyData } from '../../reducers/registerReducer';
 
 export const StepRegisterUser = () => {
+    const { dispatch } = useContext( ContextRegister );
+    const [ viewModal, setViewModal] = useState( false );
     const [ countries, setCountries] = useState([]);
-    const [ userData, setUserData ] = useState({countryCode:undefined,numberPhone:''});
+    const [ userData, setUserData ] = useState({ countryCode:undefined, phone:0 });
     const recaptchaVerifier = useRef( null );
     const attemptInvisibleVerification = false;
     useEffect(() => {
@@ -33,17 +38,17 @@ export const StepRegisterUser = () => {
     }, [])
     const hanldeSeendCode = async () => {
         try {
-            const phoneNumber = `+${userData.countryCode}${userData.numberPhone}`;
-            console.log( phoneNumber );
+           
+            const phoneNumber = `+${userData.countryCode}${userData.phone}`;
             const verificationId = await phoneProvider.verifyPhoneNumber(
               phoneNumber,
               recaptchaVerifier.current
             );
-            console.log( verificationId );
+            dispatch( addPhoneAndVerifyData({ verificationId,...userData,}) )
+            setViewModal( true )
         } catch( err ) {
             console.log( err )
         }
-
     }
     return (
         <>
@@ -75,8 +80,8 @@ export const StepRegisterUser = () => {
                                 text = {`+${userData.countryCode}`}
                                 />
                                 <TextInputApp 
-                                    value = { userData.name }
-                                    onChange = { ( value ) => setUserData({...userData,...{numberPhone:value}}) }
+                                    // value = { +userData.numberPhone }
+                                    onChange = { ( value ) => setUserData({...userData,...{phone:+value}}) }
                                     placeholder = { 'Your phone' }
                                     styleT = {{ width:'85%', marginLeft:5, height:'100%'}}
                                     type = {'numeric'}
@@ -100,7 +105,8 @@ export const StepRegisterUser = () => {
                 // IconRight = { IconArrowRight }
                 hanldeOnPress = { hanldeSeendCode }
             />
-            
+            { viewModal && <ModalFinallyRegister /> }
+            {/* <ModalFinallyRegister /> */}
         </>
     )
 }

@@ -10,7 +10,7 @@ import { initialState, registerReducer } from '../../reducers/registerReducer';
 
 export const PresentationScreen = () => {
     const [ dataRegister, dispatch ] = useReducer(registerReducer,initialState );
-    const [steps, setStep] = useState({ stepWelcome: true, stepInfoProfile: false, stepVerifyPhone: false });
+    const [steps, setStep] = useState({ stepWelcome: false, stepInfoProfile: false, stepVerifyPhone: true });
     const opacity = useRef(new Animated.Value(0) ).current;
     useEffect(() => {
         Animated.timing(
