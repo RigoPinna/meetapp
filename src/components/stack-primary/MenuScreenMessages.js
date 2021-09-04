@@ -25,7 +25,7 @@ export const MenuScreenMessages = () => {
                 gradient ={['#F3F7FE','#F3F7FE']}
                 textButton = {'Join group'}
                 styleText = {{color:'#35A8FD', fontWeight:'bold', fontSize:12}}
-                styleButton = {{height:35}}
+                styleButton = {{width: 100,height:35}}
                 sizeGradient={{width:100, height:100}}
                 IconLeft ={ IconJoinGroup }
                 hanldeOnPress={hanldeNavigatorJoinGroup}

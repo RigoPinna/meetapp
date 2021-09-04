@@ -8,7 +8,7 @@ import { ButtonGradient } from './ButtonGradient'
 import { IconClose } from '../icons/IconClose'
 import { COLORS_APP } from '../ui/COLORS_APP'
 
-export const ModalApp = ({navigation,children,textTitle, closeModal=true}) => {
+export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleContainer}) => {
     const [ showModal, setShowModal ] = useState(true);
     const scaleValue = useRef(new Animated.Value(0)).current;
     useEffect(() => {
@@ -35,7 +35,7 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true}) => {
     return (
         <Modal transparent visible={showModal} >
             <BlurView  tint="dark" intensity={85} style={[{alignItems: 'center', flex: 1, justifyContent:'flex-end',}]}>
-                <Animated.View style={[styles.modalContainer, {transform: [{scale: scaleValue}]}]}>
+                <Animated.View style={[{...styles.modalContainer,...styleContainer}, {transform: [{scale: scaleValue}]}]}>
                     <View style={styles.header}>
                         <Textapp
                             size={ TEXTS_SIZE.medium }

@@ -1,32 +1,21 @@
-import React, { useState,useRef,useEffect } from 'react'
-import {  Animated } from 'react-native'
-import { styles2 } from '../../theme/appTheme'
-import { SetpCreation } from './SetpCreation'
-import { StepCreated } from './StepCreated'
+import React, { useState } from 'react'
+import { ModalApp } from '../elements/ModalApp';
+import { StepJoin } from './StepJoin'
+import { StepJoined } from './StepJoined'
 
 export const ModalScreenJoinGroup = ({navigation}) => {
-    const [steps, setStep] = useState({ stepCreation: true, stepCreated: false});
-    const opacity = useRef(new Animated.Value(0) ).current;
-    useEffect(() => {
-        Animated.timing(
-            opacity,
-            {
-                toValue:1,
-                duration:500,
-                useNativeDriver:true,
-            }
-        ).start();
-    }, [])
+    const [steps, setStep] = useState({ stepJoin: true, stepJoined: false});
      return (
-        <Animated.View style = {{...styles2.wrapperPresentation, opacity:opacity, backgroundColor:'transparent'}}>
-                {
-                    steps.stepCreation 
-                        && <SetpCreation steps = { steps } setStep = { setStep } />
-                }
-                {
-                    steps.stepCreated 
-                        && <StepCreated steps = { steps } setStep = { setStep } />
-                }
-        </Animated.View >       
+        <ModalApp styleContainer={{height: '70%', marginBottom: 150,borderBottomRightRadius: 20,
+        borderBottomLeftRadius: 20,}} navigation={navigation} textTitle={'Join Group'}>
+            {
+                steps.stepJoin 
+                    && <StepJoin steps = { steps } setStep = { setStep }/>
+            }
+            {
+                steps.stepJoined 
+                    && <StepJoined steps = { steps } setStep = { setStep }/>
+            }
+        </ModalApp>    
     );
 }

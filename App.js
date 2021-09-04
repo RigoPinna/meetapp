@@ -21,10 +21,10 @@ export default function App() {
     //   <PresentationScreen/>
     // </>
     <RootSiblingParent>
-            <NavigationContainer>
-      <TabNavigator />
+      <NavigationContainer>
+        <TabNavigator />
       {/* <ScreenChatInfo/> */}
-    </NavigationContainer>
+      </NavigationContainer>
     </RootSiblingParent>
 
   );

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { ModalApp } from '../elements/ModalApp'
-import { SetpCreation } from './SetpCreation'
+import { StepCreation } from './StepCreation'
 import { StepCreated } from './StepCreated'
 
 export const ModalScreenCreateGroup = ({navigation}) => {
@@ -10,7 +10,7 @@ export const ModalScreenCreateGroup = ({navigation}) => {
         <ModalApp navigation={navigation} textTitle={'Create Group'}>
             {
                 steps.stepCreation 
-                    && <SetpCreation steps = { steps } setStep = { setStep } groupData={groupData} setGroupData={setGroupData}/>
+                    && <StepCreation steps = { steps } setStep = { setStep } groupData={groupData} setGroupData={setGroupData}/>
             }
             {
                 steps.stepCreated 

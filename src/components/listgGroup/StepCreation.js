@@ -10,8 +10,8 @@ import { IconPersons } from '../icons/IconPersons'
 import { IconDocument } from '../icons/IconDocument'
 import {  View, Image } from 'react-native'
 
-export const SetpCreation = ({steps, setStep, groupData, setGroupData }) => {
-    const code = Math.round (Math.random() * (999 - 0)) + ' - ' + Math.round (Math.random() * (999 - 0)) + ' - ' + Math.round (Math.random() * (999 - 0))
+export const StepCreation = ({steps, setStep, groupData, setGroupData }) => {
+    const code = Math.round (Math.random() * (999 - 0)) +  Math.round (Math.random() * (999 - 0)) +  Math.round (Math.random() * (999 - 0))
 
     const handleOnChangeName = ( text ) => {
         setGroupData({...groupData, ...{nameGroup:text}})
