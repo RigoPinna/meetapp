@@ -22,7 +22,7 @@ export const StackNavigatorPrimary = () => {
                     name="ScreenListGroups" 
                     options={{
                         headerLargeTitle:true, 
-                        title:'Messages', 
+                        title:'Groups', 
                         headerTitleAlign:'left',
                         headerTitleStyle:{ 
                             fontWeight:'bold', 

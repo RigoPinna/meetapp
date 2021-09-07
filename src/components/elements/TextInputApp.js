@@ -17,6 +17,7 @@ export const TextInputApp = ({size = (TEXTS_SIZE.extraSmall),weight = 'normal', 
                 borderColor:'#F0F0F0',
                 overflow:'hidden',
                 borderRadius:100,
+                height: height,
                 ...styleT
                 }}
             >

@@ -1,4 +1,4 @@
-import React, { useState,useRef,useEffect } from 'react'
+import React, { useState,useRef,useEffect, useContext } from 'react'
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
@@ -8,12 +8,14 @@ import { styles, styles2 } from '../../theme/appTheme'
 import {  View, Image, Animated, Clipboard } from 'react-native'
 import { IconCopy } from '../icons/IconCopy'
 import { Toastapp } from '../elements/ToastApp'
+import { ContextRegisterGroup } from '../../context-register-group/ContextRegisterGroup'
 
-export const StepCreated = ({steps, setStep, groupData, setGroupData }) => {
+export const StepCreated = ({steps, setStep }) => {
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
+    const { dataRegister } = useContext( ContextRegisterGroup );
     const handlecopyToClipboard = () => {
-        Clipboard.setString(groupData.code)
+        Clipboard.setString(dataRegister.code)
         setVisible(true)
         setMessages([...messages, 'Code copied!' + Math.random()])
     }
@@ -42,9 +44,9 @@ export const StepCreated = ({steps, setStep, groupData, setGroupData }) => {
                 <Image
                         style={styles.tinyLogo}
                         source = {
-                                groupData.image === '' 
+                                dataRegister.image === '' 
                                     ? require('../../assets/genericGroup.png')
-                                    : {uri:groupData.image}
+                                    : {uri:dataRegister.image}
                                 }
                         
                     />
@@ -52,7 +54,7 @@ export const StepCreated = ({steps, setStep, groupData, setGroupData }) => {
                 <View style={{marginTop: 10}}>
                     <Textapp 
                         size={TEXTS_SIZE.medium}
-                        text={groupData.nameGroup}
+                        text={dataRegister.name}
                         color={COLORS_APP.black2}
                         weight={'bold'}
                         styles={{textAlign: 'center'}}
@@ -64,9 +66,8 @@ export const StepCreated = ({steps, setStep, groupData, setGroupData }) => {
                     />
                 </View>
                 <TextInputApp 
-                        placeholder={groupData.code}
+                        placeholder={dataRegister.code}
                         height={150}
-                        paddingLeftT={0}
                         size={TEXTS_SIZE.long}
                         weight={'bold'}
                         color={COLORS_APP.green}
@@ -76,7 +77,8 @@ export const StepCreated = ({steps, setStep, groupData, setGroupData }) => {
                             borderBottomRightRadius: 10,
                             borderBottomLeftRadius: 10,
                             borderTopLeftRadius: 10,
-                            backgroundColor: '#F9F9F9'
+                            backgroundColor: '#F9F9F9',
+                            paddingLeft: 60
                         }}
                         editable={false}
                     />

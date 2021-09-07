@@ -29,15 +29,13 @@ export const StepInfoProfile = ({ steps, setStep }) => {
                 size= {TEXTS_SIZE.medium} 
                 weight = {'bold'}
                 styles = {{marginBottom:13, marginTop: 13}}
-                text = {'Veirfy your information'}
+                text = {'Verify your information'}
             />
             <Textapp 
                 size= {TEXTS_SIZE.small} 
                 styles = {{marginBottom:13, marginTop: 13}}
                 color = {COLORS_APP.black2}
                 text = {'Please, select a profile photo'}
-                
-
             />
             <View>
                 <Image
