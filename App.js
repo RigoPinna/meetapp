@@ -11,6 +11,8 @@ import { StackNavigatorPrimary } from './src/components/stack-primary/StackNavig
 import { TabNavigator } from './src/components/TabNavigator';
 import { styles } from './src/theme/appTheme';
 import { RootSiblingParent } from 'react-native-root-siblings';
+import { Provider } from 'react-redux';
+import { store } from './src/store/store';
 
 export default function App() {
 
@@ -20,12 +22,15 @@ export default function App() {
     //   <StatusBar  barStyle="default" />
     //   <PresentationScreen/>
     // </>
-    <RootSiblingParent>
-      <NavigationContainer>
-        <TabNavigator />
-      {/* <ScreenChatInfo/> */}
-      </NavigationContainer>
-    </RootSiblingParent>
+    <Provider store = { store } >
+      <RootSiblingParent>
+        <NavigationContainer>
+          <TabNavigator />
+        {/* <ScreenChatInfo/> */}
+        </NavigationContainer>
+      </RootSiblingParent>
+
+    </Provider>
 
   );
 }

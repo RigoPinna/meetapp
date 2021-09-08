@@ -12,48 +12,20 @@ import {  View, Image, LogBox } from 'react-native'
 import { addNewGroup } from '../../reducers/groupReducer'
 import { ContextRegisterGroup } from '../../context-register-group/ContextRegisterGroup'
 import { db, userStatic } from '../../firebase/firebase-config'
+import { useDispatch } from 'react-redux'
 
-export const StepCreation = ({steps, setStep,}) => {
-    LogBox.ignoreLogs(['Setting a timer for a long period of time'])
-    const { dataRegister, dispatch } = useContext( ContextRegisterGroup );
-    const code = Math.round (Math.random() * (999 - 0)) + ' ' +  Math.round (Math.random() * (999 - 0)) + ' ' + Math.round (Math.random() * (999 - 0))
-    useEffect(() => {
-        dispatch(addNewGroup({...dataRegister, code: code}))
-    }, [])
-    const handleOnChange = ( variable, text ) => {
-        dispatch(addNewGroup({...dataRegister, [variable]: text}))
+export const StepCreation = ({steps, setStep}) => {
+
+    LogBox.ignoreLogs(['Setting a timer for a long period of time']);
+    const [ dataGroup, setDataGroup ] = useState({name:'',image:'', description: '',code:'', creator: userStatic});
+    const dispatch = useDispatch();
+    const handleOnChange = ( variable, text ) => setDataGroup({...dataGroup, [variable]: text})
+    const hanldeSaveGroup = () => {
+        dispatch( addNewGroup( dataGroup ) );
+        setStep({...steps, ...{ stepCreation: false, stepCreated:true }});
     }
-    const groupRef = db.collection('groups').doc()
-    const participantsRef = db.collection('groups').doc(groupRef.id).collection('participants').doc()
-    const saveGroup = async () => {
-        try {
-            await groupRef.set({
-                code: dataRegister.code,
-                creator: userStatic,
-                description: dataRegister.description,
-                name: dataRegister.name
-            })
-            .then(() => {
-                // participantsRef.set({
-                //     participants: {admin: creator}
-                // })
-                setStep({...steps, ...{ stepCreation: false, stepCreated:true }}) 
-            })
-            // setStep({...steps, ...{ stepCreation: false, stepCreated:true }}) 
-        } catch (e) {
-            console.log(e)
-        }
         
-    }
-    const saveParticipants = async () => {
-        try {
-            await participantsRef.update({
-                participants: {admin: creator}
-            })
-        } catch (e) {
-            console.log(e)
-        }
-    }
+    
     return (
         <>
             <Textapp 
@@ -68,13 +40,13 @@ export const StepCreation = ({steps, setStep,}) => {
                 <Image
                         style={styles.tinyLogo}
                         source = {
-                            dataRegister.image === '' 
+                            dataGroup.image === '' 
                                     ? require('../../assets/genericGroup.png')
-                                    : {uri:dataRegister.image}
+                                    : {uri:dataGroup.image}
                                 }
   
                     />
-                <ButtonCamera onPress={ (uriImage) => { dispatch(addNewGroup({...dataRegister, ...{image:uriImage}}))}}/>
+                <ButtonCamera onPress={ (uriImage) => { dispatch(addNewGroup({...dataGroup, ...{image:uriImage}}))}}/>
             </View>
                 <View style={{marginTop: 20}}>
                     <Textapp 
@@ -126,15 +98,15 @@ export const StepCreation = ({steps, setStep,}) => {
                 </View>
                 {
                 // ( groupData.nameGroup.trim() !== '' && groupData.description.trim() !== '' && groupData.image.trim() !== '' )
-                    ( dataRegister.name.trim() !== '' && dataRegister.description.trim() !== '')
-                    && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
+                    ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '')
+                    && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
                             <ButtonGradient
                                 gradient={['#48C6EF','#6F86D6']}
                                 sizeGradient = {{width:350, height:50}}
                                 textButton={`Create Event`}
                                 styleText={{color:'white', fontWeight:'bold',}}
                                 styleButton={{width:350, height:50}}
-                                hanldeOnPress = { saveGroup }
+                                hanldeOnPress = { hanldeSaveGroup }
                             />
                         </View>
                 }

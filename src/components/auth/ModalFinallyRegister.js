@@ -34,10 +34,7 @@ export const ModalFinallyRegister = () => {
                 value = {code.code}
                 onChange = { ( value ) => setCode({...code,...{ code:value }}) }
             />
-            <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-            { code.isLoading && <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />}
-
-            </View>
+            
                { 
                     !code.isLoading 
                     && <ButtonGradient
