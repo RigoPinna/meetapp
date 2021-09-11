@@ -15,7 +15,7 @@ import { ContextRegister } from '../../context-register-user/ContextRegister';
 import { ModalFinallyRegister } from './ModalFinallyRegister';
 import { addPhoneAndVerifyData } from '../../reducers/registerReducer';
 
-export const StepRegisterUser = () => {
+export const StepRegisterUser = ({step, setStep}) => {
     const { dispatch } = useContext( ContextRegister );
     const [ viewModal, setViewModal] = useState( false );
     const [ countries, setCountries] = useState([]);
@@ -105,7 +105,7 @@ export const StepRegisterUser = () => {
                 // IconRight = { IconArrowRight }
                 hanldeOnPress = { hanldeSeendCode }
             />
-            { viewModal && <ModalFinallyRegister /> }
+            { viewModal && <ModalFinallyRegister step={step} setStep={setStep}/> }
             {/* <ModalFinallyRegister /> */}
         </>
     )

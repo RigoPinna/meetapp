@@ -14,7 +14,6 @@ export const ButtonCamera = ({ onPress }) => {
             const imageSelected = await ImagePicker.launchImageLibraryAsync();
             ( !imageSelected.cancelled ) && onPress( imageSelected.uri );
         }
-
     }
 
     const ios = () => {

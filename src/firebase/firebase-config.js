@@ -20,12 +20,20 @@ const firebaseConfig = {
 
 firebase.initializeApp( firebaseConfig );
 
-const userStatic = 'dfX6rT1pCEDGEZ41sfut'
+const userStatic = 
+  {
+    uid:'dfX6rT1pCEDGEZ41sfut',
+    image:'https://comunidav.org/php/api/Images/avatar.jpg',
+    name: 'Ralph Edwards',
+    phone: '(480) 555-0103'
+  }
+const storage = firebase.storage()
 const db = firebase.firestore();
 const phoneProvider = new firebase.auth.PhoneAuthProvider();
 export {
     firebase,
     db,
+    storage,
     firebaseConfig,
     phoneProvider,
     userStatic

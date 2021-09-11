@@ -7,7 +7,7 @@ import { TextInputApp } from '../elements/TextInputApp'
 import { IconCheck } from '../icons/IconCheck'
 import { ContextRegister } from '../../context-register-user/ContextRegister';
 import { firebase } from '../../firebase/firebase-config';
-export const ModalFinallyRegister = () => {
+export const ModalFinallyRegister = ({step, setStep}) => {
     const { dataRegister } = useContext( ContextRegister );
     const [ code, setCode ] = useState({ code:'', isLoading:false });
     const handleRegister = async () => {
@@ -20,6 +20,7 @@ export const ModalFinallyRegister = () => {
             const resp = await firebase.auth().signInWithCredential(credential);
             console.log( resp )
             setCode({isLoading: false, ...code})
+            setStep({...step, ...{ stepPresentation: false, stepApp: true }})
         }catch(e) {
             console.log( e )
         }

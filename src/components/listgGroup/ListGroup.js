@@ -1,8 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { ScrollView } from 'react-native'
+import { db } from '../../firebase/firebase-config'
 import { EmptyList } from './EmptyList'
 import { ItemListGroup } from './ItemListGroup'
+
 const participants = [
     {
         uid:1,
@@ -64,8 +66,25 @@ const groupsExamples = [
         description:'Descripcion del grupo'
     },
 ]
+
 export const ListGroup = ({ navigation }) => {
-    const [groups, setGroups] = useState( groupsExamples );
+    const [groups, setGroups] = useState([]);
+    useEffect(() => {
+        db.collection('groups').onSnapshot(querySnapshot => {
+            const users = []
+            querySnapshot.docs.forEach(doc => {
+                const {name, createdat, description} = doc.data()
+                users.push({
+                    gid: doc.id,
+                    name,
+                    createdat,
+                    description
+                })
+                // console.log(doc.id, '=>', doc.data())
+            });
+            setGroups(users)
+        })
+    }, [])
     return (
         <>
             {

@@ -20,7 +20,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
         setUserData({...userData, ...{ name:text }})
     }
     const hanldeGoToNextStep = () => {
-        dispatch(addNameAndImg( userData ))
+        // dispatch(addNameAndImg( userData ))
         setStep({...steps, ...{ stepInfoProfile: false, stepVerifyPhone:true }})
     }
     return (

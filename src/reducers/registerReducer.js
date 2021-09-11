@@ -11,6 +11,11 @@ export const addPhoneAndVerifyData = ({ phone, countryCode, verificationId, }) =
     payload: { phone, countryCode, verificationId, }
 })
 
+// export const addNameAndImg = ({ name, image='' }) => ({
+//     type:'ADD-DATA',
+//     payload: { phone, countryCode, verificationId, }
+// })
+
 export const registerReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case 'ADD-DATA': 

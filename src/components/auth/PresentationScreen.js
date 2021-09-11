@@ -8,9 +8,9 @@ import { StepWelcome } from './StepWelcome';
 import { initialState, registerReducer } from '../../reducers/registerReducer';
 
 
-export const PresentationScreen = () => {
+export const PresentationScreen = ({stepPrincipal, setStepPrincipal}) => {
     const [ dataRegister, dispatch ] = useReducer(registerReducer,initialState );
-    const [steps, setStep] = useState({ stepWelcome: false, stepInfoProfile: false, stepVerifyPhone: true });
+    const [steps, setStep] = useState({ stepWelcome: true, stepInfoProfile: false, stepVerifyPhone: false });
     const opacity = useRef(new Animated.Value(0) ).current;
     useEffect(() => {
         Animated.timing(
@@ -39,7 +39,7 @@ export const PresentationScreen = () => {
                         }
                         {
                             steps.stepVerifyPhone 
-                                && <StepRegisterUser steps = { steps } setStep = { setStep } />
+                                && <StepRegisterUser step = { stepPrincipal } setStep = { setStepPrincipal } />
                         }
                         </View>
                     </ScrollView>
