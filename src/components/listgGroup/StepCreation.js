@@ -51,12 +51,11 @@ export const StepCreation = ({steps, setStep}) => {
                         source = {
                             dataGroup.image === '' 
                                     ? require('../../assets/genericGroup.png')
-                                    : {uri:dataGroup.imageFile}
+                                    : {uri:dataGroup.image}
                                 }
                     />
-                <ButtonCamera onPress={ (uriImage) => {
-                    let filename = uriImage.substring(uriImage.lastIndexOf('/') + 1)
-                    setDataGroup({...dataGroup, ...{image:filename, imageFile: uriImage}})
+                <ButtonCamera onPress={ ( uriImg, file ) => {
+                    setDataGroup({...dataGroup, ...{ image:uriImg, imageFile: file }})
                 }}/>
             </View>
                 <View style={{marginTop: 20}}>

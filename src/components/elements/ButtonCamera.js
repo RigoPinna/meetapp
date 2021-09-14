@@ -11,8 +11,17 @@ export const ButtonCamera = ({ onPress }) => {
     const handleSelectImage = async () => {
         const isAccessAcepted =  await ImagePicker.requestMediaLibraryPermissionsAsync();
         if ( isAccessAcepted.granted ) {
-            const imageSelected = await ImagePicker.launchImageLibraryAsync();
-            ( !imageSelected.cancelled ) && onPress( imageSelected.uri );
+            const imageSelected = await ImagePicker.launchImageLibraryAsync({
+                    mediaTypes: ImagePicker.MediaTypeOptions.All,
+                    allowsEditing: true,
+                    aspect: [4, 3],
+                    quality: 1,
+                    base64: true,
+                });
+            if ( !imageSelected.cancelled ) {
+                const file = await imageSelected.base64;
+                onPress( imageSelected.uri, file );
+            }
         }
     }
 

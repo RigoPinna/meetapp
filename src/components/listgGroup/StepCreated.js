@@ -57,7 +57,7 @@ export const StepCreated = ({steps, setStep }) => {
                             source = {
                                     groupCreated.image === '' 
                                         ? require('../../assets/genericGroup.png')
-                                        : {uri:groupCreated.imageFile}
+                                        : {uri:groupCreated.image}
                                     }
                             
                         />

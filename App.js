@@ -29,40 +29,40 @@ export default function App() {
         ).start();
     }, [])
   return (
-    <Animated.View style = {{opacity:opacity}}>
-      {
-        steps.stepPresentation && <>
-                                    <StatusBar  barStyle="default" />
-                                    <PresentationScreen stepPrincipal = {steps} setStepPrincipal={setStep}/>
-                                  </>
-      }
-      {
-        steps.stepApp &&  <View style= {{height: '100%'}}>
-                          <Provider store = { store } >
-                            <RootSiblingParent>
-                              <NavigationContainer>
+    // <Animated.View style = {{opacity:opacity}}>
+    //   {
+    //     steps.stepPresentation && <>
+    //                                 <StatusBar  barStyle="default" />
+    //                                 <PresentationScreen stepPrincipal = {steps} setStepPrincipal={setStep}/>
+    //                               </>
+    //   }
+    //   {
+    //     steps.stepApp &&  <View style= {{height: '100%'}}>
+    //                       <Provider store = { store } >
+    //                         <RootSiblingParent>
+    //                           <NavigationContainer>
                                 
-                                <TabNavigator />
+    //                             <TabNavigator />
                                 
-                              </NavigationContainer>
-                            </RootSiblingParent>
-                          </Provider>
-                          </View>
-      }
+    //                           </NavigationContainer>
+    //                         </RootSiblingParent>
+    //                       </Provider>
+    //                       </View>
+    //   }
       
-    </Animated.View >
+    // </Animated.View >
     // <>
     //   <StatusBar  barStyle="default" />
     //   <PresentationScreen/>
     // </>
-    // <Provider store = { store } >
-    //   <RootSiblingParent>
-    //     <NavigationContainer>
-    //       <TabNavigator />
-    //     </NavigationContainer>
-    //   </RootSiblingParent>
+    <Provider store = { store } >
+      <RootSiblingParent>
+        <NavigationContainer>
+          <TabNavigator />
+        </NavigationContainer>
+      </RootSiblingParent>
 
-    // </Provider>
+    </Provider>
 
   );
 }
