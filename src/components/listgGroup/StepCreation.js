@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
@@ -8,13 +8,10 @@ import { styles } from '../../theme/appTheme'
 import { ButtonCamera } from '../elements/ButtonCamera'
 import { IconPersons } from '../icons/IconPersons'
 import { IconDocument } from '../icons/IconDocument'
-import {  View, Image, LogBox, Platform } from 'react-native'
+import {  View, Image, LogBox } from 'react-native'
 import { addNewGroup } from '../../reducers/groupReducer'
 import { userStatic } from '../../firebase/firebase-config'
 import { useDispatch } from 'react-redux'
-import ImgToBase64 from 'react-native-image-base64';
-import {ImagePicker} from 'expo'
-import { launchImageLibraryAsync } from 'expo-image-picker'
 
 export const StepCreation = ({steps, setStep}) => {
 
@@ -25,15 +22,6 @@ export const StepCreation = ({steps, setStep}) => {
     const hanldeSaveGroup = () => {
         dispatch( addNewGroup( dataGroup ) );
         setStep({...steps, ...{ stepCreation: false, stepCreated:true }});
-    }
-    const onChooseImagePress = (image, uri) => {
-        // let result = await ImagePicker.launchCameraAsync()
-        // let result = await ImagePicker.launchImageLibraryAsync()
-
-        // if(!result.cancelled){
-        //     let filename = uriImage.substring(uriImage.lastIndexOf('/') + 1)
-        //             setDataGroup({...dataGroup, ...{image:filename, imageFile: uriImage}})
-        // }
     }
     return (
         <>

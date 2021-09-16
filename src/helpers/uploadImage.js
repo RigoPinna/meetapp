@@ -14,6 +14,4 @@ export const uploadImage = async ( uri, folder='', nameImg='img' ) => {
     await imgRef.put( blob );
     const imgURL =  await imgRef.getDownloadURL();
     return imgURL;
-
-    
 }

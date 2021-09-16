@@ -2,15 +2,12 @@ import moment from "moment-timezone";
 import { db, userStatic } from "../firebase/firebase-config";
 import { uploadImage } from '../helpers/uploadImage';
 import { generateCode } from '../helpers/generateCode';
-//OBJETO PARA UN GRUPO
+//OBJETO PARA UN EVENTO
 // {
 //     gid:'',
 //     name:'',
-//     image:'',
 //     description: '',
-//     code:'',
-//     createdat: '',
-//     participants: ''.
+//     startDate:'',
 // }
 
 export const initialState = {
@@ -26,7 +23,6 @@ export const addNewGroup = ({ name, image='', description }) => {
         const groupRef = db.collection('groups').doc();
         const { id:gid } = groupRef;
         db.collection('groups').doc(gid).collection('chat').doc().set({},{ merge: true })
-        db.collection('groups').doc(gid).collection('events').doc().set({}, {merge: true})
         db.collection('groups').doc(gid).collection('participants').doc().set({ userStatic },{ merge: true })
         const imageURL =  await uploadImage( image, name,'img_group' );
         await groupRef.set({ 

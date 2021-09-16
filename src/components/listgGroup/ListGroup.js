@@ -74,13 +74,37 @@ const STATE_GROUPS_LOADING = {
 export const ListGroup = ({ navigation }) => {
     const [ groups, setGroups ] = useState( STATE_GROUPS_LOADING.loading );
     useEffect(() => {
+        let dataGroup = [] 
         db.collection('groups').onSnapshot( querySnapshot => {
             const groups = querySnapshot.docs.map( doc => {
+                const dataF = []
                 const data = doc.data();
                 const gid = doc.id;
-                return { gid, ...data }
+                // console.log(doc.data())
+                
+                // db.collection('groups').doc(gid).collection('participants').onSnapshot( querySnapshot => {
+                    
+                //     dataGroup = querySnapshot.docs.map( doc => {
+                //         // setGroups({...groups, ...{participants: doc.data()}})
+                //         const p = doc.data()
+                //         const pid = doc.id;
+
+                //         return {...dataGroup, ...{gid, ...data, participants: {pid, ...p}}}
+                //         // console.log(p)
+                //     })
+                //     // const data2 = [{data, participant}]
+                //     // console.log(dataGroup)
+                //     // dataF = data2
+                // })
+
+                // const data2 = [{data,participants}]
+                // console.log(dataF)
+                return { gid, ...data, participants }
+                // console.log(dataGroup)
+                // return dataGroup
 
             })
+            // console.log(groups)
             setGroups( groups )
         })
     }, [])
