@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { ScrollView, View } from 'react-native'
-import { db } from '../../firebase/firebase-config'
+import { db, userStatic } from '../../firebase/firebase-config'
 import { EmptyList } from './EmptyList'
 import { ItemListGroup } from './ItemListGroup'
 import { COLORS_APP } from '../ui/COLORS_APP'
@@ -73,39 +73,20 @@ const STATE_GROUPS_LOADING = {
 }
 export const ListGroup = ({ navigation }) => {
     const [ groups, setGroups ] = useState( STATE_GROUPS_LOADING.loading );
-    useEffect(() => {
-        let dataGroup = [] 
+    useEffect(() => { 
         db.collection('groups').onSnapshot( querySnapshot => {
-            const groups = querySnapshot.docs.map( doc => {
-                const dataF = []
+            let groups = querySnapshot.docs.map( doc => {
                 const data = doc.data();
                 const gid = doc.id;
-                // console.log(doc.data())
-                
-                // db.collection('groups').doc(gid).collection('participants').onSnapshot( querySnapshot => {
-                    
-                //     dataGroup = querySnapshot.docs.map( doc => {
-                //         // setGroups({...groups, ...{participants: doc.data()}})
-                //         const p = doc.data()
-                //         const pid = doc.id;
-
-                //         return {...dataGroup, ...{gid, ...data, participants: {pid, ...p}}}
-                //         // console.log(p)
-                //     })
-                //     // const data2 = [{data, participant}]
-                //     // console.log(dataGroup)
-                //     // dataF = data2
-                // })
-
-                // const data2 = [{data,participants}]
-                // console.log(dataF)
-                return { gid, ...data, participants }
-                // console.log(dataGroup)
-                // return dataGroup
-
+                const createdat =  data.createdat.toDate();
+                //Se hace el parse porque en la BD los participantes estan guardados como un **string**
+                const participants = JSON.parse( data.participants );
+                const isSuscribed = participants.some( pr => pr.uid === userStatic.uid )
+                //Si el usuario no esta suscrito, se retornará un false
+                return isSuscribed && { gid, ...data, participants, createdat }
             })
-            // console.log(groups)
-            setGroups( groups )
+            //Se limpia el array de valores false y se establece como state
+            setGroups( groups.filter( group => group !== false ) )
         })
     }, [])
     return (
@@ -119,8 +100,9 @@ export const ListGroup = ({ navigation }) => {
                         ? <ScrollView>
                             {
                                 groups.map( ({ gid, name,image,createdat,participants, description }) =>{
-                                    return(
-                                        <ItemListGroup
+                                    return ( 
+                                        !!gid 
+                                            ? <ItemListGroup
                                             key = { gid } 
                                             image = { image } 
                                             name = { name } 
@@ -128,8 +110,9 @@ export const ListGroup = ({ navigation }) => {
                                             participants = { participants }
                                             description = { description}
                                             navigation = { navigation }
-                                        />
-                                    )
+                                        /> 
+                                        :<></>
+                                        )
                                 
                                 })
                             }

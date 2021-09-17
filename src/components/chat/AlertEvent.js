@@ -13,7 +13,8 @@ export const AlertEvent = () => {
                 style={{ 
                 width: '110%', 
                 height: '130%', 
-                position:'absolute',}}/>
+                position:'absolute',
+                }}/>
                  <Textapp 
                     size= {TEXTS_SIZE.extraMedium} 
                     color = {COLORS_APP.black2}

@@ -1,5 +1,6 @@
 import React from 'react'
 import { Image, TouchableOpacity, View } from 'react-native'
+import { useTimeAgo } from '../../hooks/useTimeAgo'
 import { styleListGroups } from '../../theme/appTheme'
 import { ItemNumberNotification } from '../elements/ItemNumberNotification'
 import { Textapp } from '../elements/Textapp'
@@ -8,8 +9,7 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { ListParticipants } from './ListParticipants'
 
 export const ItemListGroup = ({image,name='',createdat='', participants = [],description, navigation}) => {
-
-
+    const time = useTimeAgo( createdat );
     const hanldeNavigatorChat = () => navigation.navigate('ScreenChatGroup',{image,name, participants,description});
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } >
@@ -25,7 +25,7 @@ export const ItemListGroup = ({image,name='',createdat='', participants = [],des
                 <Textapp 
                     size={TEXTS_SIZE.small} 
                     weight='200' 
-                    text ={`Created on ${createdat}`} 
+                    text ={`Created on ${time}`} 
                     styles = {{marginTop:2}} 
                 />
                 <ListParticipants participants={ participants } colorColorBordersAvatars = {'#EEEEEC'} />

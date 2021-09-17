@@ -13,7 +13,6 @@ import { AlertEvent } from './AlertEvent'
 
 export const ScreenChatInfo = ({ navigation, route }) => {
     const eventNew = true;
-    const { top } = useSafeAreaInsets();
     const { params } = route;
     const { name,description,participants, image} = params;
     const hanldeGoToModal = () => {
@@ -32,19 +31,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomRightRadius:25,
                }} 
                 source = {{ uri: image }} />
-            <View style={{flexDirection:'row', padding:13, width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>
-                <ButtonGradient 
-                    gradient ={['#F3F7FE','#F3F7FE']}
-                    sizeGradient = {{width:50, height:50}}
-                    styleText={{color:'white', fontWeight:'bold',}}
-                    styleButton={{width:35, height:35, backgroundColor:'pink'}}
-                    IconRight = { IconArrowLeftSimple }
-                    colorIcon = {'#35A8FD'}
-                    hanldeOnPress = { () => navigation.goBack()}
-                    
-                />
                 <MenuScreenChat navigation={navigation} />
-            </View>
             <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <Textapp 
