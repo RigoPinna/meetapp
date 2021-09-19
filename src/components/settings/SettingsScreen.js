@@ -16,8 +16,11 @@ import { db, userStatic } from '../../firebase/firebase-config'
 import * as Progress from 'react-native-progress';
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../reducers/settingsReducer'
+import { Toastapp } from '../elements/ToastApp'
 
 export const SettingsScreen = ({ navigation }) => {
+    const [messages, setMessages] = useState([]);
+    const [visible, setVisible] = useState(false)
     const [ userData, setUserData ] = useState({imageFile: null,image:'', name:'',flag:'https://www.countryflags.io/mx/flat/64.png'});
     const { top } = useSafeAreaInsets();
     const dispatch = useDispatch();
@@ -36,6 +39,8 @@ export const SettingsScreen = ({ navigation }) => {
     }
     const hanldeUpdateUser = () => {
         dispatch( updateUser(userData.name,userData.image, userData.imageFile, userStatic.uid ) );
+        setVisible(true)
+        setMessages([...messages, 'User Update!' + Math.random()])
     }
     useEffect(() => {
         const controller = new AbortController();
@@ -134,7 +139,23 @@ export const SettingsScreen = ({ navigation }) => {
                                     IconLeft = { IconSave }
                                     hanldeOnPress = { hanldeUpdateUser }
                                 />
-                        </View>  
+                        </View> 
+                        {
+                        visible && messages.map((message) => (
+                                        <Toastapp
+                                            key={message}
+                                            style={{top: top}}
+                                            message={'user Update!'}
+                                            onHide={() => {
+                                            setMessages((messages) =>
+                                                messages.filter(
+                                                    (currentMessage) =>
+                                                    currentMessage !== message
+                                            ));
+                                        }}
+                                        />
+                                    ))
+                        }
                     </View>
         }
         </>

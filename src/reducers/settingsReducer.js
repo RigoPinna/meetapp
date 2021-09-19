@@ -13,8 +13,6 @@ export const updateUser = (nameNew='', imageNew='', imageFile='', uid) => {
         const userRef = db.collection('users').doc(uid)
         const doc = await userRef.get()
         const {name, image} = doc.data()
-        console.log('image =>',image, 'imageNew =>', imageNew)
-        console.log('name =>',name, 'nameNew =>', nameNew)
         if(name !== nameNew || image !== imageNew){
             if(name !== nameNew) {
                 await userRef.update({name: nameNew})

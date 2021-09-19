@@ -21,14 +21,15 @@ export const initialState = {
 export const addNewGroup = ({ name, image='', description }) => {
     
     return async ( dispatch ) => {
-        const date = moment().toNow();
+        const date = moment().format('DD-MM-YYYY')
         const code = generateCode();
         const groupRef = db.collection('groups').doc();
         const imageURL =  await uploadImage( image, name,'img_group' );
         await groupRef.set({ 
             code, 
             creator: userStatic.uid, 
-            createdat: firebase.firestore.Timestamp.fromDate(new Date()),
+            // createdat: firebase.firestore.Timestamp.fromDate(new Date()),
+            createdat: date,
             description,
             image: imageURL, 
             name,

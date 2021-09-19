@@ -40,6 +40,7 @@ export const Toastapp = (props) => {
           top: 0,
           left: 0,
           right: 0,
+          ...props.style
         }}
       >
               <Animated.View

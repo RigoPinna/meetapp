@@ -12,7 +12,7 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { AlertEvent } from './AlertEvent'
 
 export const ScreenChatInfo = ({ navigation, route }) => {
-    const eventNew = true;
+    const eventNew = false;
     const { params } = route;
     const { name,description,participants, image} = params;
     const hanldeGoToModal = () => {
