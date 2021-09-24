@@ -11,48 +11,67 @@ import { generateCode } from '../helpers/generateCode';
 // }
 
 export const initialState = {
-    listGroup:[], 
-    groupCreated:null
+    listEvent:[], 
+    eventCreated:null
 };
 
-export const addNewGroup = ({ name, image='', description }) => {
+export const addNewEvent = ({ name, nameEvent, startDate, description }) => {
     
     return async ( dispatch ) => {
-        const date = moment().format('DD-MM-YYYY')
-        const code = generateCode();
-        const groupRef = db.collection('groups').doc();
-        const { id:gid } = groupRef;
-        db.collection('groups').doc(gid).collection('chat').doc().set({},{ merge: true })
-        db.collection('groups').doc(gid).collection('participants').doc().set({ userStatic },{ merge: true })
-        const imageURL =  await uploadImage( image, name,'img_group' );
-        await groupRef.set({ 
-            code, 
-            creator: userStatic.uid, 
-            createdat: date,
-            description,
-            image: imageURL, 
-            name, 
-        },{ merge: true });
+        const groupRef = db.collection('groups')
+        const snapshot = await groupRef.where('name','==',name).get()
+        snapshot.forEach(doc => {
+            // console.log(doc.id, '=>', doc.data());
+            const gid = doc.id;
 
+            db.collection('groups').doc(gid).collection('event').doc().set({
+                nameEvent,
+                startDate,
+                description,
+            }, {merge: false})
+            // console.log(name, '=>', nameEvent, ' => ', startDate, ' => ', description)
+          });
         dispatch({
-            type:'create-group',
-            payload:[{ code, creator: userStatic.uid, description, name, image: imageURL, createdat: date, participants: userStatic}]
+            type:'create-event',
+            payload:[{name, nameEvent, startDate, description}]
         })
     }
-
-
 }
 
+// export const getIdEvent = (id, eventId, setEventId) => {
+
+//     return async ( dispatch ) => {
+//         const eventRef = db.collection('groups').doc(id).collection('event')
+//         const snapshot = await eventRef.orderBy('startDate', 'desc').limit(1).get()
+//         if(!snapshot.empty){
+//             snapshot.forEach(doc => {
+//                 // console.log(doc.id,'id =>', doc.data())
+//                 setEventId({...eventId,...{id: doc.id}})
+//             })
+//             // setEventVisible(true)
+//             // console.log(eventData)
+//         }
+//         dispatch({
+//             type:'get-event',
+//             payload:[{...eventId.id}]
+//         })
+//     }
+
+// }
 
 
-export const groupReducer = ( state = initialState, action ) => {
+export const eventReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
-        case 'create-group': 
+        case 'create-event': 
             return { 
-                listGroup:[...state.listGroup,...action.payload ], 
-                groupCreated:action.payload[0]
+                listEvent:[...state.listEvent,...action.payload ], 
+                eventCreated:action.payload[0]
             };
-        
+        case 'get-event': 
+            return { 
+                listEvent:[...state.listEvent,...action.payload ], 
+                eventCreated:action.payload[0]
+            };
         default:
             return state;
     }

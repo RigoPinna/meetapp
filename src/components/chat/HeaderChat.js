@@ -12,8 +12,8 @@ export const HeaderChat = ({ route }) => {
     const { top } = useSafeAreaInsets();
     const handleGoToInfoGroup = () => {
         const { params } = route;
-        const { name, description, participants, image  } = params;
-        navigation.navigate('ScreenChatInfo',{ name,description,participants, image })
+        const { name, description, participants, image, id } = params;
+        navigation.navigate('ScreenChatInfo',{ name,description,participants, image, id })
     }
     return (
         <View style={{ width: '100%', height: 80, paddingTop:top,paddingHorizontal:10, justifyContent:'space-between',flexDirection:'row', alignItems:'center' }}>

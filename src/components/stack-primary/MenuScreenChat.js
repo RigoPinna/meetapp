@@ -6,9 +6,9 @@ import { BlurView } from 'expo-blur';
 import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
-export const MenuScreenChat = ({navigation}) => {
+export const MenuScreenChat = ({navigation, name}) => {
     const { top } = useSafeAreaInsets();
-    const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent');
+    const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
     return (
             // <BlurView intensity={80} tint="dark" style={{flexDirection:'row',width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>
                 <LinearGradient locations={[0.2,1]} colors={['rgba(0,0,0,0.7)', 'transparent']} style={{flexDirection:'row', padding:13, width:'100%', height:60, marginTop:top,justifyContent:'space-between'}} >

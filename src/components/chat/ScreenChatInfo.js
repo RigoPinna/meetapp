@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Button, Image, ScrollView, View } from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { styleListGroups } from '../../theme/appTheme'
@@ -10,11 +10,31 @@ import { ListParticipants } from '../listgGroup/ListParticipants'
 import { MenuScreenChat } from '../stack-primary/MenuScreenChat'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { AlertEvent } from './AlertEvent'
+import { db, userStatic } from '../../firebase/firebase-config'
+import { getIdEvent, getEvent } from '../../helpers/getIdEvent'
+
+
 
 export const ScreenChatInfo = ({ navigation, route }) => {
-    const eventNew = false;
     const { params } = route;
-    const { name,description,participants, image} = params;
+    const { name,description,participants, image, id} = params;
+    const [eventVisible, setEventVisible] = useState(false)
+    const [eventData, setEventData] = useState({nameEvent: '', startDate: '', description: ''})
+    const [eventId, setEventId] = useState({id: ''})
+    
+    useEffect(() => {
+        const eid = eventId.id
+        if(eid === ''){
+            getIdEvent(id, eventId, setEventId, eventData, setEventData)
+            // getEvent(id,eid,eventData,setEventData)
+        } else {
+            console.log(eid)
+            console.log(eventData)
+            setEventVisible(true)
+        }
+    }, [eventData])
+
+
     const hanldeGoToModal = () => {
         navigation.navigate('ModalParticipants',{participants})
     }
@@ -31,7 +51,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomRightRadius:25,
                }} 
                 source = {{ uri: image }} />
-                <MenuScreenChat navigation={navigation} />
+                <MenuScreenChat navigation={navigation} name = {name}/>
             <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <Textapp 
@@ -60,7 +80,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     />
                 </View>
                 {
-                (eventNew) && <AlertEvent/>
+                (eventVisible) && <AlertEvent event={eventData}/>
                 }
             </ScrollView>
         </View>

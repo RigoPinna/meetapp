@@ -17,6 +17,7 @@ import * as Progress from 'react-native-progress';
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../reducers/settingsReducer'
 import { Toastapp } from '../elements/ToastApp'
+import RNSimData from 'react-native-sim-data'
 
 export const SettingsScreen = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
@@ -25,7 +26,7 @@ export const SettingsScreen = ({ navigation }) => {
     const { top } = useSafeAreaInsets();
     const dispatch = useDispatch();
     const[ loading, setLoading ] = useState( true );
-    // const {  userUpdate } = useSelector( state => state.settingsReducer )
+    // const {  settingsReducer } = useSelector( state => state.settingsReducer )
 
     const handleOnChange = ( text ) => {
         setUserData({...userData, ...{name:text}})
@@ -52,9 +53,9 @@ export const SettingsScreen = ({ navigation }) => {
 
         })();
         getUser()
-        // !!userUpdate && setLoading( false )
+        // !!settingsReducer && setLoading( false )
         return controller?.abort();
-    // }, [userUpdate])
+    // }, [settingsReducer])
     }, [])
     return (
         <>

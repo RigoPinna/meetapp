@@ -1,7 +1,7 @@
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 
-
+import { useSelector } from 'react-redux'
 import { Animated, LogBox, SafeAreaView, StatusBar, View } from 'react-native';
 import { PresentationScreen } from './src/components/auth/PresentationScreen';
 import { ScreenChatInfo } from './src/components/chat/ScreenChatInfo';

@@ -104,6 +104,7 @@ export const ListGroup = ({ navigation }) => {
                                         !!gid 
                                             ? <ItemListGroup
                                             key = { gid } 
+                                            id={gid}
                                             image = { image } 
                                             name = { name } 
                                             createdat = {createdat} 

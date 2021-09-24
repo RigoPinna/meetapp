@@ -4,7 +4,7 @@ import { uploadImage } from '../helpers/uploadImage';
 
 export const initialState = {
     user:{}, 
-    userUpdate:null
+    // userUpdate:null
 };
 
 export const updateUser = (nameNew='', imageNew='', imageFile='', uid) => {
@@ -28,12 +28,12 @@ export const updateUser = (nameNew='', imageNew='', imageFile='', uid) => {
     }
 }
 
-export const settingsReducer = () => {
+export const settingsReducer = (state = initialState, action) => {
     switch ( action.type ) {
         case 'update-user': 
             return { 
                 user:{...state.user,...action.payload }, 
-                userUpdate:action.payload[0]
+                // userUpdate:action.payload[0]
             };
         
         default:

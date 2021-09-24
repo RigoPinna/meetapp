@@ -23,7 +23,8 @@ export const DatePickerApp = ({eventData, setEventData}) => {
             setVisible( false )
             setText( fDate )
             setDate( currentDate )
-            setEventData( fDate )
+            // setEventData( fDate )
+            setEventData({...eventData, ...{startDate: fDate}})
         } else {
             setVisible(false)
         }

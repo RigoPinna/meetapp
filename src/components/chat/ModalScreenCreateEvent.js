@@ -7,18 +7,28 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { TextInputApp } from '../elements/TextInputApp'
 import { DatePickerApp } from '../elements/DatePickerApp'
 import { ButtonGradient } from '../elements/ButtonGradient'
+import { useDispatch } from 'react-redux'
+import { addNewEvent } from '../../reducers/eventReducer'
 
-export const ModalScreenCreateEvent = ({navigation}) => {
-    const [ eventData, setEventData ] = useState({nameEvent:'', description:'',startDate:''});
+export const ModalScreenCreateEvent = ({navigation, route}) => {
+    const dispatch = useDispatch();
+    const {params} = route;
+    const {name} = params
+    const [ eventData, setEventData ] = useState({name: name, nameEvent:'', description:'',startDate:''});
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
     }
     const handleOnChangeDescription = ( text ) => {
         setEventData({...eventData, ...{description:text}})
     }
+    const handleCreateEvent = () => {
+        dispatch( addNewEvent( eventData ) );
+        navigation.goBack()
+    }
      return (
         <ModalApp navigation={navigation} textTitle={'Create Event'}>
-                <View>
+            <View style={{flex: 1, width: 380}}>
+            <View>
                     <Textapp 
                         size={TEXTS_SIZE.small}
                         text={'Name Event'}
@@ -69,16 +79,22 @@ export const ModalScreenCreateEvent = ({navigation}) => {
                     eventData= {eventData} 
                     setEventData={setEventData}
                 />
-                <View style={{ flex: 1,justifyContent: 'center', alignItems:'flex-end',marginTop: 25, paddingBottom:10}}>
-                    <ButtonGradient
-                        gradient={['#48C6EF','#6F86D6']}
-                        sizeGradient = {{width:350, height:50}}
-                        textButton={`Create Event`}
-                        styleText={{color:'white', fontWeight:'bold',}}
-                        styleButton={{justifyContent: 'center',width:350, height:50}}
-                        // hanldeOnPress = { hanldeGoToNextStep }
-                    />
-                </View>
+                {
+                    ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
+                    &&  <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>
+                            <ButtonGradient
+                                gradient={['#48C6EF','#6F86D6']}
+                                sizeGradient = {{width:350, height:50}}
+                                textButton={`Create Event`}
+                                styleText={{color:'white', fontWeight:'bold',}}
+                                styleButton={{justifyContent: 'center',width:350, height:50}}
+                                hanldeOnPress = { handleCreateEvent }
+                            />
+                        </View>
+                }
+
+            </View>
+               
         </ModalApp>
     );
 }
