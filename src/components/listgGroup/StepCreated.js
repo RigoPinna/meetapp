@@ -19,7 +19,7 @@ export const StepCreated = ({steps, setStep }) => {
     const[ loading, setLoading ] = useState( true );
     const {  groupCreated } = useSelector( state => state.groupReducer )
     const handlecopyToClipboard = () => {
-        Clipboard.setString( groupCreated.code )
+        Clipboard.setString( groupCreated.code)
         setVisible(true)
         setMessages([...messages, 'Code copied!' + Math.random()])
     }

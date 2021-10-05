@@ -15,9 +15,8 @@ import { useEffect } from 'react'
 import { db, userStatic } from '../../firebase/firebase-config'
 import * as Progress from 'react-native-progress';
 import { useDispatch, useSelector } from 'react-redux'
-import { updateUser } from '../../reducers/settingsReducer'
+import { getUser,updateUser } from '../../reducers/settingsReducer'
 import { Toastapp } from '../elements/ToastApp'
-import RNSimData from 'react-native-sim-data'
 
 export const SettingsScreen = ({ navigation }) => {
     const [messages, setMessages] = useState([]);
@@ -38,25 +37,30 @@ export const SettingsScreen = ({ navigation }) => {
         setUserData({...userData, ...{name: name, image: image}})
         setLoading(false)
     }
+    const getFlag = async () => {
+        const flag = await fetchGetFlagCountry( 52 );
+        setUserData({...userData,...{ flag } })
+    }
     const hanldeUpdateUser = () => {
         dispatch( updateUser(userData.name,userData.image, userData.imageFile, userStatic.uid ) );
         setVisible(true)
         setMessages([...messages, 'User Update!' + Math.random()])
     }
     useEffect(() => {
-        const controller = new AbortController();
-        ( async () => {
-            //Se piesa obtener el número de telefono de alguna forma, parcearlo y extraer
-            //código del pais ( 52=Mexico )
-            const flag = await fetchGetFlagCountry( 52 );
-            setUserData({...userData,...{ flag } })
-
-        })();
+        // const controller = new AbortController();
+        // ( async () => {
+        //     //Se piesa obtener el número de telefono de alguna forma, parcearlo y extraer
+        //     //código del pais ( 52=Mexico )
+        //     
+            
+        // })();
+        // getFlag()
+        // dispatch(getUser())
+        // setLoading(false)
         getUser()
-        // !!settingsReducer && setLoading( false )
-        return controller?.abort();
-    // }, [settingsReducer])
+        // return controller?.abort();
     }, [])
+    // }, [])
     return (
         <>
         {

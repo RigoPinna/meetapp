@@ -13,11 +13,32 @@ import { styles, styles2 } from './src/theme/appTheme';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import { store } from './src/store/store';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const STATE_USER_LOADING = {
+  loading:undefined,
+  empty: [],
+}
 
 export default function App() {
   LogBox.ignoreLogs(['Setting a timer for a long period of time']);
+  const [ user, setUser ] = useState( STATE_USER_LOADING.loading );
   const [steps, setStep] = useState({ stepPresentation: true, stepApp: false});
   const opacity = useRef(new Animated.Value(0) ).current;
+  const storeDataGet = async () => {
+    try {
+      // const jsonValue = JSON.stringify(value)
+      // await AsyncStorage.
+      const jsonValue = await AsyncStorage.getItem('@MyApp_USER')
+      // return jsonValue != null ? JSON.parse(jsonValue) : null
+      if(jsonValue !== null){
+        JSON.parse(jsonValue)
+      } 
+      console.log(jsonValue)
+    } catch (e) {
+      console.log(e)
+    }
+  }
     useEffect(() => {
         Animated.timing(
             opacity,
@@ -27,6 +48,7 @@ export default function App() {
                 useNativeDriver:true,
             }
         ).start();
+        storeDataGet()
     }, [])
   return (
     // <Animated.View style = {{opacity:opacity}}>
