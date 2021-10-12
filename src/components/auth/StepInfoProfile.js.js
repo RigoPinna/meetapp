@@ -10,6 +10,7 @@ import { TextInputApp } from '../elements/TextInputApp'
 import { IconArrowRight } from '../icons/IconArrowRight'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
+import { useAsyncStorag } from "../../hooks/useAsyncStorage";
 
 export const StepInfoProfile = ({ steps, setStep }) => {
     const { dispatch } = useContext( ContextRegister );
@@ -20,8 +21,10 @@ export const StepInfoProfile = ({ steps, setStep }) => {
         setUserData({...userData, ...{ name:text }})
     }
     const hanldeGoToNextStep = () => {
-        // dispatch(addNameAndImg( userData ))
+        dispatch(addNameAndImg( {...userData} ))
+        // useAsyncStorag('@MyApp_USER','set', userData.name)
         setStep({...steps, ...{ stepInfoProfile: false, stepVerifyPhone:true }})
+        // useAsyncStorag('@MyApp_USER','set', userData.name)
     }
     return (
         <>
@@ -65,7 +68,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
                     />
             </View>
             {
-                ( userData.name.trim() !== '' )
+                ( userData.name.trim() !== '' && userData.image.trim() !== '')
                     && <View style = {{flex:1, width:'100%', justifyContent:'flex-end', alignItems:'flex-end', padding:20}}>
                            <ButtonGradient 
                                 gradient={['#48C6EF','#6F86D6']}

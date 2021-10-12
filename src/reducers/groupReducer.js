@@ -28,8 +28,8 @@ export const addNewGroup = ({ name, image='', description }) => {
         await groupRef.set({ 
             code, 
             creator: userStatic.uid, 
-            // createdat: firebase.firestore.Timestamp.fromDate(new Date()),
-            createdat: date,
+            createdat: firebase.firestore.Timestamp.fromDate(new Date()),
+            // createdat: date,
             description,
             image: imageURL, 
             name,

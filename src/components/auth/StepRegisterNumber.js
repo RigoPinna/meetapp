@@ -15,6 +15,8 @@ import { ContextRegister } from '../../context-register-user/ContextRegister';
 import { ModalFinallyRegister } from './ModalFinallyRegister';
 import { addPhoneAndVerifyData } from '../../reducers/registerReducer';
 
+import { useAsyncStorag } from "../../hooks/useAsyncStorage";
+
 export const StepRegisterUser = ({step, setStep}) => {
     const { dispatch } = useContext( ContextRegister );
     const [ viewModal, setViewModal] = useState( false );
@@ -22,6 +24,7 @@ export const StepRegisterUser = ({step, setStep}) => {
     const [ userData, setUserData ] = useState({ countryCode:undefined, phone:0 });
     const recaptchaVerifier = useRef( null );
     const attemptInvisibleVerification = false;
+    // const data = useAsyncStorag('@MyApp_USER','get')
     useEffect(() => {
         let controller = new AbortController();
         ( async ()=>{
@@ -33,6 +36,7 @@ export const StepRegisterUser = ({step, setStep}) => {
 
             }
         })();
+        // console.log('data', data)
         return () => controller?.abort();
 
     }, [])

@@ -12,12 +12,16 @@ const getTimeDiff = ( time ) => {
     const now = Date.now();
     const elapsed =  ( now - time ) / 1000 ;
     for( const [ unit, secondsUnit ] of DATE_UNITS) {
-        if ( elapsed > secondsUnit || unit === 'second') {
+        if ( Math.abs(elapsed) > secondsUnit || unit === 'second') {
             return { 
-                value: Math.round( elapsed )  / secondsUnit,
+                value: Math.round( elapsed / secondsUnit),
                 unit,
             }
-
+        } else if (Math.abs(elapsed) < 1) {
+            return {
+                value: -1,
+                unit: 'seconds'
+            }
         }
     }
 }

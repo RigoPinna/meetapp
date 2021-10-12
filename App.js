@@ -13,7 +13,7 @@ import { styles, styles2 } from './src/theme/appTheme';
 import { RootSiblingParent } from 'react-native-root-siblings';
 import { Provider } from 'react-redux';
 import { store } from './src/store/store';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useAsyncStorage } from "./src/hooks/useAsyncStorage";
 
 const STATE_USER_LOADING = {
   loading:undefined,
@@ -22,23 +22,19 @@ const STATE_USER_LOADING = {
 
 export default function App() {
   LogBox.ignoreLogs(['Setting a timer for a long period of time']);
-  const [ user, setUser ] = useState( STATE_USER_LOADING.loading );
+  const [ user, setUser ] = useState( {user: ''} );
   const [steps, setStep] = useState({ stepPresentation: true, stepApp: false});
   const opacity = useRef(new Animated.Value(0) ).current;
-  const storeDataGet = async () => {
-    try {
-      // const jsonValue = JSON.stringify(value)
-      // await AsyncStorage.
-      const jsonValue = await AsyncStorage.getItem('@MyApp_USER')
-      // return jsonValue != null ? JSON.parse(jsonValue) : null
-      if(jsonValue !== null){
-        JSON.parse(jsonValue)
-      } 
-      console.log(jsonValue)
-    } catch (e) {
-      console.log(e)
-    }
-  }
+  // useAsyncStorag('@MyApp_USER','set', 'null')
+  const data = useAsyncStorage('@MyApp_USER','get')
+
+  // const getUser = async () => {
+  //   const userRef = db.collection('users').doc(userStatic.uid)
+  //       const doc = await userRef.get()
+  //       const {name, image} = doc.data()
+  //       setUserData({...userData, ...{name: name, image: image}})
+  // }
+
     useEffect(() => {
         Animated.timing(
             opacity,
@@ -48,43 +44,44 @@ export default function App() {
                 useNativeDriver:true,
             }
         ).start();
-        storeDataGet()
+        console.log('data',data)
     }, [])
   return (
-    // <Animated.View style = {{opacity:opacity}}>
-    //   {
-    //     steps.stepPresentation && <>
-    //                                 <StatusBar  barStyle="default" />
-    //                                 <PresentationScreen stepPrincipal = {steps} setStepPrincipal={setStep}/>
-    //                               </>
-    //   }
-    //   {
-    //     steps.stepApp &&  <View style= {{height: '100%'}}>
-    //                       <Provider store = { store } >
-    //                         <RootSiblingParent>
-    //                           <NavigationContainer>
-                                
-    //                             <TabNavigator />
-                                
-    //                           </NavigationContainer>
-    //                         </RootSiblingParent>
-    //                       </Provider>
-    //                       </View>
-    //   }
-      
-    // </Animated.View >
+    <>
+      {
+       (data === 'null')  ? <Animated.View style = {{opacity:opacity}}>
+                            {
+                              steps.stepPresentation && <>
+                                                          <StatusBar  barStyle="default" />
+                                                          <PresentationScreen stepPrincipal = {steps} setStepPrincipal={setStep}/>
+                                                        </>
+                            }
+                            {
+                              steps.stepApp &&  <View style= {{height: '100%'}}>
+                                                  <Provider store = { store } >
+                                                    <RootSiblingParent>
+                                                      <NavigationContainer>
+                                                        <TabNavigator />
+                                                      </NavigationContainer>
+                                                    </RootSiblingParent>
+                                                  </Provider>
+                                                </View>
+                            }
+                          </Animated.View >
+                        : <Provider store = { store } >
+                            <RootSiblingParent>
+                              <NavigationContainer>
+                                <TabNavigator />
+                              </NavigationContainer>
+                            </RootSiblingParent>
+                          </Provider>
+      }
+    </>
     // <>
     //   <StatusBar  barStyle="default" />
     //   <PresentationScreen/>
     // </>
-    <Provider store = { store } >
-      <RootSiblingParent>
-        <NavigationContainer>
-          <TabNavigator />
-        </NavigationContainer>
-      </RootSiblingParent>
 
-    </Provider>
 
   );
 }

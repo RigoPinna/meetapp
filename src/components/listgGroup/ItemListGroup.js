@@ -9,7 +9,7 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { ListParticipants } from './ListParticipants'
 
 export const ItemListGroup = ({id,image,name='',createdat='', participants = [],description, navigation}) => {
-    // const time = useTimeAgo( createdat );
+    const time = useTimeAgo( createdat );
     const hanldeNavigatorChat = () => navigation.navigate('ScreenChatGroup',{id,image,name, participants,description});
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } >
@@ -25,7 +25,8 @@ export const ItemListGroup = ({id,image,name='',createdat='', participants = [],
                 <Textapp 
                     size={TEXTS_SIZE.small} 
                     weight='200' 
-                    text ={`Created on ${createdat}`} 
+                    // text ={`Created on ${createdat}`} 
+                    text ={`Created on ${time}`} 
                     styles = {{marginTop:2}} 
                 />
                 <ListParticipants participants={ participants } colorColorBordersAvatars = {'#EEEEEC'} />
