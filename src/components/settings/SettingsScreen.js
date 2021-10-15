@@ -19,48 +19,29 @@ import { getUser,updateUser } from '../../reducers/settingsReducer'
 import { Toastapp } from '../elements/ToastApp'
 
 export const SettingsScreen = ({ navigation }) => {
+    const user = useSelector( state => state.authRed )
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
-    const [ userData, setUserData ] = useState({imageFile: null,image:'', name:'',flag:'https://www.countryflags.io/mx/flat/64.png'});
+    const [ userData, setUserData ] = useState({ image:user.image, name:user.name, flag:'https://www.countryflags.io/mx/flat/64.png'});
     const { top } = useSafeAreaInsets();
     const dispatch = useDispatch();
     const[ loading, setLoading ] = useState( true );
-    // const {  settingsReducer } = useSelector( state => state.settingsReducer )
+    useEffect(() => {
+        ( user.uid !== null ) && setLoading( false )
+    }, [ user.uid ])
 
     const handleOnChange = ( text ) => {
         setUserData({...userData, ...{name:text}})
-    }
-    const getUser = async () => {
-        const userRef = db.collection('users').doc(userStatic.uid)
-        const doc = await userRef.get()
-        const {name, image} = doc.data()
-        setUserData({...userData, ...{name: name, image: image}})
-        setLoading(false)
     }
     const getFlag = async () => {
         const flag = await fetchGetFlagCountry( 52 );
         setUserData({...userData,...{ flag } })
     }
     const hanldeUpdateUser = () => {
-        dispatch( updateUser(userData.name,userData.image, userData.imageFile, userStatic.uid ) );
+        dispatch( updateUser({ userData }) );
         setVisible(true)
         setMessages([...messages, 'User Update!' + Math.random()])
     }
-    useEffect(() => {
-        // const controller = new AbortController();
-        // ( async () => {
-        //     //Se piesa obtener el número de telefono de alguna forma, parcearlo y extraer
-        //     //código del pais ( 52=Mexico )
-        //     
-            
-        // })();
-        // getFlag()
-        // dispatch(getUser())
-        // setLoading(false)
-        getUser()
-        // return controller?.abort();
-    }, [])
-    // }, [])
     return (
         <>
         {

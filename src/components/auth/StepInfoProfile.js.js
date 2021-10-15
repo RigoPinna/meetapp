@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Image, View } from 'react-native'
-import { ContextRegister } from '../../context-register-user/ContextRegister'
+import { useDispatch } from 'react-redux'
 import { addNameAndImg } from '../../reducers/registerReducer'
 import { styles } from '../../theme/appTheme'
 import { ButtonCamera } from '../elements/ButtonCamera'
@@ -10,10 +10,10 @@ import { TextInputApp } from '../elements/TextInputApp'
 import { IconArrowRight } from '../icons/IconArrowRight'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
-import { useAsyncStorag } from "../../hooks/useAsyncStorage";
+
 
 export const StepInfoProfile = ({ steps, setStep }) => {
-    const { dispatch } = useContext( ContextRegister );
+    const dispatch = useDispatch()
 
     const [ userData, setUserData ] = useState({ image:'', name:'' });
 
@@ -21,8 +21,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
         setUserData({...userData, ...{ name:text }})
     }
     const hanldeGoToNextStep = () => {
-        dispatch(addNameAndImg( {...userData} ))
-        // useAsyncStorag('@MyApp_USER','set', userData.name)
+        dispatch( addNameAndImg( {...userData} ) )
         setStep({...steps, ...{ stepInfoProfile: false, stepVerifyPhone:true }})
         // useAsyncStorag('@MyApp_USER','set', userData.name)
     }

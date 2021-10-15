@@ -1,15 +1,12 @@
-import React, { useState, useEffect, useRef, useReducer } from 'react';
-import { ContextRegister } from '../../context-register-user/ContextRegister';
+import React, { useState, useEffect, useRef } from 'react';
 import { Animated, SafeAreaView, ScrollView, View } from 'react-native';
 import { styles2 } from '../../theme/appTheme';
 import { StepInfoProfile } from './StepInfoProfile.js';
 import { StepRegisterUser } from './StepRegisterNumber';
 import { StepWelcome } from './StepWelcome';
-import { initialState, registerReducer } from '../../reducers/registerReducer';
 
 
-export const PresentationScreen = ({stepPrincipal, setStepPrincipal}) => {
-    const [ dataRegister, dispatch ] = useReducer(registerReducer,initialState );
+export const PresentationScreen = () => {
     const [steps, setStep] = useState({ stepWelcome: true, stepInfoProfile: false, stepVerifyPhone: false });
     const opacity = useRef(new Animated.Value(0) ).current;
     useEffect(() => {
@@ -24,7 +21,6 @@ export const PresentationScreen = ({stepPrincipal, setStepPrincipal}) => {
     }, [])
     return (
         <Animated.View style = {{...styles2.wrapperPresentation, opacity:opacity}}>
-            <ContextRegister.Provider value ={{ dataRegister, dispatch }}>
                 {
                     steps.stepWelcome 
                         && <StepWelcome steps = { steps } setStep = { setStep } />
@@ -39,12 +35,11 @@ export const PresentationScreen = ({stepPrincipal, setStepPrincipal}) => {
                         }
                         {
                             steps.stepVerifyPhone 
-                                && <StepRegisterUser step = { stepPrincipal } setStep = { setStepPrincipal } />
+                                && <StepRegisterUser />
                         }
                         </View>
                     </ScrollView>
                 </SafeAreaView>
-            </ContextRegister.Provider>
         </Animated.View >
     )
 }

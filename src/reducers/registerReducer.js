@@ -1,6 +1,8 @@
-import { useAsyncStorage } from "@react-native-async-storage/async-storage";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-import { db, userStatic, firebase } from "../firebase/firebase-config";
+import { db } from "../firebase/firebase-config";
+import { uploadImage } from '../helpers/uploadImage';
+import { setData } from "./authReducer";
 export const initialState = {
     name:'',
     image:'',
@@ -15,24 +17,25 @@ export const addPhoneAndVerifyData = ({ phone, countryCode, verificationId, }) =
 })
 
 export const addNameAndImg = ({ name, image='' }) => {
-    console.log('aqioo',name,image)
-    useAsyncStorage('@MyApp_USER','set', name)
     return async ( dispatch ) => {
-        const userRef = db.collection('users').doc();
-        const imageURL =  await uploadImage( image, name,'profile_photo' );
-        console.log('magegegee',imageURL, userRef)
-        await userRef.set({ 
-            name: name,
-            image: imageURL, 
-        },{ merge: true });
-
         dispatch({
             type:'ADD-DATA',
             payload:{name, image}
         })
     }
-//     type:'ADD-DATA',
-//     payload: { name,image, }
+}
+export const registerUser = ({ name, image='' }) => {
+    return async ( dispatch ) => {
+        console.log('NOMBRE=',name )
+        const imageURL =  await uploadImage( image, name,'profile_photo' );
+        const userRef = await db.collection('users').add({ 
+            name: name,
+            image: imageURL, 
+        },{ merge: true })
+        console.log('ID=', userRef.id)
+        await AsyncStorage.setItem( 'uid', userRef.id )
+        dispatch( setData(  userRef.id ) )
+    }
 }
 
 export const registerReducer = ( state = initialState, action ) => {

@@ -9,11 +9,13 @@ import { IconKey } from '../icons/IconKey'
 
 export const StepJoin = ({steps, setStep}) => {
     const [code, setCode] = useState('')
+    const userLoged = useSelector(state => state.authRed )
     const handleOnChangeName = ( text ) => {
         setCode(text)
     }
     const hanldeGoToNextStep = () => {
         setStep({...steps, ...{ stepJoin: false, stepJoined: true }})
+        
     }
 
     return (

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { firebaseConfig, phoneProvider} from '../../firebase/firebase-config';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 
-import { fetchGetCodeAndCountryName } from '../../services/fetchGetCodeAndCountryName';
+import { dataCountry, fetchGetCodeAndCountryName } from '../../services/fetchGetCodeAndCountryName';
 import { Image, View } from 'react-native';
 import { styles2 } from '../../theme/appTheme';
 import { InputSelectapp } from '../elements/InputSelectapp';
@@ -16,9 +16,10 @@ import { ModalFinallyRegister } from './ModalFinallyRegister';
 import { addPhoneAndVerifyData } from '../../reducers/registerReducer';
 
 import { useAsyncStorag } from "../../hooks/useAsyncStorage";
+import { useDispatch } from 'react-redux';
 
-export const StepRegisterUser = ({step, setStep}) => {
-    const { dispatch } = useContext( ContextRegister );
+export const StepRegisterUser = () => {
+    const dispatch = useDispatch()
     const [ viewModal, setViewModal] = useState( false );
     const [ countries, setCountries] = useState([]);
     const [ userData, setUserData ] = useState({ countryCode:undefined, phone:0 });
@@ -29,9 +30,9 @@ export const StepRegisterUser = ({step, setStep}) => {
         let controller = new AbortController();
         ( async ()=>{
             try {
-                const dataCountries = await fetchGetCodeAndCountryName();
+                // const dataCountries = await fetchGetCodeAndCountryName();
                 controller = null;
-                setCountries( dataCountries.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code })) );
+                setCountries( dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code })) );
             } catch( e ) {
 
             }
@@ -41,18 +42,18 @@ export const StepRegisterUser = ({step, setStep}) => {
 
     }, [])
     const hanldeSeendCode = async () => {
-        try {
+        // try {
            
-            const phoneNumber = `+${userData.countryCode}${userData.phone}`;
-            const verificationId = await phoneProvider.verifyPhoneNumber(
-              phoneNumber,
-              recaptchaVerifier.current
-            );
-            dispatch( addPhoneAndVerifyData({ verificationId,...userData,}) )
+        //     const phoneNumber = `+${userData.countryCode}${userData.phone}`;
+        //     const verificationId = await phoneProvider.verifyPhoneNumber(
+        //       phoneNumber,
+        //       recaptchaVerifier.current
+        //     );
+            dispatch( addPhoneAndVerifyData({ verificationId:11111,...userData,}) )
             setViewModal( true )
-        } catch( err ) {
-            console.log( err )
-        }
+        // } catch( err ) {
+        //     console.log( err )
+        // }
     }
     return (
         <>
@@ -109,7 +110,7 @@ export const StepRegisterUser = ({step, setStep}) => {
                 // IconRight = { IconArrowRight }
                 hanldeOnPress = { hanldeSeendCode }
             />
-            { viewModal && <ModalFinallyRegister step={step} setStep={setStep}/> }
+            { viewModal && <ModalFinallyRegister /> }
             {/* <ModalFinallyRegister /> */}
         </>
     )

@@ -1,29 +1,32 @@
 import React, { useContext, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import * as Progress from 'react-native-progress';
 import { Text, View } from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { ModalApp } from '../elements/ModalApp'
 import { TextInputApp } from '../elements/TextInputApp'
 import { IconCheck } from '../icons/IconCheck'
-import { ContextRegister } from '../../context-register-user/ContextRegister';
 import { firebase } from '../../firebase/firebase-config';
-export const ModalFinallyRegister = ({step, setStep}) => {
-    const { dataRegister } = useContext( ContextRegister );
+import { registerUser } from '../../reducers/registerReducer';
+
+export const ModalFinallyRegister = () => {
+
+    const dispatch = useDispatch()
+    const userData = useSelector(state => state.registerReducer )
     const [ code, setCode ] = useState({ code:'', isLoading:false });
-    const handleRegister = async () => {
-        try {
-            setCode({isLoading: true, ...code})
-            const credential =  firebase.auth.PhoneAuthProvider.credential(
-                dataRegister.verificationId,
-                code.code
-              );
-            const resp = await firebase.auth().signInWithCredential(credential);
-            console.log( resp )
-            setCode({isLoading: false, ...code})
-            setStep({...step, ...{ stepPresentation: false, stepApp: true }})
-        }catch(e) {
-            console.log( e )
-        }
+
+    const handleRegister = () => {
+        setCode({isLoading: true, ...code})
+        // const credential =  firebase.auth.PhoneAuthProvider.credential(
+        //     dataRegister.verificationId,
+        //     code.code
+        //     );
+        // firebase.auth().signInWithCredential( credential ).then( resp => {
+            dispatch(registerUser( userData ))
+            setCode({ isLoading: false, ...code })
+        // }).catch( err => {
+        //     console.log( err )
+        // })
     }
     return (
         <ModalApp textTitle="Enter verification code" closeModal = { false }>
@@ -33,7 +36,7 @@ export const ModalFinallyRegister = ({step, setStep}) => {
                 styleT={{height:50, marginBottom:10,}}
                 placeholder="Code"
                 value = {code.code}
-                onChange = { ( value ) => setCode({...code,...{ code:value }}) }
+                onChange = { ( value ) => setCode({...code,code:value }) }
             />
             
                { 

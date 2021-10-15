@@ -17,26 +17,7 @@ export const getUser = () => {
         })
     } 
 }
-export const updateUser = (nameNew='', imageNew='', imageFile='', uid) => {
 
-    return async ( dispatch ) => {
-        const userRef = db.collection('users').doc(uid)
-        const doc = await userRef.get()
-        const {name, image} = doc.data()
-        if(name !== nameNew || image !== imageNew){
-            if(name !== nameNew) {
-                await userRef.update({name: nameNew})
-            } else if (image !== imageNew) {
-                const imageURL =  await uploadImage( imageNew, nameNew,'img_profile' );
-                await userRef.update({image: imageURL})
-            }
-        }
-        dispatch({
-            type:'update-user',
-            payload:[{ name: nameNew, image: imageNew}]
-        })
-    }
-}
 
 export const settingsReducer = (state = initialState, action) => {
     switch ( action.type ) {
