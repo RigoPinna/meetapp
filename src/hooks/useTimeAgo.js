@@ -9,6 +9,7 @@ const DATE_UNITS =[
     ['seconds', 1],
 ]
 const getTimeDiff = ( time ) => {
+    console.log( "time", time )
     const now = Date.now();
     const elapsed =  ( now - time ) / 1000 ;
     for( const [ unit, secondsUnit ] of DATE_UNITS) {
@@ -19,7 +20,7 @@ const getTimeDiff = ( time ) => {
             }
         } else if (Math.abs(elapsed) < 1) {
             return {
-                value: -1,
+                value: 1,
                 unit: 'seconds'
             }
         }

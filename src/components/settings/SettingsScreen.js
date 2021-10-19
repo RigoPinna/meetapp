@@ -15,30 +15,30 @@ import { useEffect } from 'react'
 import { db, userStatic } from '../../firebase/firebase-config'
 import * as Progress from 'react-native-progress';
 import { useDispatch, useSelector } from 'react-redux'
-import { getUser,updateUser } from '../../reducers/settingsReducer'
+import { updateUser } from '../../reducers/authReducer'
 import { Toastapp } from '../elements/ToastApp'
 
 export const SettingsScreen = ({ navigation }) => {
+    const { top } = useSafeAreaInsets();
+    const dispatch = useDispatch();
     const user = useSelector( state => state.authRed )
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
-    const [ userData, setUserData ] = useState({ image:user.image, name:user.name, flag:'https://www.countryflags.io/mx/flat/64.png'});
-    const { top } = useSafeAreaInsets();
-    const dispatch = useDispatch();
+    const [ userData, setUserData ] = useState({ imageURL:user.image, name:user.name, flag:'https://www.countryflags.io/mx/flat/64.png'});
     const[ loading, setLoading ] = useState( true );
     useEffect(() => {
         ( user.uid !== null ) && setLoading( false )
     }, [ user.uid ])
 
     const handleOnChange = ( text ) => {
-        setUserData({...userData, ...{name:text}})
+        setUserData({...userData, name:text })
     }
     const getFlag = async () => {
         const flag = await fetchGetFlagCountry( 52 );
         setUserData({...userData,...{ flag } })
     }
     const hanldeUpdateUser = () => {
-        dispatch( updateUser({ userData }) );
+        dispatch( updateUser( userData ) )
         setVisible(true)
         setMessages([...messages, 'User Update!' + Math.random()])
     }
@@ -62,14 +62,14 @@ export const SettingsScreen = ({ navigation }) => {
                             <Image
                                     style={styles.tinyLogo}
                                     source = {
-                                            userData.image === '' 
+                                            userData.imageURL === '' 
                                                 ? require('../../assets/avatarDefault.png')
-                                                : {uri:userData.image}
+                                                : {uri:userData.imageURL}
                                             }
                                     
                                 />
                             <ButtonCamera onPress={ ( uriImg, file ) => {
-                                setUserData({...userData, ...{ image:uriImg, imageFile: file }})
+                                setUserData({...userData, ...{ imageURL:uriImg, image: file }})
                             }}/>
                         </View>
                         

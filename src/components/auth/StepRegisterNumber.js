@@ -11,11 +11,8 @@ import { TextInputApp } from '../elements/TextInputApp';
 import { COLORS_APP } from '../ui/COLORS_APP';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 import { ButtonGradient } from '../elements/ButtonGradient';
-import { ContextRegister } from '../../context-register-user/ContextRegister';
 import { ModalFinallyRegister } from './ModalFinallyRegister';
 import { addPhoneAndVerifyData } from '../../reducers/registerReducer';
-
-import { useAsyncStorag } from "../../hooks/useAsyncStorage";
 import { useDispatch } from 'react-redux';
 
 export const StepRegisterUser = () => {
@@ -42,18 +39,18 @@ export const StepRegisterUser = () => {
 
     }, [])
     const hanldeSeendCode = async () => {
-        // try {
+        try {
            
-        //     const phoneNumber = `+${userData.countryCode}${userData.phone}`;
-        //     const verificationId = await phoneProvider.verifyPhoneNumber(
-        //       phoneNumber,
-        //       recaptchaVerifier.current
-        //     );
-            dispatch( addPhoneAndVerifyData({ verificationId:11111,...userData,}) )
+            const phoneNumber = `+${userData.countryCode}${userData.phone}`;
+            const verificationId = await phoneProvider.verifyPhoneNumber(
+              phoneNumber,
+              recaptchaVerifier.current
+            );
+            dispatch( addPhoneAndVerifyData({ verificationId,...userData,}) )
             setViewModal( true )
-        // } catch( err ) {
-        //     console.log( err )
-        // }
+        } catch( err ) {
+            console.log( err )
+        }
     }
     return (
         <>

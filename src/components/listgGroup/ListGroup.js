@@ -21,12 +21,12 @@ export const ListGroup = ({ navigation }) => {
                 let groups = querySnapshot.docs.map( doc => {
                     const data = doc.data();
                     const gid = doc.id;
-                    // const createdat =  data.createdat.toDate();
+                    const createdat =  data.createdat.toDate();
                     //Se hace el parse porque en la BD los participantes estan guardados como un **string**
                     const participants = JSON.parse( data.participants );
                     const isSuscribed = participants.some( pr => pr.uid === userLoged.uid )
                     //Si el usuario no esta suscrito, se retornará un false
-                    return isSuscribed && { gid, ...data, participants }
+                    return isSuscribed && { gid, ...data, participants, createdat }
                 })
                 //Se limpia el array de valores false y se establece como state
                 setGroups( groups.filter( group => group !== false ) )

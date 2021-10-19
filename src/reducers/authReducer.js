@@ -33,21 +33,25 @@ export const setData = ( uid ) => {
         }
     }
 }
-export const updateUser = ({ name, image }) => {
+export const updateUser = ({ name, image, imageURL }) => {
 
     return async ( dispatch, getState ) => {
         const userLoged = getState().authRed
-        if( name.trim() !== "" && image.trim() !== "" ){
+        if( name.trim() !== "" || imageURL.trim() !== "" ){
+            const userRef = db.collection('users').doc(  userLoged.uid )
             if( name !== userLoged.name ) {
                 await userRef.update({ name })
             }
-            if ( image !== userLoged.image ) {
-                const imageURL =  await uploadImage( image, nameNew,'img_profile' );
-                await userRef.update({ image: imageURL })
+            if ( !!image ) {
+                const newImg =  await uploadImage( imageURL, userLoged.name,'img_profile' );
+                await userRef.update({ image: newImg })
             }
             dispatch({
                 type:'update-user',
-                payload:{ name , image}
+                payload:{ 
+                    name, 
+                    image:imageURL
+                }
             })
         }
     }
@@ -61,6 +65,7 @@ export const authRed = ( state = initialState, action ) => {
             return initialState
 
         case 'update-user':
+
             return { ...state, ...action.payload }
         default:
             return state

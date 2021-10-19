@@ -11,9 +11,13 @@ export const initialState = {
     verificationId:null,
 };
 
-export const addPhoneAndVerifyData = ({ phone, countryCode, verificationId, }) => ({
+export const addPhoneAndVerifyData = ({ phone, countryCode, verificationId }) => ({
     type:'ADD-DATA',
-    payload: { phone, countryCode, verificationId, }
+    payload: { 
+        phone, 
+        countryCode, 
+        verificationId, 
+    }
 })
 
 export const addNameAndImg = ({ name, image='' }) => {

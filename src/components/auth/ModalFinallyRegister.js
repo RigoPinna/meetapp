@@ -1,13 +1,13 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import * as Progress from 'react-native-progress';
-import { Text, View } from 'react-native'
+import { Text } from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { ModalApp } from '../elements/ModalApp'
 import { TextInputApp } from '../elements/TextInputApp'
 import { IconCheck } from '../icons/IconCheck'
-import { firebase } from '../../firebase/firebase-config';
-import { registerUser } from '../../reducers/registerReducer';
+import { firebase } from '../../firebase/firebase-config'
+import { registerUser } from '../../reducers/registerReducer'
+import { SpinnerLoading } from '../SpinnerLoading/SpinnerLoading'
 
 export const ModalFinallyRegister = () => {
 
@@ -17,16 +17,18 @@ export const ModalFinallyRegister = () => {
 
     const handleRegister = () => {
         setCode({isLoading: true, ...code})
-        // const credential =  firebase.auth.PhoneAuthProvider.credential(
-        //     dataRegister.verificationId,
-        //     code.code
-        //     );
-        // firebase.auth().signInWithCredential( credential ).then( resp => {
-            dispatch(registerUser( userData ))
+        const credential =  firebase.auth.PhoneAuthProvider.credential(
+            userData.verificationId,
+            code.code
+            );
+        firebase.auth().signInWithCredential( credential ).then( resp => {
+            console.log( resp )
+            dispatch(registerUser( userData ))    
             setCode({ isLoading: false, ...code })
-        // }).catch( err => {
-        //     console.log( err )
-        // })
+        }).catch( err => {
+            console.log( err )
+            console.log('no son iguales')
+        })
     }
     return (
         <ModalApp textTitle="Enter verification code" closeModal = { false }>
@@ -41,7 +43,7 @@ export const ModalFinallyRegister = () => {
             
                { 
                     !code.isLoading 
-                    && <ButtonGradient
+                    ? <ButtonGradient
                             gradient={['#0BA360','#3CBA92']}
                             sizeGradient = {{width:'110%', height:40}}
                             textButton={`Verify code`}
@@ -51,6 +53,7 @@ export const ModalFinallyRegister = () => {
                             disabled={ ( code.code === '' ) ? true : false}
                             hanldeOnPress = { handleRegister }
                         />
+                    : <SpinnerLoading />
                 }
         </ModalApp>
     )

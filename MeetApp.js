@@ -15,18 +15,18 @@ export const MeetApp = () => {
     useEffect(() => {
         ( async () => {
             try {
+                // await AsyncStorage.removeItem('uid')
                 const uid = await AsyncStorage.getItem('uid')
+                console.log( userData)
                 if( uid ) {
                     if( userData.uid === null ) {
                         dispatch(setData( uid ))
                         setStatus( true )
+                    } else {
+                        setStatus( true )
                     }
                 } else {
-                    //Si existe el uid, se consulta el usuario, 
-                    //por lo tanto se vuelve a ejecutar el useeffect y coloca el status como logeado(true)
-                    (!!uid ) 
-                        ? dispatch(setData( uid )) 
-                        : setStatus( null )
+                    setStatus( null )
                 }
             }catch(error) {
                 //Si es false quiere decir que no está registrado
