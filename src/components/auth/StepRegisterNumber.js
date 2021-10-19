@@ -62,7 +62,7 @@ export const StepRegisterUser = () => {
             />
             <Textapp 
                 size= {TEXTS_SIZE.small} 
-                styles = {{marginBottom:13, marginTop: 13}}
+                styles = {{marginBottom:13, marginTop: 13, marginLeft: 10}}
                 color = {COLORS_APP.black2}
                 text = {'Meetapp will send a SMS message to verify yoru phone number. Enter your country and phone number '}
 

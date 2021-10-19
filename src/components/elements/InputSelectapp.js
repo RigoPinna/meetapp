@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { View } from 'react-native'
 
 import RNPickerSelect from 'react-native-picker-select';
@@ -17,7 +17,7 @@ export const InputSelectapp = ({ itemsData, setState }) => {
             <IconLocation styles = {{position: 'absolute',left: 8, top:12}}/>
             <RNPickerSelect
                 placeholder = { placeholder }
-                onValueChange={(value) => { setState(value) } }
+                onValueChange={(value) => { setState(value)  } }
                 items = { itemsData }
                 style = {{inputIOS:{fontWeight:'bold',}}}
             />

@@ -4,7 +4,7 @@ import { StepJoin } from './StepJoin'
 import { StepJoined } from './StepJoined'
 
 export const ModalScreenJoinGroup = ({navigation}) => {
-    const [steps, setStep] = useState({ stepJoin: true, stepJoined: false});
+    const [steps, setStep] = useState({ stepJoin: true, stepJoined: false, gid: '', gname: '', gimage: ''});
      return (
         <ModalApp styleContainer={{height: '70%', marginBottom: 150,borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,}} navigation={navigation} textTitle={'Join Group'}>

@@ -6,6 +6,9 @@ import { TextInputApp } from '../elements/TextInputApp'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import {  View } from 'react-native'
 import { IconKey } from '../icons/IconKey'
+import { useSelector } from 'react-redux'
+
+import { db } from '../../firebase/firebase-config'
 
 export const StepJoin = ({steps, setStep}) => {
     const [code, setCode] = useState('')
@@ -13,9 +16,30 @@ export const StepJoin = ({steps, setStep}) => {
     const handleOnChangeName = ( text ) => {
         setCode(text)
     }
-    const hanldeGoToNextStep = () => {
-        setStep({...steps, ...{ stepJoin: false, stepJoined: true }})
-        
+    const changeParticipants = async(gid, allParticipants, gname, gimage) => {
+        await db.collection('groups').doc(gid).update({participants: allParticipants})
+        setStep({...steps, ...{ stepJoin: false, stepJoined: true, gid: gid, gname: gname, gimage: gimage}})
+    }
+    const hanldeGoToNextStep = async () => {
+        if( userLoged.uid !== null ) {
+            const groupRef = db.collection('groups')
+            const snapshot = await groupRef.get()
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                const codeGet = data.code;
+                if(code === codeGet) {
+                    const gid = doc.id;
+                    const gname = data.name;
+                    const gimage = data.image;
+                    const participants = JSON.parse( data.participants );
+                    console.log('participants =>',participants)
+                    const allParticipants = JSON.stringify([...participants, userLoged])
+                    console.log('allParticipants =>', allParticipants)
+                    changeParticipants(gid, allParticipants, gname, gimage)
+                }
+            })
+        } 
     }
 
     return (
@@ -41,6 +65,7 @@ export const StepJoin = ({steps, setStep}) => {
                             borderRadius: 100,
                             height: 50
                         }}
+                        type={'numeric'}
                     />
                 </View>
                 <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
