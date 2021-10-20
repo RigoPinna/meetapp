@@ -33,9 +33,7 @@ export const StepJoin = ({steps, setStep}) => {
                     const gname = data.name;
                     const gimage = data.image;
                     const participants = JSON.parse( data.participants );
-                    console.log('participants =>',participants)
                     const allParticipants = JSON.stringify([...participants, userLoged])
-                    console.log('allParticipants =>', allParticipants)
                     changeParticipants(gid, allParticipants, gname, gimage)
                 }
             })
