@@ -35,9 +35,10 @@ export const ModalFinallyRegister = () => {
             <Text style={{marginTop:10}}>Enter the verification code that we have sent to your phone number.</Text>
             <TextInputApp 
                 size={20}
-                styleT={{height:50, marginBottom:10,}}
+                styleT={{height:50, marginBottom:10}}
                 placeholder="Code"
                 value = {code.code}
+                type = {'numeric'}
                 onChange = { ( value ) => setCode({...code,code:value }) }
             />
             
