@@ -1,20 +1,35 @@
 import { useNavigation } from '@react-navigation/native'
-import React from 'react'
+import { db } from '../../firebase/firebase-config'
+import React, { useState } from 'react'
 import { useEffect } from 'react'
-import { Image, KeyboardAvoidingView, ScrollView,Text,TouchableOpacity, View } from 'react-native'
-import { useSafeAreaInsets } from 'react-native-safe-area-context'
-import { ButtonGradient } from '../elements/ButtonGradient'
+import { KeyboardAvoidingView, ScrollView,View } from 'react-native'
 import { ButtonSendMessage } from '../elements/ButtonSendMessage'
 import { TextInputApp } from '../elements/TextInputApp'
-import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple'
-import { COLORS_APP } from '../ui/COLORS_APP'
+
 import { HeaderChat } from './HeaderChat'
+import { useSelector } from 'react-redux'
+import { getDataUser } from '../../helpers/getDataUser'
 import { ItemMessage } from './ItemMessage'
 
-const img = 'https://mdbcdn.b-cdn.net/img/new/avatars/4.jpg';
-const img2 = 'https://cuidatuambiente.com/wp-content/uploads/2016/10/6-2.jpg';
 
 export const ScreenChatGroup = ({ route }) => {
+    const userLoged = useSelector(state => state.authRed)
+    const [ messages, setMessages ] = useState([])
+    useEffect(() => {
+            db.collection('groups')
+                .doc( route.params.id )
+                .collection('Chat').orderBy('createdat').onSnapshot((snapshot) => {
+                const msgs = snapshot.docs.map( (doc) => {
+                    const data = doc.data();
+                    return {
+                        mid: doc.id,
+                        ...data
+                    }
+                })
+                setMessages( msgs )
+
+            })
+    }, [])
     
     return (
 
@@ -25,17 +40,10 @@ export const ScreenChatGroup = ({ route }) => {
             >
            <HeaderChat route = { route }/>
             <View style={{flex:1,flexDirection: 'column', position:'relative'}}>
-                <ScrollView style={{flex: 1, backgroundColor:'white', paddingHorizontal:8}}>
-                    <ItemMessage message={'Hi!!'}/>
-                    <ItemMessage image={img} isMyMessage = { false } message={'Hi! welcome'}/>
-                    <ItemMessage image={img2} isMyMessage = { false } message={'yeah'}/>
-                    <ItemMessage message={'Who are you?'}/>
-                    <ItemMessage image={img2} isMyMessage = { false } message={'find'}/>
-                    <ItemMessage image={img} isMyMessage = { false } message={'findsdklfsdhfsdhfdsjkf sdjfsdkjfhjsdkhfdsj sdjfhsdkhfjdshfjkds dhfkdshfjsdhkjfsk'}/>
-                    <ItemMessage message={'what?'}/>
-                    <ItemMessage message={'afaskfasjf skjfhskhfsakjh kshksh'}/>
-                    <ItemMessage image={img2} isMyMessage = { false } message={'find'}/>
-                    <ItemMessage image={img2} isMyMessage = { false } message={'find'}/>
+                <ScrollView style={{flex: 1, backgroundColor:'white', paddingHorizontal:8,}}>
+                   {
+                       messages.map( message =>  <ItemMessage key={ message.mid } {...message}/>)
+                   }
                 </ScrollView>
             </View>
            

@@ -17,7 +17,6 @@ export const MeetApp = () => {
             try {
                 // await AsyncStorage.removeItem('uid')
                 const uid = await AsyncStorage.getItem('uid')
-                console.log( userData)
                 if( uid ) {
                     if( userData.uid === null ) {
                         dispatch(setData( uid ))
