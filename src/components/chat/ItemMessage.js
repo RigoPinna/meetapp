@@ -4,15 +4,14 @@ import { Image, Text, View } from 'react-native'
 import { useSelector } from 'react-redux'
 import { getDataUser } from '../../helpers/getDataUser'
 import { stylesChat } from '../../theme/appTheme'
+import { COLORS_APP } from '../ui/COLORS_APP'
 
 export const ItemMessage = React.memo(({ uid, message:text }) => {
     const [ message, setMessage] = useState( null )
     const user = useSelector( state => state.authRed )
     useEffect(() => {
         ( async()=>{
-            console.log(user.uid === uid )
             if ( user.uid === uid ) {
-                console.log( 'entra ')
                 setMessage({
                     creator: {
                         uid: uid,
@@ -23,9 +22,7 @@ export const ItemMessage = React.memo(({ uid, message:text }) => {
                     text,
                 })
             } else {
-                console.log( uid )
                 const oltherUser = await getDataUser( uid );
-                console.log( oltherUser )
                 if( !!oltherUser ) {
                     setMessage({
                         creator: {
@@ -38,23 +35,30 @@ export const ItemMessage = React.memo(({ uid, message:text }) => {
                     })
                 }
             }
-
         })();
     }, [])
     return (
        <>
        {
            !!message 
-            &&  <View style={( message.isMyMessage ) ? stylesChat.wrapperItemMessageSended : stylesChat.wrapperItemMessage }>
-            { ( !message.isMyMessage ) 
-                && <Image style = { stylesChat.avatar } source = {{ uri:message.creator.image }} /> }
-            <View style={{ height:'100%'}}>
+                &&  
+            <View style={( message.isMyMessage ) ? stylesChat.wrapperItemMessageSended : stylesChat.wrapperItemMessage }>
+                { ( !message.isMyMessage ) 
+                    && <Image 
+                            style = { stylesChat.avatar } 
+                            source = {{ uri:message.creator.image }} />     
+                }
+            <View>
+                { 
+                    ( !message.isMyMessage ) 
+                        && <Text style={{fontWeight:'bold', color:COLORS_APP.black3, fontSize:12}}>
+                            { 
+                                message.creator.name
+                            }
+                        </Text>
+                }
                 <View style = {( message.isMyMessage ) ? stylesChat.wrapperTextSended : stylesChat.wrapperTextRecibed}>
-                    <LinearGradient 
-                        colors = { ( message.isMyMessage ) ? stylesChat.bgMessageSended : stylesChat.bgMessageRecived } 
-                        style = { stylesChat.bgMessage }
-                    /> 
-                    <Text style = {{ padding:10, color:(message.isMyMessage) ? 'white': 'black'}}>
+                    <Text style = {{ padding:6, fontSize:12.8, color:(message.isMyMessage) ? 'white': 'black'}}>
                             { message.text }
                     </Text>
                 </View>

@@ -402,7 +402,7 @@ export const  stylesChat = {
         width:'100%', 
         height:'auto', 
         flexDirection:'row',
-        paddingVertical:5,
+        paddingVertical:10,
         alignItems: 'center'
     },
     wrapperItemMessageSended:{
@@ -410,12 +410,12 @@ export const  stylesChat = {
         height:'auto', 
         flexDirection:'row',
         paddingVertical:5,
-        justifyContent:'flex-end'
+        justifyContent:'flex-end',
     },
     avatar:{
-        width:50, 
-        height:50, 
-        borderRadius:50,
+        width:40, 
+        height:40, 
+        borderRadius:40,
         marginRight:2,
     },
     wrapperMessage:{
@@ -433,27 +433,31 @@ export const  stylesChat = {
         alignItems: 'flex-start',
         flexDirection:'row',
         alignItems: 'center',
-        borderBottomLeftRadius:20,
-        borderBottomRightRadius:20,
-        borderTopRightRadius:20,
+        borderBottomLeftRadius:15,
+        borderBottomRightRadius:15,
+        borderTopRightRadius:15,
         borderTopLeftRadius:5,
         overflow: 'hidden',
         position:'relative', 
         display:'flex',
-        marginTop:25
+        marginTop:2,
+        backgroundColor:'#E7E5E8',
+        padding:2,
     },
     wrapperTextSended:{
         flexWrap: 'wrap', 
         alignItems: 'flex-start',
         flexDirection:'row',
         alignItems: 'center',
-        borderBottomLeftRadius:20,
+        borderBottomLeftRadius:15,
         borderBottomRightRadius:5,
-        borderTopRightRadius:20,
-        borderTopLeftRadius:20,
+        borderTopRightRadius:15,
+        borderTopLeftRadius:15,
         overflow: 'hidden',
         position:'relative', 
-        display:'flex'
+        display:'flex',
+        backgroundColor:'#4481EB',
+        padding:2,
     },
     bgMessage:{
         width:'100%', 
@@ -464,5 +468,32 @@ export const  stylesChat = {
     },
     bgMessageRecived:['#EEEEEC','#D5D4D0'],
     bgMessageSended:['#49B6DA','#0ACFFE'],
-
+    inputMessage: { 
+        width:'85%', 
+        borderRadius:20, 
+        marginTop:0 
+    },
+    wrapperFooterSendMessage: {
+        justifyContent: 'space-between', 
+        height:60,
+        flexDirection:'row', 
+        width: '100%',
+        backgroundColor:'white',
+        padding:5, 
+        alignItems:'flex-end'
+    },
+    wrapperListMessages: { 
+        flex: 1, 
+        backgroundColor:'white', 
+        paddingHorizontal:8,
+    },
+    wrapperKeyboard: { 
+        flex: 1, 
+        backgroundColor:'white' 
+    },
+    wrapperColumnChat: { 
+        flex:1,
+        flexDirection: 'column', 
+        position:'relative'
+    }
 }

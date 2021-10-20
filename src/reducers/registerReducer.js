@@ -36,7 +36,6 @@ export const registerUser = ({ name, image='' }) => {
             name: name,
             image: imageURL, 
         },{ merge: true })
-        console.log('ID=', userRef.id)
         await AsyncStorage.setItem( 'uid', userRef.id )
         dispatch( setData(  userRef.id ) )
     }
