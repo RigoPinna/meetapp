@@ -10,8 +10,13 @@ import { useSelector } from 'react-redux'
 
 import { db } from '../../firebase/firebase-config'
 
+import { Toastapp } from '../elements/ToastApp'
+
 export const StepJoin = ({steps, setStep}) => {
     const [code, setCode] = useState('')
+    const [messages, setMessages] = useState([]);
+    const [visible, setVisible] = useState(false)
+
     const userLoged = useSelector(state => state.authRed )
     const handleOnChangeName = ( text ) => {
         setCode(text)
@@ -22,9 +27,14 @@ export const StepJoin = ({steps, setStep}) => {
     }
     const hanldeGoToNextStep = async () => {
         if( userLoged.uid !== null ) {
-            const groupRef = db.collection('groups')
-            const snapshot = await groupRef.get()
+            const groupRef = db.collection('groups');
+            const snapshot = await groupRef.where('code', '==', code).get();
 
+            if(snapshot.empty) {
+                setVisible(true)
+                setMessages([...messages, 'Wrong Code!' + Math.random()])
+                return;
+            } 
             snapshot.forEach(doc => {
                 const data = doc.data();
                 const codeGet = data.code;
@@ -37,7 +47,7 @@ export const StepJoin = ({steps, setStep}) => {
                     changeParticipants(gid, allParticipants, gname, gimage)
                 }
             })
-        } 
+        }
     }
 
     return (
@@ -66,16 +76,33 @@ export const StepJoin = ({steps, setStep}) => {
                         type={'numeric'}
                     />
                 </View>
-                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
-                    <ButtonGradient
-                        gradient={['#BA48EF','#E75551','#C86FD6']}
-                        sizeGradient = {{width:350, height:50}}
-                        textButton={`Join Group`}
-                        styleText={{color:'white', fontWeight:'bold',}}
-                        styleButton={{width:350, height:50}}
-                        hanldeOnPress = { hanldeGoToNextStep }
-                    />
-                </View>
+                {
+                    (code!=='') &&  <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
+                                        <ButtonGradient
+                                            gradient={['#BA48EF','#E75551','#C86FD6']}
+                                            sizeGradient = {{width:350, height:50}}
+                                            textButton={`Join Group`}
+                                            styleText={{color:'white', fontWeight:'bold',}}
+                                            styleButton={{width:350, height:50}}
+                                            hanldeOnPress = { hanldeGoToNextStep }
+                                        />
+                                    </View>
+                }
+                {
+                    visible && messages.map((message) => (
+                                    <Toastapp
+                                        key={message}
+                                        message={'Wrong Code!'}
+                                        onHide={() => {
+                                        setMessages((messages) =>
+                                            messages.filter(
+                                                (currentMessage) =>
+                                                currentMessage !== message
+                                        ));
+                                    }}
+                                    />
+                                ))
+                }
         </View>
     )
 }

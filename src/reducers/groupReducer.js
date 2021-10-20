@@ -23,8 +23,14 @@ export const addNewGroup = ({ name, image='', description }) => {
     return async ( dispatch, getState ) => {
         const userLoged = getState().authRed
         const date = moment().format('DD-MM-YYYY')
-        const code = generateCode();
+        let code = generateCode();
         //TODO: hacer chequeo de codigo
+        const groupRefQuery = db.collection('groups');
+        const snapshot = await groupRefQuery.where('code', '==', code).get();
+        if(!snapshot.empty) {
+            code = generateCode()
+            console.log('code =>', code)
+        } 
         const groupRef = db.collection('groups').doc();
         const imageURL =  await uploadImage( image, name,'img_group' );
         await groupRef.set({ 

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import { Button, Image, ScrollView, View } from 'react-native'
+import { Button, Image, ScrollView, View, Clipboard} from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { styleListGroups } from '../../theme/appTheme'
 import { Buttonapp } from '../elements/Buttonapp'
@@ -12,7 +12,11 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { AlertEvent } from './AlertEvent'
 import { db, userStatic } from '../../firebase/firebase-config'
 import { getIdEvent, getEvent } from '../../helpers/getIdEvent'
-
+import { useSelector } from 'react-redux'
+import { Toastapp } from '../elements/ToastApp'
+import { TextInputApp } from '../elements/TextInputApp'
+import { COLORS_APP } from '../ui/COLORS_APP'
+import { IconCopy } from '../icons/IconCopy'
 
 
 export const ScreenChatInfo = ({ navigation, route }) => {
@@ -21,7 +25,34 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const [eventVisible, setEventVisible] = useState(false)
     const [eventData, setEventData] = useState({nameEvent: '', startDate: '', description: ''})
     const [eventId, setEventId] = useState({id: ''})
-    
+    const [codeF, setCodeF] = useState('')
+    const userLoged = useSelector(state => state.authRed )
+    const [messages, setMessages] = useState([]);
+    const [visible, setVisible] = useState(false)
+
+    const getCode = async () => {
+        if( userLoged.uid !== null ) {
+            const groupRef = db.collection('groups').doc(id);
+            const doc = await groupRef.get();
+            if(doc.exists){
+                const data = doc.data();
+                const participants = JSON.parse( data.participants );
+                const {uid,name,image} = participants[0];
+
+                if(userLoged.uid === uid) {
+                    const code = data.code;
+                    setCodeF(code)
+                }
+            }
+        } 
+    }
+
+    const handlecopyToClipboard = () => {
+        Clipboard.setString( codeF)
+        setVisible(true)
+        setMessages([...messages, 'Code copied!' + Math.random()])
+    }
+
     useEffect(() => {
         const eid = eventId.id
         if(eid === ''){
@@ -32,7 +63,12 @@ export const ScreenChatInfo = ({ navigation, route }) => {
             console.log(eventData)
             setEventVisible(true)
         }
+
     }, [eventData])
+
+    useEffect(() => {
+        getCode();
+    }, [])
 
 
     const hanldeGoToModal = () => {
@@ -54,6 +90,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 <MenuScreenChat navigation={navigation} name = {name}/>
             <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
+
                     <Textapp 
                         size = { TEXTS_SIZE.medium } 
                         weight='bold' 
@@ -65,6 +102,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                         text ={description} 
                         styles={{width:'100%'}} 
                     />
+
                 </View>
                 <Textapp 
                         size = { TEXTS_SIZE.small } 
@@ -81,6 +119,53 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 </View>
                 {
                 (eventVisible) && <AlertEvent event={eventData}/>
+                }
+                {
+                        (codeF !== '') &&   <>
+                                                <TextInputApp 
+                                                    placeholder={codeF}
+                                                    height={150}
+                                                    size={TEXTS_SIZE.long}
+                                                    weight={'bold'}
+                                                    color={COLORS_APP.green}
+                                                    styleT={{ 
+                                                        width: '100%',
+                                                        borderTopRightRadius: 10,
+                                                        borderBottomRightRadius: 10,
+                                                        borderBottomLeftRadius: 10,
+                                                        borderTopLeftRadius: 10,
+                                                        backgroundColor: '#F9F9F9',
+                                                        paddingLeft: 90
+                                                    }}
+                                                    editable={false}
+                                                />    
+                                                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
+                                                        <ButtonGradient
+                                                            IconLeft={IconCopy}
+                                                            gradient={['#F3F7FE','#F3F7FE']}
+                                                            sizeGradient = {{width:350, height:50}}
+                                                            textButton={`Copy code`}
+                                                            styleText={{color:'black', marginLeft: 10}}
+                                                            styleButton={{width:350, height:50,justifyContent:'center', }}
+                                                            hanldeOnPress = { handlecopyToClipboard }
+                                                        />
+                                                </View>
+                                            </>
+                }
+                {
+                    visible && messages.map((message) => (
+                                    <Toastapp
+                                        key={message}
+                                        message={'Code copied!'}
+                                        onHide={() => {
+                                        setMessages((messages) =>
+                                            messages.filter(
+                                                (currentMessage) =>
+                                                currentMessage !== message
+                                        ));
+                                    }}
+                                    />
+                                ))
                 }
             </ScrollView>
         </View>

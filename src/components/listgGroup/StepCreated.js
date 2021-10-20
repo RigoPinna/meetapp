@@ -89,7 +89,7 @@ export const StepCreated = ({steps, setStep }) => {
                                 borderBottomLeftRadius: 10,
                                 borderTopLeftRadius: 10,
                                 backgroundColor: '#F9F9F9',
-                                paddingLeft: 60
+                                paddingLeft: 90
                             }}
                             editable={false}
                         />
