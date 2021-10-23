@@ -98,15 +98,17 @@ export const StepRegisterUser = () => {
                                 firebaseConfig={firebaseConfig}
                                 attemptInvisibleVerification={ attemptInvisibleVerification }
                             />
-             <ButtonGradient 
-                gradient={['#48C6EF','#6F86D6']}
-                sizeGradient = {{width:'110%', height:40}}
-                textButton={`Register`}
-                styleText={{color:'white', fontWeight:'bold',}}
-                styleButton={{width:'100%', height:40,marginTop:30}}
-                // IconRight = { IconArrowRight }
-                hanldeOnPress = { hanldeSeendCode }
-            />
+            {
+                (userData.phone !== 0) && <ButtonGradient 
+                                                gradient={['#48C6EF','#6F86D6']}
+                                                sizeGradient = {{width:'110%', height:40}}
+                                                textButton={`Register`}
+                                                styleText={{color:'white', fontWeight:'bold',}}
+                                                styleButton={{width:'100%', height:40,marginTop:30}}
+                                                // IconRight = { IconArrowRight }
+                                                hanldeOnPress = { hanldeSeendCode }
+                                            />
+            }   
             { viewModal && <ModalFinallyRegister /> }
             {/* <ModalFinallyRegister /> */}
         </>

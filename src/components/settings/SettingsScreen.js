@@ -111,7 +111,7 @@ export const SettingsScreen = ({ navigation }) => {
                             <Textapp 
                                 size= {TEXTS_SIZE.small} 
                                 color = {COLORS_APP.black2}
-                                text = {'+52 8340248975'}
+                                text = {user.phone}
                                 weight={'bold'}
                             />
                         </View>

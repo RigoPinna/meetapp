@@ -5,6 +5,7 @@ const initialState = {
     uid: null,
     name: null,
     image: null,
+    phone: null,
 }
 
 export const setData = ( uid ) => {
@@ -20,6 +21,7 @@ export const setData = ( uid ) => {
                         uid,
                         name: user.name,
                         image: user.image,
+                        phone: user.phone,
                     }
                 })
             } else {

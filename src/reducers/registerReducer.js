@@ -28,13 +28,15 @@ export const addNameAndImg = ({ name, image='' }) => {
         })
     }
 }
-export const registerUser = ({ name, image='' }) => {
+export const registerUser = ({ name, image='', countryCode,phone }) => {
     return async ( dispatch ) => {
-        console.log('NOMBRE=',name )
+        // console.log('NOMBRE=',name )
+        const phoneNumber = `+${countryCode}${phone}`;
         const imageURL =  await uploadImage( image, name,'profile_photo' );
         const userRef = await db.collection('users').add({ 
             name: name,
             image: imageURL, 
+            phone: phoneNumber,
         },{ merge: true })
         await AsyncStorage.setItem( 'uid', userRef.id )
         dispatch( setData(  userRef.id ) )

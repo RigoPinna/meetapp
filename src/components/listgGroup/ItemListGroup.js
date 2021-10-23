@@ -14,9 +14,8 @@ export const ItemListGroup = ({ id,image,name='',createdat='', participants = []
     const time = useTimeAgo( createdat );
     const hanldeNavigatorChat = () => navigation.navigate('ScreenChatGroup',{ id, image, name, participants, description });
     const userLoged = useSelector(state => state.authRed )
-    const hanldeNavigatorEliminateGroup = () => navigation.navigate('ModalEliminateGroup', {name});
+    const hanldeNavigatorEliminateGroup = () => navigation.navigate('ModalEliminateGroup', {id,name});
     const onLongPressButton = async () => {
-        // 
         if( userLoged.uid !== null ) {
             const groupRef = db.collection('groups').doc(id);
             const doc = await groupRef.get();

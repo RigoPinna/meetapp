@@ -1,6 +1,7 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react'
 import { View } from 'react-native';
+import { useSelector } from 'react-redux';
 import { ButtonGradient } from '../elements/ButtonGradient';
 import { ModalApp } from '../elements/ModalApp';
 import { Textapp } from '../elements/Textapp';
@@ -10,8 +11,32 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 import { StepJoin } from './StepJoin'
 import { StepJoined } from './StepJoined'
 
+import { db, userStatic } from '../../firebase/firebase-config'
+
 export const ModalScreenEliminateGroup = ({route}) => {
     const navigation = useNavigation()
+    // const userLoged = useSelector(state => state.authRed )
+
+    const eliminateGroup = async () => {
+        // if( userLoged.uid !== null ) {
+        //     const groupRef = db.collection('groups').doc(route.params.id);
+        //     const doc = await groupRef.get();
+        //     if(doc.exists){
+        //         const data = doc.data();
+        //         const participants = JSON.parse( data.participants );
+        //         // const {uid,name,image} = participants[0];
+
+        //         // if(userLoged.uid === uid) {
+        //         //     const code = data.code;
+        //         //     setCodeF(code)
+        //         // }
+        //         participants.forEach(pr => {
+        //             console.log('data =>', pr)
+        //         })
+        //     }
+        // } 
+    }
+
      return (
         <ModalApp styleContainer={{height: '50%', marginBottom: 200,borderBottomRightRadius: 20,
         borderBottomLeftRadius: 20,}} navigation={navigation} textTitle={`Eliminate ${route.params.name}`}>
@@ -29,22 +54,20 @@ export const ModalScreenEliminateGroup = ({route}) => {
             />
             <View style={{flexDirection: 'row',}}>
                 <ButtonGradient
-                    // IconLeft={IconCopy}
                     gradient={['#3CBA92','#0BA360']}
                     sizeGradient = {{width:190, height:50}}
                     textButton={`Yes, Eliminate Group`}
                     styleText={{color:'black', marginLeft: 10}}
                     styleButton={{width:190, height:50,justifyContent:'center', }}
-                    // hanldeOnPress = { handlecopyToClipboard }
+                    hanldeOnPress = { eliminateGroup() }
                 />
                 <ButtonGradient
-                    // IconLeft={IconCopy}
                     gradient={['#F19184','#DB1723']}
                     sizeGradient = {{width:190, height:50}}
                     textButton={`Cancel`}
                     styleText={{color:'black', marginLeft: 10}}
                     styleButton={{width:190, height:50,justifyContent:'center', marginLeft: 5}}
-                    // hanldeOnPress = { handlecopyToClipboard }
+                    hanldeOnPress = { () => {navigation.goBack()} }
                 />
             </View>
         </ModalApp>    

@@ -18,5 +18,6 @@ export const COLORS_APP = {
     skyblue3:'#007C84',
     skyblue4:'#00B5CB',
     skyblue5:'#00A2B1',
-    green: '#0BA360'
+    green: '#0BA360',
+    white: '#FFFFFF',
 }
