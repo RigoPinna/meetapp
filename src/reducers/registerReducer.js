@@ -28,12 +28,12 @@ export const addNameAndImg = ({ name, image='' }) => {
         })
     }
 }
-export const registerUser = ({ name, image='', countryCode,phone }) => {
+export const registerUser = ({ name, image='', countryCode, phone, uid }) => {
     return async ( dispatch ) => {
         // console.log('NOMBRE=',name )
         const phoneNumber = `+${countryCode}${phone}`;
         const imageURL =  await uploadImage( image, name,'profile_photo' );
-        const userRef = await db.collection('users').add({ 
+        const userRef = await db.collection('users').doc( uid ).set({ 
             name: name,
             image: imageURL, 
             phone: phoneNumber,

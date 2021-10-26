@@ -26,6 +26,10 @@ export const MeetApp = () => {
                         setStatus( true )
                     }
                 } else {
+                    if( !!userData.uid ) {
+                        await AsyncStorage.setItem( 'uid', userData.uid )
+                        setStatus( true )
+                    }
                     setStatus( null )
                 }
             }catch(error) {

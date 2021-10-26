@@ -1,9 +1,6 @@
-import { BlurView } from 'expo-blur'
-import React, { useRef, useState } from 'react'
-import { StyleSheet, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { Image } from 'react-native'
-import { HeaderDecoration } from '../auth/HeaderDecoration'
+
+import React, { useEffect, useRef, useState } from 'react'
+import { Image, Text, View } from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconApp } from '../IconApp'
@@ -11,48 +8,47 @@ import { Textapp } from '../elements/Textapp'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { TextInputApp } from '../elements/TextInputApp'
 import { styles2 } from '../../theme/appTheme'
-import { db, firebase, firebaseConfig } from '../../firebase/firebase-config'
+import { db, firebase,firebaseConfig, phoneProvider } from '../../firebase/firebase-config'
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha'
 import { IconArrowLeft } from '../icons/IconArrowLeft'
+import { InputSelectapp } from '../elements/InputSelectapp'
+import { dataCountry } from '../../services/fetchGetCodeAndCountryName'
+import { useDispatch } from 'react-redux'
+import { setData } from '../../reducers/authReducer'
 // import { getAuth } from "firebase/auth";
 
 export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
-    const [ userData, setUserData ] = useState({phone:''});
-    // const auth = getAuth();
-    // const user = firebase.auth().currentUser;
-    // const recaptchaVerifier = useRef( null );
-    // const attemptInvisibleVerification = false;
+    const dispatch = useDispatch();
+    const recaptchaVerifier = useRef( null );
+    const s = useRef( null );
+    const [ userData, setUserData ] = useState({phone:'', countryCode:undefined, countries:[], verificationId:undefined, code:'' });
+    const attemptInvisibleVerification = false;
+
+    useEffect(() => {
+        const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
+        setUserData({...userData, countries })
+    }, [])
     const login = async () => {
-        if( userData.phone !== '' ) {
-            // if(user !== null){
-            //     console.log(user.phone)
-            // }
-            // firebase.auth().signInWithPhoneNumber(userData.phone, recaptchaVerifier.current).then(userCredentials => {
-            //     console.log(userCredentials)
-            // })
-            // const userRef = db.collection('users');
-            // const doc = await userRef.where('phone', '==' user.phone)
-            // console.log('user =>', user)
-            // if(userData.phone === user.phone){
-
-            // }
-            // try {
-            const userRef = db.collection('users');
-            const doc = await userRef.where('phone','==',userData.phone).get();
-
-            if(doc.exists){
-                const data = doc.data();
-                console.log(data)
+        try {
+            const phoneNumber = `+${userData.countryCode}${userData.phone}`;
+            if( !!userData.verificationId ) {
+                const credential = await firebase.auth.PhoneAuthProvider.credential(
+                    userData.verificationId,
+                    userData.code
+                );
+                const { user } = await firebase.auth().signInWithCredential( credential )
+                // const userRef = await db.collection('users').where('phone', '==', '+528342542740' );
+                dispatch( setData( user.uid ) )
+            } else {
+                const verificationId = await phoneProvider.verifyPhoneNumber(
+                    phoneNumber,
+                    recaptchaVerifier.current
+                  );
+                  setUserData({...userData, verificationId });
             }
-            // // if(userRef.exists){
-            // //     const data = userRef.data()
-            // //     console.log(data)
-            // // }
-            // } catch (error) {
-            //     console.log(error)
-            // }
-            
-        } 
+        } catch( err ) {
+            console.log( err )
+        }
     }
     const goBack = () => {
         setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
@@ -67,14 +63,14 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
             }}
             source = {require('../../assets/fondoLogin.png')} />
             <View style={{position: 'absolute', top: 10, left: 10}}>
-            <ButtonGradient 
-                gradient={['#F3F7FE','#F3F7FE']}
-                sizeGradient = {{ width:100, height:100 }}
-                styleButton = {{ width: 50, height: 50, marginTop: 10}}
-                IconLeft = { IconArrowLeft }
-                hanldeOnPress = { () => { goBack() } }
-                colorIcon = {COLORS_APP.black2}
-            />
+                <ButtonGradient 
+                    gradient={['#F3F7FE','#F3F7FE']}
+                    sizeGradient = {{ width:100, height:100 }}
+                    styleButton = {{ width: 50, height: 50, marginTop: 10}}
+                    IconLeft = { IconArrowLeft }
+                    hanldeOnPress = { () => { goBack() } }
+                    colorIcon = {COLORS_APP.black2}
+                />
             </View>
             <IconApp position={{position:'absolute',top:0,left:0, marginTop:100}} />
             <Textapp 
@@ -84,44 +80,66 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                 size={TEXTS_SIZE.long}
                 color={COLORS_APP.white}
             />
-            <View style={{height: '100%',justifyContent: 'center', marginTop: 100}}>
-                <Textapp
-                    text={'Enter your phone to access'}
-                    styles={{textAlign: 'center'}}
-                    size={TEXTS_SIZE.small}
-                    color={COLORS_APP.black1}
+            <View style={{ width:'100%',height: '100%',justifyContent: 'center', marginTop: 100}}>
+                <Text style={{marginBottom:13, marginTop: 13, marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
+                    {
+                        !!userData.verificationId
+                        ? "Enter the verification code that we have sent to your phone number."
+                        : "Meetapp will send a SMS message to verify yoru phone number. Enter your country and phone number"
+                    }
+                    
+                </Text>
+                <InputSelectapp 
+                    itemsData = { userData.countries } 
+                    setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
                 />
-                <View style = { styles2.wrapperRegisterNumberPhone }>
-                    <Textapp
-                                size= {TEXTS_SIZE.medium}
-                                weight = {'bold'}
-                                color = {COLORS_APP.black1}
-                                text = {`+`}
-                    />
-                    <TextInputApp 
-                        onChange = { ( value ) => setUserData({...userData, ...{phone: value}}) }
-                        placeholder = { 'Your phone' }
-                        styleT = {{ width:'85%', marginLeft:5, height:'100%'}}
-                        type = {'numeric'}
-                    />
-                </View>
-                <ButtonGradient 
-                    gradient={['#0ACFFE','#49B6DA']}
-                    sizeGradient = {{width:200, height:40}}
-                    textButton={`Login`}
-                    styleText={{color:'white', fontWeight:'bold',}}
-                    styleButton={{width:200, height:40, backgroundColor:'pink', marginTop: 50, marginLeft: 80}}
-                    hanldeOnPress = { login }
-                />
+                {
+                    userData.countryCode && <>
+                                <View style = { styles2.wrapperRegisterNumberPhone }>
+                                    <Textapp
+                                    size= {TEXTS_SIZE.medium}
+                                    weight = {'bold'}
+                                    color = {COLORS_APP.black1}
+                                    text = {`+${userData.countryCode}`}
+                                    />
+                                    <TextInputApp 
+                                        // value = { +userData.numberPhone }
+                                        onChange = { ( value ) => setUserData({...userData,...{phone:+value}}) }
+                                        placeholder = { 'Your phone' }
+                                        styleT = {{ width:'85%', marginLeft:5, height:'100%'}}
+                                        type = {'numeric'}
+                                    />
+                                </View>
+                            </>
+                            
+                }
+                {
+                    !!userData.verificationId 
+                        && <TextInputApp 
+                                // value = { +userData.numberPhone }
+                                onChange = { ( value ) => setUserData({...userData,...{ code:value }}) }
+                                placeholder = { 'Verification code' }
+                                styleT = {{ width:'100%',height:50}}
+                                
+                            />
+                }
+                {
+                    (userData.phone !== 0) 
+                    && <ButtonGradient 
+                            gradient={['#48C6EF','#6F86D6']}
+                            sizeGradient = {{width:'110%', height:40}}
+                            textButton={!!userData.verificationId ? "Login" : "Verify"}
+                            styleText={{color:'white', fontWeight:'bold',}}
+                            styleButton={{width:'100%', height:40,marginTop:30}}
+                            hanldeOnPress = { login }
+                        />
+                }   
             </View>
-
-            {/* <FirebaseRecaptchaVerifierModal
+            <FirebaseRecaptchaVerifierModal
                                 ref={recaptchaVerifier}
                                 firebaseConfig={firebaseConfig}
                                 attemptInvisibleVerification={ attemptInvisibleVerification }
-            /> */}
-        {/* </View> */}
- 
+            />
         </>
     )
 }

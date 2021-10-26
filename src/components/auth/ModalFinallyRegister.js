@@ -20,11 +20,11 @@ export const ModalFinallyRegister = () => {
         const credential =  firebase.auth.PhoneAuthProvider.credential(
             userData.verificationId,
             code.code
-            );
+        );
         firebase.auth().signInWithCredential( credential ).then( resp => {
             console.log( resp )
             dispatch(registerUser( userData ))    
-            setCode({ isLoading: false, ...code })
+            setCode({ isLoading: false, ...code, uid:resp.user.uid })
         }).catch( err => {
             console.log( err )
             console.log('no son iguales')
