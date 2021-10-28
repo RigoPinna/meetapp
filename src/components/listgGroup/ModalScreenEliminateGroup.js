@@ -11,31 +11,23 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 import { StepJoin } from './StepJoin'
 import { StepJoined } from './StepJoined'
 
-import { db, userStatic } from '../../firebase/firebase-config'
+import { db,firebase, userStatic } from '../../firebase/firebase-config'
 
 export const ModalScreenEliminateGroup = ({route}) => {
     const navigation = useNavigation()
-    // const userLoged = useSelector(state => state.authRed )
-
     const eliminateGroup = async () => {
-        // if( userLoged.uid !== null ) {
-        //     const groupRef = db.collection('groups').doc(route.params.id);
-        //     const doc = await groupRef.get();
-        //     if(doc.exists){
-        //         const data = doc.data();
-        //         const participants = JSON.parse( data.participants );
-        //         // const {uid,name,image} = participants[0];
+        await db.collection('groups').doc(route.params.id).delete()
 
-        //         // if(userLoged.uid === uid) {
-        //         //     const code = data.code;
-        //         //     setCodeF(code)
-        //         // }
-        //         participants.forEach(pr => {
-        //             console.log('data =>', pr)
-        //         })
-        //     }
-        // } 
+        const imgRef = firebase.storage().ref( route.params.name ).child('img_group');
+
+        imgRef.delete().then(
+            navigation.goBack()
+        ).catch(error => {
+            console.log(error)
+        })
+        
     }
+      
 
      return (
         <ModalApp styleContainer={{height: '50%', marginBottom: 200,borderBottomRightRadius: 20,
@@ -59,7 +51,7 @@ export const ModalScreenEliminateGroup = ({route}) => {
                     textButton={`Yes, Eliminate Group`}
                     styleText={{color:'black', marginLeft: 10}}
                     styleButton={{width:190, height:50,justifyContent:'center', }}
-                    hanldeOnPress = { eliminateGroup() }
+                    hanldeOnPress = { () =>{eliminateGroup()} }
                 />
                 <ButtonGradient
                     gradient={['#F19184','#DB1723']}

@@ -13,7 +13,7 @@ import { styles, styles2 } from '../../theme/appTheme'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
-export const StepCreated = ({steps, setStep }) => {
+export const StepCreated = () => {
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
     const[ loading, setLoading ] = useState( true );

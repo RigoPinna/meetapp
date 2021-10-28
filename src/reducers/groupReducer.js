@@ -53,6 +53,15 @@ export const addNewGroup = ({ name, image='', description }) => {
 
 }
 
+export const cleanGroup = () =>{
+    return (dispatch) => {
+        dispatch({
+            type:'clean-group',
+            payload:initialState.listGroup
+        })
+    }
+}
+
 
 
 export const groupReducer = ( state = initialState, action ) => {
@@ -61,6 +70,11 @@ export const groupReducer = ( state = initialState, action ) => {
             return { 
                 listGroup:[...state.listGroup,...action.payload ], 
                 groupCreated:action.payload[0]
+            };
+        case 'clean-group': 
+            return { 
+                listGroup:[...state.listGroup,...action.payload ], 
+                groupCreated:null
             };
         
         default:

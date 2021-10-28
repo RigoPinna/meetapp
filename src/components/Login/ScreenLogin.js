@@ -39,6 +39,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                 const { user } = await firebase.auth().signInWithCredential( credential )
                 // const userRef = await db.collection('users').where('phone', '==', '+528342542740' );
                 dispatch( setData( user.uid ) )
+                // console.log(user.uid)
             } else {
                 const verificationId = await phoneProvider.verifyPhoneNumber(
                     phoneNumber,
@@ -120,7 +121,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                                 onChange = { ( value ) => setUserData({...userData,...{ code:value }}) }
                                 placeholder = { 'Verification code' }
                                 styleT = {{ width:'100%',height:50}}
-                                
+                                type = {'numeric'}
                             />
                 }
                 {

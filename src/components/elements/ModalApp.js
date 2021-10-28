@@ -8,8 +8,8 @@ import { ButtonGradient } from './ButtonGradient'
 import { IconClose } from '../icons/IconClose'
 import { COLORS_APP } from '../ui/COLORS_APP'
 
-export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleContainer}) => {
-    const [ showModal, setShowModal ] = useState(true);
+export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleContainer, handle = () => {}}) => {
+    const [ showModal, setShowModal ] = useState(closeModal);
     const scaleValue = useRef(new Animated.Value(0)).current;
     useEffect(() => {
         toggleModal();
@@ -43,15 +43,17 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
                             weight={'bold'}
                         />
                        { 
-                        closeModal &&  <ButtonGradient 
-                                gradient={['#F3F7FE','#F3F7FE']}
-                                sizeGradient = {{ width:35, height:35 }}
-                                styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
-                                IconLeft = { IconClose }
-                                hanldeOnPress = { () => { setShowModal(false); navigation.goBack(); } }
-                                colorIcon = {COLORS_APP.black2}
-                                
-                            />
+                            closeModal &&  <ButtonGradient 
+                                                gradient={['#F3F7FE','#F3F7FE']}
+                                                sizeGradient = {{ width:35, height:35 }}
+                                                styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
+                                                IconLeft = { IconClose }
+                                                hanldeOnPress = { () => { 
+                                                    setShowModal(false); navigation.goBack(); 
+                                                    (!!handle) && handle()
+                                                } }
+                                                colorIcon = {COLORS_APP.black2}    
+                                            />
                         }
                     </View>
                     <ScrollView style={{flex:1}}>

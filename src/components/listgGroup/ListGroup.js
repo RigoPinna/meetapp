@@ -17,7 +17,7 @@ export const ListGroup = ({ navigation }) => {
     const userLoged = useSelector(state => state.authRed )
     useEffect(() => {
         if( userLoged.uid !== null ) {
-            db.collection('groups').onSnapshot( querySnapshot => {
+            db.collection('groups').orderBy('createdat', 'desc').onSnapshot( querySnapshot => {
                 let groups = querySnapshot.docs.map( doc => {
                     const data = doc.data();
                     const gid = doc.id;
