@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Image, Text, View } from 'react-native'
+import { Image, Text, View, ScrollView, SafeAreaView, KeyboardAvoidingView} from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconApp } from '../IconApp'
@@ -20,7 +20,6 @@ import { setData } from '../../reducers/authReducer'
 export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const dispatch = useDispatch();
     const recaptchaVerifier = useRef( null );
-    const s = useRef( null );
     const [ userData, setUserData ] = useState({phone:'', countryCode:undefined, countries:[], verificationId:undefined, code:'' });
     const attemptInvisibleVerification = false;
 
@@ -38,7 +37,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                 );
                 const { user } = await firebase.auth().signInWithCredential( credential )
                 // const userRef = await db.collection('users').where('phone', '==', '+528342542740' );
-                dispatch( setData( user.uid ) )
+                await dispatch( setData( user.uid ) )
                 // console.log(user.uid)
             } else {
                 const verificationId = await phoneProvider.verifyPhoneNumber(
@@ -56,7 +55,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     }
 
     return (
-        <>  
+        <SafeAreaView>
             <Image style = {{
                 position: 'absolute',
                 width: '100%',
@@ -81,66 +80,77 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                 size={TEXTS_SIZE.long}
                 color={COLORS_APP.white}
             />
-            <View style={{ width:'100%',height: '100%',justifyContent: 'center', marginTop: 100}}>
-                <Text style={{marginBottom:13, marginTop: 13, marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
+            <KeyboardAvoidingView 
+                style={{flex:1}}
+                behavior={Platform.OS === "ios" ? "padding" : "height"}
+                keyboardVerticalOffset={90}
+            >
+                <ScrollView style={{flex:1, marginTop:230}}>
+                    <View style={{ width:'100%',height:200,justifyContent: 'center'}}>
+                    <Text style={{marginBottom:13,marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
+                        {
+                            !!userData.verificationId
+                            ? "Enter the verification code that we have sent to your phone number."
+                            : "Meetapp will send a SMS message to verify yoru phone number. Enter your country and phone number"
+                        }
+                        
+                    </Text>
+                    <InputSelectapp 
+                        itemsData = { userData.countries } 
+                        setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
+                    />
                     {
-                        !!userData.verificationId
-                        ? "Enter the verification code that we have sent to your phone number."
-                        : "Meetapp will send a SMS message to verify yoru phone number. Enter your country and phone number"
+                        userData.countryCode && <>
+                                    <View style = { styles2.wrapperRegisterNumberPhone }>
+                                        <Textapp
+                                        size= {TEXTS_SIZE.medium}
+                                        weight = {'bold'}
+                                        color = {COLORS_APP.black1}
+                                        text = {`+${userData.countryCode}`}
+                                        />
+                                        <TextInputApp 
+                                            // value = { +userData.numberPhone }
+                                            onChange = { ( value ) => setUserData({...userData,...{phone:+value}}) }
+                                            placeholder = { 'Your phone' }
+                                            styleT = {{ width:'85%', marginLeft:5, height:'100%'}}
+                                            type = {'numeric'}
+                                        />
+                                    </View>
+                                </>
+                                
                     }
-                    
-                </Text>
-                <InputSelectapp 
-                    itemsData = { userData.countries } 
-                    setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
-                />
-                {
-                    userData.countryCode && <>
-                                <View style = { styles2.wrapperRegisterNumberPhone }>
-                                    <Textapp
-                                    size= {TEXTS_SIZE.medium}
-                                    weight = {'bold'}
-                                    color = {COLORS_APP.black1}
-                                    text = {`+${userData.countryCode}`}
-                                    />
-                                    <TextInputApp 
-                                        // value = { +userData.numberPhone }
-                                        onChange = { ( value ) => setUserData({...userData,...{phone:+value}}) }
-                                        placeholder = { 'Your phone' }
-                                        styleT = {{ width:'85%', marginLeft:5, height:'100%'}}
-                                        type = {'numeric'}
-                                    />
-                                </View>
-                            </>
-                            
-                }
-                {
-                    !!userData.verificationId 
-                        && <TextInputApp 
-                                // value = { +userData.numberPhone }
-                                onChange = { ( value ) => setUserData({...userData,...{ code:value }}) }
-                                placeholder = { 'Verification code' }
-                                styleT = {{ width:'100%',height:50}}
-                                type = {'numeric'}
+                    {
+                        !!userData.verificationId 
+                            && <TextInputApp 
+                                    // value = { +userData.numberPhone }
+                                    onChange = { ( value ) => setUserData({...userData,...{ code:value }}) }
+                                    placeholder = { 'Verification code' }
+                                    styleT = {{ width:'100%',height:50}}
+                                    type = {'numeric'}
+                                />
+                    }
+                    {
+                        (userData.phone !== 0) 
+                        && <ButtonGradient 
+                                gradient={['#48C6EF','#6F86D6']}
+                                sizeGradient = {{width:'110%', height:40}}
+                                textButton={!!userData.verificationId ? "Login" : "Verify"}
+                                styleText={{color:'white', fontWeight:'bold',}}
+                                styleButton={{width:'100%', height:40,marginTop:30}}
+                                hanldeOnPress = { login }
                             />
-                }
-                {
-                    (userData.phone !== 0) 
-                    && <ButtonGradient 
-                            gradient={['#48C6EF','#6F86D6']}
-                            sizeGradient = {{width:'110%', height:40}}
-                            textButton={!!userData.verificationId ? "Login" : "Verify"}
-                            styleText={{color:'white', fontWeight:'bold',}}
-                            styleButton={{width:'100%', height:40,marginTop:30}}
-                            hanldeOnPress = { login }
-                        />
-                }   
-            </View>
+                    }   
+                        
+
+                    </View>
+                </ScrollView>
+            </KeyboardAvoidingView>
+            
             <FirebaseRecaptchaVerifierModal
                                 ref={recaptchaVerifier}
                                 firebaseConfig={firebaseConfig}
                                 attemptInvisibleVerification={ attemptInvisibleVerification }
             />
-        </>
+        </SafeAreaView>
     )
 }

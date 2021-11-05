@@ -29,8 +29,10 @@ export const MeetApp = () => {
                     if( !!userData.uid ) {
                         await AsyncStorage.setItem( 'uid', userData.uid )
                         setStatus( true )
+                    } else{
+
+                        setStatus( null )
                     }
-                    setStatus( null )
                 }
             }catch(error) {
                 //Si es false quiere decir que no está registrado

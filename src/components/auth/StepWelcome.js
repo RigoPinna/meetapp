@@ -66,9 +66,10 @@ export const StepWelcome = ({ steps, setStep }) => {
                             </>
             }
             {
-                stepLogin.stepGo && <>
-                                        <ScreenLogin stepLogin={stepLogin} setStepLogin={setStepLoging}/>
-                                        </>
+                stepLogin.stepGo 
+                    && <>
+                            <ScreenLogin stepLogin={stepLogin} setStepLogin={setStepLoging}/>
+                        </>
             }
         </>
     )

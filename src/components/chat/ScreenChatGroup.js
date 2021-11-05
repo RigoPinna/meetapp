@@ -33,7 +33,7 @@ export const ScreenChatGroup = ({ route }) => {
         <KeyboardAvoidingView 
             style={ stylesChat.wrapperKeyboard }
             behavior={Platform.OS === "ios" ? "padding" : "height"}
-            keyboardVerticalOffset={90}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 0 :90 }
             >
            <HeaderChat route = { route }/>
             <View style={stylesChat.wrapperColumnChat }>
