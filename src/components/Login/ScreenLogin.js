@@ -15,6 +15,7 @@ import { InputSelectapp } from '../elements/InputSelectapp'
 import { dataCountry } from '../../services/fetchGetCodeAndCountryName'
 import { useDispatch } from 'react-redux'
 import { setData } from '../../reducers/authReducer'
+import { HeaderDecoration } from '../auth/HeaderDecoration'
 // import { getAuth } from "firebase/auth";
 
 export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
@@ -56,37 +57,15 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
 
     return (
         <SafeAreaView>
-            <Image style = {{
-                position: 'absolute',
-                width: '100%',
-                height: '100%',
-            }}
-            source = {require('../../assets/fondoLogin.png')} />
-            <View style={{position: 'absolute', top: 10, left: 10}}>
-                <ButtonGradient 
-                    gradient={['#F3F7FE','#F3F7FE']}
-                    sizeGradient = {{ width:100, height:100 }}
-                    styleButton = {{ width: 50, height: 50, marginTop: 10}}
-                    IconLeft = { IconArrowLeft }
-                    hanldeOnPress = { () => { goBack() } }
-                    colorIcon = {COLORS_APP.black2}
-                />
-            </View>
-            <IconApp position={{position:'absolute',top:0,left:0, marginTop:100}} />
-            <Textapp 
-                text={'Login'}
-                styles={{position:'absolute',top:0,left:160, marginTop:190}}
-                weight={'bold'}
-                size={TEXTS_SIZE.long}
-                color={COLORS_APP.white}
-            />
             <KeyboardAvoidingView 
                 style={{flex:1}}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 keyboardVerticalOffset={90}
             >
-                <ScrollView style={{flex:1, marginTop:230}}>
-                    <View style={{ width:'100%',height:200,justifyContent: 'center'}}>
+             <HeaderDecoration />
+            <IconApp position={{position:'absolute',top:0,left:0, marginTop:150}} />
+                <ScrollView style={{flex:1}}>
+                    <View style={{ width:'100%',justifyContent: 'center'}}>
                     <Text style={{marginBottom:13,marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
                         {
                             !!userData.verificationId

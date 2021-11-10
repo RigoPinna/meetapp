@@ -14,7 +14,7 @@ import { userStatic } from '../../firebase/firebase-config'
 import { useDispatch } from 'react-redux'
 
 export const StepCreation = ({steps, setStep}) => {
-
+    const IMG_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/meetapp-prueba.appspot.com/o/groups_imgs_defaults%2Fimg_3.png?alt=media&token=2724ab38-867a-4d98-b971-3880faa72e93';
     LogBox.ignoreLogs(['Setting a timer for a long period of time']);
     const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic});
     const dispatch = useDispatch();
@@ -36,11 +36,7 @@ export const StepCreation = ({steps, setStep}) => {
             <View style={{alignItems:'flex-end', alignSelf: 'center'}}>
                 <Image
                         style={styles.tinyLogo}
-                        source = {
-                            dataGroup.image === '' 
-                                    ? require('../../assets/genericGroup.png')
-                                    : {uri:dataGroup.image}
-                                }
+                        source = {{uri:dataGroup.image !== "" ? dataGroup.image :  IMG_DEFAULT }}
                     />
                 <ButtonCamera onPress={ ( uriImg, file ) => {
                     setDataGroup({...dataGroup, ...{ image:uriImg, imageFile: file }})
