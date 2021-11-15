@@ -14,7 +14,7 @@ export const FooterChat = ({ gid }) => {
         <View style={ stylesChat.wrapperFooterSendMessage}>
                
             <TextInputApp 
-                placeholder={'Message..'} 
+                placeholder={'Message...'} 
                 styleT={ stylesChat.inputMessage } 
                 paddingHorizontal={0}
                 value = { message }
