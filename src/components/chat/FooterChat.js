@@ -6,7 +6,7 @@ import { stylesChat } from '../../theme/appTheme'
 import { ButtonSendMessage } from '../elements/ButtonSendMessage'
 import { TextInputApp } from '../elements/TextInputApp'
 
-export const FooterChat = ({ gid }) => {
+export const FooterChat = ({ gid}) => {
     
     const [ message, setMessage ] = useState('')
 
@@ -20,7 +20,7 @@ export const FooterChat = ({ gid }) => {
                 value = { message }
                 onChange = { ( text ) => setMessage( text )} 
             />
-            <ButtonSendMessage gid = { gid } message = { message } setMessage={ setMessage }/>
+            <ButtonSendMessage gid = { gid } message = { message } setMessage={ setMessage } />
         </View>
     )
 }

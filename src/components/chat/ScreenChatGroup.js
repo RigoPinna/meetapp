@@ -1,5 +1,5 @@
 import { db } from '../../firebase/firebase-config'
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useEffect } from 'react'
 import { KeyboardAvoidingView, ScrollView,View } from 'react-native'
 import { HeaderChat } from './HeaderChat'
@@ -10,7 +10,8 @@ import { FooterChat } from './FooterChat'
 
 
 export const ScreenChatGroup = ({ route }) => {
-
+    const scrollViewRef = useRef()
+    let bottom
     const [ messages, setMessages ] = useState([])
     useEffect(() => {
             db.collection('groups')
@@ -37,13 +38,16 @@ export const ScreenChatGroup = ({ route }) => {
             >
            <HeaderChat route = { route }/>
             <View style={stylesChat.wrapperColumnChat }>
-                <ScrollView style={ stylesChat.wrapperListMessages }>
+                <ScrollView 
+                    ref={scrollViewRef}
+                    onContentSizeChange = {() => !!scrollViewRef.current && scrollViewRef.current.scrollToEnd({animated: true})}
+                    style={ stylesChat.wrapperListMessages }>
                    {
                        messages.map( message =>  <ItemMessage key={ message.mid } {...message}/>)
                    }
                 </ScrollView>
             </View>
-            <FooterChat gid = { route.params.id } />
+            <FooterChat gid = { route.params.id }/>
         </KeyboardAvoidingView>
     )
 }

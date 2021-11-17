@@ -10,7 +10,7 @@ import { styles, stylesChat } from '../../theme/appTheme'
 import { IconSendMessage } from '../icons/IconSendMessage'
 
 
-export const ButtonSendMessage = ({ gid, message,setMessage }) => {
+export const ButtonSendMessage = ({ gid, message,setMessage}) => {
     const { uid } = useSelector( state => state.authRed )
     const hanldeSendMessage = () => {
         if( message.trim() !== '' ) {
