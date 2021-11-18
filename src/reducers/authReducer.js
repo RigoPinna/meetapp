@@ -15,7 +15,6 @@ export const setData = ( uid ) => {
             const doc = await userRef.get()
             if ( doc.exists ) {
                 const user = doc.data()
-                console.log(user)
                 dispatch({
                     type: 'set-data-user',
                     payload: {

@@ -1,11 +1,33 @@
-import React from 'react'
+import React, { useEffect, useRef, useState } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
 import { Text, View } from 'react-native'
 import { COLORS_APP } from '../ui/COLORS_APP'
-
-export const ItemNumberNotification = ({ number=0 }) => {
+import { addNewMessageNumber } from '../../reducers/notificationsReducer'
+import { db } from '../../firebase/firebase-config'
+export const ItemNumberNotification = ({ id }) => {
+   
+    const isMounted = useRef(null)
+    const [number, setNumber] = useState(0)
+    const { notificationsReducer } = useSelector( state => state)
+    useEffect(() => {
+      
+        if ( isMounted.current ) {        
+            const group = notificationsReducer.find( group => group.gid === id )
+            if( !!group ) {
+                setNumber( group.number )
+            }
+        }
+    }, [ notificationsReducer ])
     return (
-        <View style = {{width:25, height:25,backgroundColor:COLORS_APP.black2, borderRadius:20, justifyContent: 'center', alignItems:'center', position:'absolute', right:10, top:10}}>
-                <Text style = {{color:'white'}}>{ number }</Text>
-            </View>
+        <>
+            {
+                <View
+                    ref={ isMounted } 
+                    style = {{width:number>0 ? 35 : 0 , height:25,backgroundColor:'#FF3838', borderRadius:20, justifyContent: 'center', alignItems:'center', position:'absolute', right:10, top:10}}>
+                                <Text style = {{color:'white'}}>{number}</Text>
+                </View>
+            }
+        </>
+       
     )
 }

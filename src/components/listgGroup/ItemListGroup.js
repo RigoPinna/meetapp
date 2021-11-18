@@ -49,7 +49,7 @@ export const ItemListGroup = ({ id,image,name='',createdat='', participants = []
                 />
                 <ListParticipants participants={ participants } colorColorBordersAvatars = {'#EEEEEC'} />
             </View>
-           <ItemNumberNotification />
+           <ItemNumberNotification id = { id } />
         </View>
         </TouchableOpacity>
        
