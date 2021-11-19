@@ -11,9 +11,10 @@
 // ]
 const initState = []
 
-export const addNotification = ( gid ) => {
+export const addNotification = ( gid, title="title", body="body", msg="message" ) => {
     
     return async (dispatch) => {
+       
         dispatch({
             type:"addNotification",
             payload:gid,

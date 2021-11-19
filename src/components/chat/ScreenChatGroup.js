@@ -11,6 +11,7 @@ import { ItemMessage } from './ItemMessage'
 import { FooterChat } from './FooterChat'
 
 import { stylesChat } from '../../theme/appTheme'
+import { sendNotification } from '../../helpers/sendNotification'
 
 
 
@@ -36,6 +37,7 @@ export const ScreenChatGroup = ({ route }) => {
                     setMessages( msgs )
                 } else {
                     await dispatch( addNotification(route.params.id) )
+                    await sendNotification( route.params.tokenNotification )
                 }
             })
     }, [])

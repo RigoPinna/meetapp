@@ -10,11 +10,13 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { ListParticipants } from './ListParticipants'
 import { db, userStatic } from '../../firebase/firebase-config'
 
-export const ItemListGroup = ({ id,image,name='',createdat='', participants = [],description, navigation }) => {
+export const ItemListGroup = ({ id,image,name='',createdat='', participants = [],description, navigation, tokenNotification }) => {
     const time = useTimeAgo( createdat );
-    const hanldeNavigatorChat = () => navigation.navigate('ScreenChatGroup',{ id, image, name, participants, description });
+    const hanldeNavigatorChat = () => {
+        navigation.navigate('ScreenChatGroup',{ id, image, name, participants, description, tokenNotification })
+    };
     const userLoged = useSelector(state => state.authRed )
-    const hanldeNavigatorEliminateGroup = () => navigation.navigate('ModalEliminateGroup', {id,name});
+    const hanldeNavigatorEliminateGroup = () => navigation.navigate('ModalEliminateGroup', { id, name });
     const onLongPressButton = async () => {
         if( userLoged.uid !== null ) {
             const groupRef = db.collection('groups').doc(id);
