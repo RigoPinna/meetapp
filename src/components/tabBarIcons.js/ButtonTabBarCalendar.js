@@ -1,19 +1,19 @@
 import { useNavigation } from '@react-navigation/native'
 import React from 'react'
 import { ButtonGradient } from '../elements/ButtonGradient'
-import { IconMessage } from '../icons/IconMessage'
+import { IconCalendar } from '../icons/IconCalendar'
 import { COLORS_APP } from '../ui/COLORS_APP'
 
-export const ButtonTabBarMessage = ({ focused }) => {
+export const ButtonTabBarCalendar = ({ focused }) => {
     const nav = useNavigation();
     return (
-        <ButtonGradient 
+        <ButtonGradient
             gradient={ focused ? ['#4481EB','#04BEFE']:['#FFFFFF','#FFFFFF']}
-            textButton = {focused ? 'Messages': ''}
+            textButton = {focused ? 'Calendar': ''}
             styleButton = {{height:50,width:130}}
-            sizeGradient = {{width:200, height:100}}
-            hanldeOnPress = { () => nav.navigate( 'ListGroup' ) }
-            IconLeft = {IconMessage}
+            sizeGradient = {{width:200, height:50}}
+            hanldeOnPress = { () => nav.navigate( 'Calendar' ) }
+            IconLeft = {IconCalendar}
             colorIcon = {focused ? '#FFFFFF' : COLORS_APP.black3}
             styleText = {{
                 fontWeight:'bold',

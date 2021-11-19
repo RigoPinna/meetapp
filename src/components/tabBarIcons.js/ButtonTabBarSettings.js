@@ -10,7 +10,7 @@ export const ButtonTabBarSettings = ({ focused }) => {
         <ButtonGradient 
             gradient={ focused ? ['#4481EB','#04BEFE']:['#FFFFFF','#FFFFFF']}
             textButton = {focused ? 'Settings': ''}
-            styleButton = {{height:50,width:150}}
+            styleButton = {{height:50,width:130}}
             sizeGradient = {{width:200, height:50}}
             hanldeOnPress = { () => nav.navigate( 'Settings' ) }
             IconLeft = {IconSettings}
