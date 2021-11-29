@@ -49,16 +49,16 @@ export const ListGroup = ({ navigation }) => {
                                     return ( 
                                         !!gid 
                                             ? <ItemListGroup
-                                            key = { gid } 
-                                            id={gid}
-                                            image = { image } 
-                                            name = { name } 
-                                            createdat = {createdat} 
-                                            participants = { participants }
-                                            description = { description}
-                                            navigation = { navigation }
-                                            tokenNotification = { tokenNotification }
-                                        /> 
+                                                    key = { gid } 
+                                                    id={gid}
+                                                    image = { image } 
+                                                    name = { name } 
+                                                    createdat = {createdat} 
+                                                    participants = { participants }
+                                                    description = { description}
+                                                    navigation = { navigation }
+                                                    tokenNotification = { tokenNotification }
+                                                /> 
                                         :<></>
                                         )
                                 

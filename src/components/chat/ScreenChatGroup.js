@@ -15,32 +15,17 @@ import { sendNotification } from '../../helpers/sendNotification'
 
 
 
-export const ScreenChatGroup = ({ route }) => {
+export const ScreenChatGroup = React.memo(({ route }) => {
     const dispatch = useDispatch();
     const scrollViewRef = useRef()
     const [ messages, setMessages ] = useState([])
     const isMounted = useRef( null )
     useEffect(() => {
-            db.collection('groups')
-            .doc( route.params.id )
-            .collection('Chat').orderBy('createdat').onSnapshot( async (snapshot) => {
-                const msgs = snapshot.docs.map( (doc) => {
-                    const data = doc.data();
-                    return {
-                        mid: doc.id,
-                        ...data
-                    }
-                });
-
-                if ( !!isMounted.current ) {
-                    dispatch( removeBadge(route.params.id) );
-                    setMessages( msgs )
-                } else {
-                    await dispatch( addNotification(route.params.id) )
-                    await sendNotification( route.params.tokenNotification )
-                }
-            })
-    }, [])
+        if ( !!isMounted.current ) {
+            dispatch( removeBadge(route.params.id) );
+            setMessages( route.params.messages )
+        }
+    }, [route.params.messages])
     
     return (
 
@@ -57,11 +42,11 @@ export const ScreenChatGroup = ({ route }) => {
                     onContentSizeChange = {() => !!scrollViewRef.current && scrollViewRef.current.scrollToEnd({animated: true})}
                     style={ stylesChat.wrapperListMessages }>
                    {
-                       messages.map( message =>  <ItemMessage key={ message.mid } {...message}/>)
+                       messages.length > 0 && messages.map( message =>  <ItemMessage key={ message.mid } {...message}/>)
                    }
                 </ScrollView>
             </View>
             <FooterChat gid = { route.params.id }/>
         </KeyboardAvoidingView>
     )
-}
+})
