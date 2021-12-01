@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Image, ScrollView, View, Clipboard} from 'react-native'
 import { useSafeAreaFrame, useSafeAreaInsets } from 'react-native-safe-area-context'
 import { styleListGroups } from '../../theme/appTheme'
@@ -29,6 +29,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const userLoged = useSelector(state => state.authRed )
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
+    const isMounted = useRef(null)
 
     const getCode = async () => {
         if( userLoged.uid !== null ) {

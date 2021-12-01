@@ -18,29 +18,27 @@ import { addMessages } from '../../reducers/chatReducer'
 
 export const ScreenChatGroup = ({ route }) => {
     const dispatch = useDispatch();
-    const { chatReducer } = useSelector(state => state)
     const scrollViewRef = useRef()
     const [ messages, setMessages ] = useState([])
     const isMounted = useRef( null )
     useEffect(() => {
-        // if ( !!isMounted.current ) {
-            console.log("REDUCER=", chatReducer)
-            if( chatReducer.length > 0 ) {
-                const chat = chatReducer.find( chats => chats.gid === route.params.id )
-                console.log("chat=", chat)
-                if( !!chat ) {
-                    setMessages( chat.messages )
-                } else {
-                    const initChat = {
-                        gid: route.params.id,
-                        messages:[]
-                    }
-                    setMessages([])
-                }
-            }
+        if ( !!isMounted.current ) {
             dispatch( removeBadge(route.params.id) );
-            // }
-    }, [ chatReducer ])
+            db.collection('groups')
+                .doc( route.params.id )
+                .collection('Chat').orderBy('createdat').onSnapshot( (snapshot) => {
+                    const messages = snapshot.docs.map( doc => {
+                        const data = doc.data();
+                        return {
+                            mid: doc.id,
+                            ...data
+                        }
+                    });
+                    setMessages( messages );
+                })
+            
+        }
+    }, [ ])
     
     return (
 

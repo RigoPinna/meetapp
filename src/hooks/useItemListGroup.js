@@ -25,11 +25,8 @@ export const useItemListGroup = ({navigation, id, image, name, participants, des
                     ...data
                 }
             });
-            await dispatch( addMessages( id, messages ) )
-            if ( actualRoute.name !== "ScreenChatGroup" ) {
-                await dispatch( addNotification( id ) )
-                await sendNotification( tokenNotification, name, "new message..." )
-            }
+            await dispatch( addMessages({ gid:id, messages, tokenNotification, groupName:name }) )
+            
         })
     }, [])
 

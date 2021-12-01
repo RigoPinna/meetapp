@@ -7,12 +7,12 @@ import { registerReducer } from '../reducers/registerReducer';
 import { settingsReducer } from '../reducers/settingsReducer';
 import { chatReducer } from '../reducers/chatReducer';
 const reducers = combineReducers({
-    groupReducer,
-    registerReducer,
-    settingsReducer,
     authRed,
-    notificationsReducer,
+    registerReducer,
+    groupReducer,
+    settingsReducer,
     chatReducer,
+    notificationsReducer,
 });
 const composeEnhancers = 
     ( typeof window !== 'undefined' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ ) || compose;
