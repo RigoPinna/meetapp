@@ -3,7 +3,7 @@ import { KeyboardAvoidingView, ScrollView,View } from 'react-native'
 
 import { db } from '../../firebase/firebase-config'
 
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addNotification, removeBadge } from '../../reducers/notificationsReducer'
 
 import { HeaderChat } from './HeaderChat'
@@ -12,20 +12,35 @@ import { FooterChat } from './FooterChat'
 
 import { stylesChat } from '../../theme/appTheme'
 import { sendNotification } from '../../helpers/sendNotification'
+import { addMessages } from '../../reducers/chatReducer'
 
 
 
-export const ScreenChatGroup = React.memo(({ route }) => {
+export const ScreenChatGroup = ({ route }) => {
     const dispatch = useDispatch();
+    const { chatReducer } = useSelector(state => state)
     const scrollViewRef = useRef()
     const [ messages, setMessages ] = useState([])
     const isMounted = useRef( null )
     useEffect(() => {
-        if ( !!isMounted.current ) {
+        // if ( !!isMounted.current ) {
+            console.log("REDUCER=", chatReducer)
+            if( chatReducer.length > 0 ) {
+                const chat = chatReducer.find( chats => chats.gid === route.params.id )
+                console.log("chat=", chat)
+                if( !!chat ) {
+                    setMessages( chat.messages )
+                } else {
+                    const initChat = {
+                        gid: route.params.id,
+                        messages:[]
+                    }
+                    setMessages([])
+                }
+            }
             dispatch( removeBadge(route.params.id) );
-            setMessages( route.params.messages )
-        }
-    }, [route.params.messages])
+            // }
+    }, [ chatReducer ])
     
     return (
 
@@ -49,4 +64,4 @@ export const ScreenChatGroup = React.memo(({ route }) => {
             <FooterChat gid = { route.params.id }/>
         </KeyboardAvoidingView>
     )
-})
+}

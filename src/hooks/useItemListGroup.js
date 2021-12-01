@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import { db } from '../firebase/firebase-config';
 import { sendNotification } from '../helpers/sendNotification';
+import { addMessages } from '../reducers/chatReducer';
 import { addNotification } from '../reducers/notificationsReducer';
 
 
@@ -11,29 +12,28 @@ export const useItemListGroup = ({navigation, id, image, name, participants, des
     const dispatch = useDispatch()
     const { authRed: userLoged } = useSelector( state => state )
 
-    const hanldeNavigatorEliminateGroup = () => navigation.navigate('ModalEliminateGroup', { id, name });
     useEffect(() => {
         const [ actualRoute ] = navigation.getState().routes
         
         db.collection('groups')
         .doc( id )
         .collection('Chat').orderBy('createdat').onSnapshot( async (snapshot) => {
-            const msgs = snapshot.docs.map( (doc) => {
+            const messages = snapshot.docs.map( doc => {
                 const data = doc.data();
                 return {
                     mid: doc.id,
                     ...data
                 }
             });
-
+            await dispatch( addMessages( id, messages ) )
             if ( actualRoute.name !== "ScreenChatGroup" ) {
-   
                 await dispatch( addNotification( id ) )
-                await sendNotification( tokenNotification )
-                
+                await sendNotification( tokenNotification, name, "new message..." )
             }
         })
     }, [])
+
+    const hanldeNavigatorEliminateGroup = () => navigation.navigate('ModalEliminateGroup', { id, name });
 
     const onLongPressButton = async () => {
         if( userLoged.uid !== null ) {
