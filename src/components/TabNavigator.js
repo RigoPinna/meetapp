@@ -5,6 +5,8 @@ import { MenuPrimary } from './stack-primary/MenuPrimary';
 import { StackNavigatorPrimary } from './stack-primary/StackNavigatorPrimary';
 import { ButtonTabBarMessage } from './tabBarIcons.js/ButtonTabBarMessage';
 import { ButtonTabBarSettings } from './tabBarIcons.js/ButtonTabBarSettings';
+import { ButtonTabBarCalendar } from './tabBarIcons.js/ButtonTabBarCalendar';
+import { ScreenCalendar } from './Calendar/ScreenCalendar';
 
 const Tab = createBottomTabNavigator();
 
@@ -28,6 +30,15 @@ export const TabNavigator = () => {
                
             >
                 <Tab.Screen 
+                    name ="Calendar" 
+                    options = {{
+                        headerShown:false,
+                        title:'Calendar',
+                        tabBarIcon: props => <ButtonTabBarCalendar {...props } />
+                    }}
+                    component = {ScreenCalendar} 
+                />
+                <Tab.Screen 
                     name ="ListGroup" 
                     options = {{
                         headerShown:false,
@@ -41,7 +52,7 @@ export const TabNavigator = () => {
                     name ="Settings" 
                     options = {{
                         headerShown:false,
-                        tiitle:'Settings',
+                        title:'Settings',
                         tabBarIcon: props => <ButtonTabBarSettings {...props } />
                     }}
                     component = {SettingsScreen} />

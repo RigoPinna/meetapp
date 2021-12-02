@@ -5,7 +5,7 @@ import { BlurView } from 'expo-blur'
 import { Platform, View } from "react-native";
 import { COLORS_APP } from "../ui/COLORS_APP";
 import { ButtonGradient } from "./ButtonGradient";
-export const DatePickerApp = ({eventData, setEventData}) => {
+export const DatePickerApp = ({eventData, setEventData, decision}) => {
     const [visible, setVisible] = useState( false )
     const [text, setText] = useState("Select date...")
     const [date, setDate] = useState(new Date())
@@ -24,7 +24,11 @@ export const DatePickerApp = ({eventData, setEventData}) => {
             setText( fDate )
             setDate( currentDate )
             // setEventData( fDate )
-            setEventData({...eventData, ...{startDate: fDate}})
+            if(decision==='start'){
+                setEventData({...eventData, ...{startDate: fDate}}) 
+            } else {
+                setEventData({...eventData, ...{finishDate: fDate}}) 
+            } 
         } else {
             setVisible(false)
         }
