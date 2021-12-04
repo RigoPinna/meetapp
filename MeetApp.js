@@ -7,7 +7,6 @@ import { setData } from './src/reducers/authReducer';
 import { AppRoot } from './src/components/App/AppRoot';
 import { RegisterUser } from './src/components/auth/RegisterUser';
 
-
 export const MeetApp = () => {
     const [ status, setStatus ] = useState( undefined )
     const dispatch = useDispatch()

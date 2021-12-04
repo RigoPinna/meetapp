@@ -7,6 +7,7 @@ import { ItemListGroup } from './ItemListGroup'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import * as Progress from 'react-native-progress';
 import {useSelector } from 'react-redux'
+import { useNotification } from '../../hooks/useNotification'
 
 const STATE_GROUPS_LOADING = {
     loading:undefined,
@@ -15,6 +16,7 @@ const STATE_GROUPS_LOADING = {
 export const ListGroup = ({ navigation }) => {
     const [ groups, setGroups ] = useState( STATE_GROUPS_LOADING.loading );
     const userLoged = useSelector(state => state.authRed )
+    const { Token:tokenNotification } = useNotification();
     useEffect(() => {
         if( userLoged.uid !== null ) {
             db.collection('groups').orderBy('createdat', 'desc').onSnapshot( querySnapshot => {
@@ -47,15 +49,16 @@ export const ListGroup = ({ navigation }) => {
                                     return ( 
                                         !!gid 
                                             ? <ItemListGroup
-                                            key = { gid } 
-                                            id={gid}
-                                            image = { image } 
-                                            name = { name } 
-                                            createdat = {createdat} 
-                                            participants = { participants }
-                                            description = { description}
-                                            navigation = { navigation }
-                                        /> 
+                                                    key = { gid } 
+                                                    id={gid}
+                                                    image = { image } 
+                                                    name = { name } 
+                                                    createdat = {createdat} 
+                                                    participants = { participants }
+                                                    description = { description}
+                                                    navigation = { navigation }
+                                                    tokenNotification = { tokenNotification }
+                                                /> 
                                         :<></>
                                         )
                                 

@@ -5,11 +5,13 @@ import { notificationsReducer } from '../reducers/notificationsReducer';
 import { groupReducer } from '../reducers/groupReducer';
 import { registerReducer } from '../reducers/registerReducer';
 import { settingsReducer } from '../reducers/settingsReducer';
+import { chatReducer } from '../reducers/chatReducer';
 const reducers = combineReducers({
-    groupReducer,
-    registerReducer,
-    settingsReducer,
     authRed,
+    registerReducer,
+    groupReducer,
+    settingsReducer,
+    chatReducer,
     notificationsReducer,
 });
 const composeEnhancers = 
