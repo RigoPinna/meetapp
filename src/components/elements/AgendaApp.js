@@ -5,8 +5,8 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Textapp } from './Textapp';
 import {Card, Avatar} from 'react-native-paper';
 
-export const AgendaApp = () => {
-        const [items, setItems] = useState({})
+export const AgendaApp = ({event}) => {
+        const [items, setItems] = useState(event)
         const date = new Date()
 
         const timeToString = (time) => {
@@ -14,27 +14,29 @@ export const AgendaApp = () => {
             return date.toISOString().split('T')[0];
         }
         const loadItems = (day) => {
-            setTimeout(() => {
-              for (let i = -15; i < 85; i++) {
-                const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-                const strTime = timeToString(time);
-                if (!items[strTime]) {
-                  items[strTime] = [];
-                  const numItems = Math.floor(Math.random() * 3 + 1);
-                  for (let j = 0; j < numItems; j++) {
-                    items[strTime].push({
-                      name: 'Item for ' + strTime + ' #' + j,
-                      height: Math.max(50, Math.floor(Math.random() * 150))
-                    });
-                  }
-                }
-              }
-              const newItems = {};
-              Object.keys(items).forEach(key => {
-                newItems[key] = items[key];
-              });
-              setItems(newItems)
-            }, 1000);
+            // setTimeout(() => {
+            //   for (let i = -15; i < 85; i++) {
+            //     const time = day.timestamp + i ;
+            //     const strTime = timeToString(time);
+            //     if (!items[strTime]) {
+            //       items[strTime] = [];
+            //       const numItems = 1
+            //       for (let j = 0; j < numItems; j++) {
+            //         items[strTime].push({
+            //           name: 'Item for ' + strTime + ' #' + j,
+            //           height: Math.max(50, Math.floor(Math.random() * 150))
+            //         });
+            //       }
+            //     }
+            //   }
+            //   const newItems = {};
+            //   Object.keys(items).forEach(key => {
+            //     newItems[key] = items[key];
+            //   });
+            //   setItems(newItems)
+            // }, 1000);
+            console.log(items[0])
+            console.log('picado ', day)
         }
     
         const renderItem = (item) => {
@@ -44,7 +46,7 @@ export const AgendaApp = () => {
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
                         <Textapp text={item.name}/>
-                        <Avatar.Text label = 'J'/>
+                        <Avatar.Text label = 'i'/>
                     </View>
                 </Card.Content>
             </TouchableOpacity>)
@@ -55,7 +57,7 @@ export const AgendaApp = () => {
             // The list of items that have to be displayed in agenda. If you want to render item as empty date
             // the value of date key has to be an empty array []. If there exists no value for date key it is
             // considered that the date in question is not yet loaded
-            items={items}
+            // items={items}
             // items={{
             //     '2021-11-22': [{name: 'item 1 - any js object'}],
             //     '2021-11-23': [{name: 'item 2 - any js object', height: 80}],
@@ -77,7 +79,7 @@ export const AgendaApp = () => {
             // Maximum date that can be selected, dates after maxDate will be grayed out. Default = undefined
             // maxDate={'2012-05-30'}
             // Max amount of months allowed to scroll to the past. Default = 50
-            // pastScrollRange={1}
+            pastScrollRange={1}
             // // Max amount of months allowed to scroll to the future. Default = 50
             // futureScrollRange={50}
             // // Specify how each item should be rendered in agenda
@@ -97,11 +99,9 @@ export const AgendaApp = () => {
             // // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
             // // showClosingKnob={false}
             // // By default, agenda dates are marked if they have at least one item, but you can override this if needed
-            // markedDates={{
-            //     '2021-11-19': {selected: true, marked: true},
-            //     '2021-11-20': {marked: true},
-            //     '2021-11-21': {disabled: true}
-            // }}
+            markedDates={{
+                '2021-11-20': {marked: true}
+            }}
             // // If disabledByDefault={true} dates flagged as not disabled will be enabled. Default = false
             // // disabledByDefault={true}
             // // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
