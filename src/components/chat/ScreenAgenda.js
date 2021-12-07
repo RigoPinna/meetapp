@@ -18,7 +18,7 @@ export const ScreenAgenda = ({route}) => {
     const {id} = params
     const[ loading, setLoading ] = useState( true );
     const navigation = useNavigation()
-    const [events, setEvents] = useState({})
+    const [events, setEvents] = useState(undefined)
 
     useEffect(() => {
         (state !== null) && setLoading(false)
@@ -43,7 +43,10 @@ export const ScreenAgenda = ({route}) => {
                 </View>
             :   <>
                 <View style={{width: '100%',height: '94%'}}>
-                    <AgendaApp event = {events}/>
+                    {
+                        !!events && <AgendaApp event = {events}/>
+                    }
+
                 </View>
                 <View style={{...styles.header, justifyContent: 'center', backgroundColor: '#F5F7FA'}}>
                                 

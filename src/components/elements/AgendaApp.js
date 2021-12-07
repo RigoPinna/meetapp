@@ -35,8 +35,9 @@ export const AgendaApp = ({event}) => {
             //   });
             //   setItems(newItems)
             // }, 1000);
-            console.log(items[0])
-            console.log('picado ', day)
+            // console.log('event',event)
+            console.log('item',items[0])
+            // console.log('picado ', day)
         }
     
         const renderItem = (item) => {
