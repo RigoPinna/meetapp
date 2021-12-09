@@ -3,6 +3,13 @@ import { COLORS_APP } from '../components/ui/COLORS_APP';
 import { TEXTS_SIZE } from '../components/ui/TEXTS_SIZE';
 
 export const styles = StyleSheet.create({
+    emptyDate: {
+        height: 15,
+        flex: 1,
+        paddingTop: 30,
+        backgroundColor: 'red'
+      },
+
     wrapperPresentationScreen: {
         display:'flex',
         flexDirection: 'column',

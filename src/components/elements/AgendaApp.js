@@ -4,49 +4,66 @@ import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Textapp } from './Textapp';
 import {Card, Avatar} from 'react-native-paper';
+import { styles } from '../../theme/appTheme';
 
 export const AgendaApp = ({event}) => {
-        const [items, setItems] = useState(event)
+        const [items, setItems] = useState({})
+        const [dates, setDates] = useState(event)
         const date = new Date()
 
         const timeToString = (time) => {
             const date = new Date(time);
             return date.toISOString().split('T')[0];
-        }
-        const loadItems = (day) => {
-            // setTimeout(() => {
-            //   for (let i = -15; i < 85; i++) {
-            //     const time = day.timestamp + i ;
-            //     const strTime = timeToString(time);
-            //     if (!items[strTime]) {
-            //       items[strTime] = [];
-            //       const numItems = 1
-            //       for (let j = 0; j < numItems; j++) {
-            //         items[strTime].push({
-            //           name: 'Item for ' + strTime + ' #' + j,
-            //           height: Math.max(50, Math.floor(Math.random() * 150))
-            //         });
-            //       }
-            //     }
-            //   }
-            //   const newItems = {};
-            //   Object.keys(items).forEach(key => {
-            //     newItems[key] = items[key];
-            //   });
-            //   setItems(newItems)
-            // }, 1000);
-            // console.log('event',event)
-            console.log('item',items[0])
-            // console.log('picado ', day)
-        }
+          }
+          const loadItems =(day) =>{
+            setTimeout(() => {
+              for (let i = 0; i < dates.length; i++) {
+                const strTime = dates[i].startDate
+                console.log('str', strTime)
+                if (!items[strTime]) {
+                  items[strTime] = [];
+                  const numItems = 1;
+                  for (let j = 0; j < numItems; j++) {
+                    items[strTime].push({
+                      name: dates[i].nameEvent,
+                      description: dates[i].description
+                    });
+                  }
+                }
+              }
+              const newItems = {};
+              Object.keys(items).forEach(key => {
+                newItems[key] = items[key];
+              });
+              setItems(newItems);
+            }, 1000);
+          }
+
+          const renderEmptyDate = ( ) => {
+            return (
+              <View style={styles.emptyDate}>
+                <Textapp>This is empty date!</Textapp>
+              </View>
+            );
+          }
+
+          const rowHasChanged = (r1, r2) => {
+            return r1.name !== r2.name;
+          }
     
         const renderItem = (item) => {
     
             return (
-            <TouchableOpacity style = {{marginRight: 10, marginTop: 17}}>
+            <TouchableOpacity style = {{marginRight: 10, marginTop: 25}}>
                 <Card.Content>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center'}}>
-                        <Textapp text={item.name}/>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: 15}}>
+                        <View>
+                            <Textapp 
+                                text={item.name}/>
+                            <Textapp 
+                                styles={{marginTop: 10}}
+                                text={item.description}/>
+                        </View>
                         <Avatar.Text label = 'i'/>
                     </View>
                 </Card.Content>
@@ -58,7 +75,7 @@ export const AgendaApp = ({event}) => {
             // The list of items that have to be displayed in agenda. If you want to render item as empty date
             // the value of date key has to be an empty array []. If there exists no value for date key it is
             // considered that the date in question is not yet loaded
-            // items={items}
+            items={items}
             // items={{
             //     '2021-11-22': [{name: 'item 1 - any js object'}],
             //     '2021-11-23': [{name: 'item 2 - any js object', height: 80}],
@@ -67,6 +84,8 @@ export const AgendaApp = ({event}) => {
             // }}
             // Callback that gets called when items for a certain month should be loaded (month became visible)
             loadItemsForMonth={loadItems}
+            // renderEmptyDate={renderEmptyDate}
+            rowHasChanged={rowHasChanged}
             // Callback that fires when the calendar is opened or closed
             // onCalendarToggled={(calendarOpened) => {console.log(calendarOpened)}}
             // // Callback that gets called on day press
@@ -96,13 +115,14 @@ export const AgendaApp = ({event}) => {
             // // Specify your item comparison function for increased performance
             // rowHasChanged={(r1, r2) => {return r1.text !== r2.text}}
             // // Hide knob button. Default = false
-            // // hideKnob={true}
+            // hideKnob={true}
             // // When `true` and `hideKnob` prop is `false`, the knob will always be visible and the user will be able to drag the knob up and close the calendar. Default = false
             // // showClosingKnob={false}
             // // By default, agenda dates are marked if they have at least one item, but you can override this if needed
-            markedDates={{
-                '2021-11-20': {marked: true}
-            }}
+            // markedDates={{
+            //     '2021-11-20' : {marked: true}
+            // }}
+            showClosingKnob={true}
             // // If disabledByDefault={true} dates flagged as not disabled will be enabled. Default = false
             // // disabledByDefault={true}
             // // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
