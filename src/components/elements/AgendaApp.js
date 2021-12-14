@@ -77,10 +77,12 @@ export const AgendaApp = ({event}) => {
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: 15}}>
                       <View>
-                          <Textapp 
+                          <Textapp
+                              size={TEXTS_SIZE.medium}
                               text={item.name}/>
                           <Textapp 
                               styles={{marginTop: 10}}
+                              size={TEXTS_SIZE.small}
                               text={item.description}/>
                       </View>
                       <Avatar.Text label = {item.name.substring(0,2)} style={{backgroundColor: 'blue'}}/>
@@ -149,7 +151,7 @@ export const AgendaApp = ({event}) => {
             // // If provided, a standard RefreshControl will be added for "Pull to Refresh" functionality. Make sure to also set the refreshing prop correctly
             // onRefresh={() => console.log('refreshing...')}
             // // Set this true while waiting for new data from a refresh
-            // refreshing={false}
+            refreshing={true}
             // // Add a custom RefreshControl component, used to provide pull-to-refresh functionality for the ScrollView
             // refreshControl={null}
             // // Agenda theme
