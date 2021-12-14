@@ -5,28 +5,37 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Textapp } from './Textapp';
 import {Card, Avatar} from 'react-native-paper';
 import { styles } from '../../theme/appTheme';
+import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 
 export const AgendaApp = ({event}) => {
         const [items, setItems] = useState({})
         const [dates, setDates] = useState(event)
         const date = new Date()
 
-        const timeToString = (time) => {
-            const date = new Date(time);
-            return date.toISOString().split('T')[0];
+        const checkDup = (date, start) => {
+            let dup = 1;
+            for (let m = start; m < dates.length; m++) {
+              if(!!dates[m+1]){
+                let date2 = dates[m+1].startDate
+                if(date === date2){
+                  dup = dup + 1
+                }
+              }
+            }
+            return dup;
           }
           const loadItems =(day) =>{
             setTimeout(() => {
               for (let i = 0; i < dates.length; i++) {
                 const strTime = dates[i].startDate
-                console.log('str', strTime)
                 if (!items[strTime]) {
                   items[strTime] = [];
-                  const numItems = 1;
+                  const numItems = checkDup(strTime, i);
                   for (let j = 0; j < numItems; j++) {
                     items[strTime].push({
-                      name: dates[i].nameEvent,
-                      description: dates[i].description
+                      name: dates[i+j].nameEvent,
+                      description: dates[i+j].description,
+                      // color: dates[i+j].color
                     });
                   }
                 }
@@ -41,10 +50,20 @@ export const AgendaApp = ({event}) => {
 
           const renderEmptyDate = ( ) => {
             return (
-              <View style={styles.emptyDate}>
-                <Textapp>This is empty date!</Textapp>
-              </View>
-            );
+              <TouchableOpacity style = {{marginRight: 10, marginTop: 25, justifyContent: 'center'}}>
+                  <Card.Content>
+                      <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: 15}}>
+                          <View>
+                              <Textapp
+                              weight='bold'
+                              size={TEXTS_SIZE.small}
+                              // color='red'
+                                text={'No Event in this day'}/>
+                          </View>
+                          <Avatar.Text label = '!' style={{backgroundColor: 'red'}}/>
+                      </View>
+                  </Card.Content>
+              </TouchableOpacity>)
           }
 
           const rowHasChanged = (r1, r2) => {
@@ -57,14 +76,15 @@ export const AgendaApp = ({event}) => {
             <TouchableOpacity style = {{marginRight: 10, marginTop: 25}}>
                 <Card.Content>
                     <View style={{flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: 'white', padding: 15}}>
-                        <View>
-                            <Textapp 
-                                text={item.name}/>
-                            <Textapp 
-                                styles={{marginTop: 10}}
-                                text={item.description}/>
-                        </View>
-                        <Avatar.Text label = 'i'/>
+                      <View>
+                          <Textapp 
+                              text={item.name}/>
+                          <Textapp 
+                              styles={{marginTop: 10}}
+                              text={item.description}/>
+                      </View>
+                      <Avatar.Text label = {item.name.substring(0,2)} style={{backgroundColor: 'blue'}}/>
+                      {/* <Avatar.Text label = {item.name.substring(0,2)} style={{backgroundColor: item.color}}/> */}
                     </View>
                 </Card.Content>
             </TouchableOpacity>)
@@ -86,6 +106,7 @@ export const AgendaApp = ({event}) => {
             loadItemsForMonth={loadItems}
             // renderEmptyDate={renderEmptyDate}
             rowHasChanged={rowHasChanged}
+            // renderEmptyDate={renderEmptyDate}
             // Callback that fires when the calendar is opened or closed
             // onCalendarToggled={(calendarOpened) => {console.log(calendarOpened)}}
             // // Callback that gets called on day press
@@ -111,7 +132,7 @@ export const AgendaApp = ({event}) => {
             // // Specify how agenda knob should look like
             // renderKnob={() => {return (<View style={{width: '100%',height: '100%',backgroundColor: 'green'}}/>);}}
             // // Specify what should be rendered instead of ActivityIndicator
-            // renderEmptyData = {() => {return (<View style={{width: '100%',height: '100%',backgroundColor: 'black'}}/>);}}
+            renderEmptyData = {renderEmptyDate}
             // // Specify your item comparison function for increased performance
             // rowHasChanged={(r1, r2) => {return r1.text !== r2.text}}
             // // Hide knob button. Default = false

@@ -22,7 +22,7 @@ export const ScreenAgenda = ({route}) => {
 
     useEffect(() => {
         (state !== null) && setLoading(false)
-        db.collection('groups').doc(id).collection('event').onSnapshot((snapshot) =>{
+        db.collection('groups').doc(id).collection('event').orderBy('startDate', 'asc').onSnapshot((snapshot) =>{
             const eventsGet = snapshot.docs.map(doc => {
                 const data = doc.data()
                 return {
@@ -31,7 +31,7 @@ export const ScreenAgenda = ({route}) => {
                 }
             });
             setEvents(eventsGet)
-            console.log('evento',events)
+            // console.log('evento',events)
        })
     }, [])
     return (
