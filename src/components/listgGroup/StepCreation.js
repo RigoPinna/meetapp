@@ -12,11 +12,12 @@ import {  View, Image, LogBox } from 'react-native'
 import { addNewGroup } from '../../reducers/groupReducer'
 import { userStatic } from '../../firebase/firebase-config'
 import { useDispatch } from 'react-redux'
+import { DatePickerApp } from '../elements/DatePickerApp'
 
 export const StepCreation = ({steps, setStep}) => {
     const IMG_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/meetapp-prueba.appspot.com/o/groups_imgs_defaults%2Fimg_3.png?alt=media&token=2724ab38-867a-4d98-b971-3880faa72e93';
     LogBox.ignoreLogs(['Setting a timer for a long period of time']);
-    const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic});
+    const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic, startDate: '', finishDate: ''});
     const dispatch = useDispatch();
     const handleOnChange = ( variable, text ) => setDataGroup({...dataGroup, [variable]: text})
     const hanldeSaveGroup = () => {
@@ -90,6 +91,32 @@ export const StepCreation = ({steps, setStep}) => {
                         multiline={true}
                     />
                 </View>
+                <View style={{marginTop: 20, marginBottom: 10}}>
+                    <Textapp 
+                        size={TEXTS_SIZE.small}
+                        text={'Start Date'}
+                        color={COLORS_APP.black2}
+                        weight={'bold'}
+                    />
+                </View>
+                <DatePickerApp 
+                    eventData= {dataGroup} 
+                    setEventData={setDataGroup}
+                    decision={'start'}
+                />
+                                <View style={{marginTop: 20, marginBottom: 10}}>
+                    <Textapp 
+                        size={TEXTS_SIZE.small}
+                        text={'Finish Date'}
+                        color={COLORS_APP.black2}
+                        weight={'bold'}
+                    />
+                </View>
+                <DatePickerApp
+                    eventData= {dataGroup} 
+                    setEventData={setDataGroup}
+                    decision={'finish'}
+                />
                 {
                 // ( groupData.nameGroup.trim() !== '' && groupData.description.trim() !== '' && groupData.image.trim() !== '' )
                     ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '')

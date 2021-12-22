@@ -6,9 +6,11 @@ import { BlurView } from 'expo-blur';
 import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
+import { IconCalendar } from '../icons/IconCalendar';
 export const MenuScreenChat = ({navigation, name}) => {
     const { top } = useSafeAreaInsets();
     const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
+    const hanldeNavigatorCalendar = () => navigation.navigate('ScreenAgenda');
     return (
             // <BlurView intensity={80} tint="dark" style={{flexDirection:'row',width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>
                 <LinearGradient locations={[0.2,1]} colors={['rgba(0,0,0,0.7)', 'transparent']} style={{flexDirection:'row', padding:13, width:'100%', height:60, marginTop:top,justifyContent:'space-between'}} >
@@ -23,7 +25,15 @@ export const MenuScreenChat = ({navigation, name}) => {
                             
                         />
                 <View style = {{flexDirection: 'row'}}>
-                    
+                    <ButtonGradient
+                        gradient ={['#F3F7FE','#F3F7FE']}
+                        textButton = {'Calendar'}
+                        styleText = {{color:'#35A8FD',fontWeight:'bold', fontSize:12}}
+                        styleButton = {{height:35, marginRight:2}}
+                        sizeGradient={{width:150, height:100}}
+                        IconLeft ={ IconCalendar }
+                        hanldeOnPress = { hanldeNavigatorCalendar }
+                    />
                     <ButtonGradient
                         gradient ={['#F3F7FE','#F3F7FE']}
                         textButton = {'New Event'}

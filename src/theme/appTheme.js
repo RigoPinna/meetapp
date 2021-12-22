@@ -497,3 +497,70 @@ export const  stylesChat = {
         position:'relative'
     }
 }
+export const styleCalendar = {
+    wrapperItem:{
+        width: '100%', 
+        minHeight:50, 
+        justifyContent: 'center', 
+        padding:5,
+        marginBottom:5, 
+        flexDirection:'row' 
+    },
+    badgeItemCalendar: { 
+        position:"absolute",
+        borderWidth:2,
+        borderColor:"#FFFFFF",
+        bottom:0,
+        right:-5,
+        zIndex:2, 
+        width:20, 
+        height:20,
+        borderRadius:50,
+        marginTop:'auto', 
+        marginBottom:'auto'
+    },
+    groupImg: {
+        width:40, 
+        height:40, 
+        borderRadius:50
+    },
+    nameEventText: {
+        color:COLORS_APP.black1, 
+        fontWeight:'bold'
+    },
+    groupNameText: {
+        color:COLORS_APP.black2,
+        fontSize:12, 
+        fontWeight:'normal', 
+        marginRight:5
+    },
+    autorText: {
+        color:COLORS_APP.black3, 
+        fontWeight:'100', 
+        fontSize:10
+    },
+    backgroundModal: { 
+        flex: 1,justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+        backgroundColor:"#00000078" 
+    },
+    wrapperModal: {
+        width:'80%',
+        maxHeight:400,
+        position:'relative',
+        margin: 20, 
+        backgroundColor: "white", 
+        borderRadius: 5,
+        paddingTop: 20,
+        paddingBottom: 20,
+        shadowColor: "#000",
+        shadowOffset: {  width: 0,  height: 1},
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        position:'relative'
+    }
+
+    
+}
