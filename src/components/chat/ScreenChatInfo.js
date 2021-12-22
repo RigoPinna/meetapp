@@ -17,20 +17,17 @@ import { Toastapp } from '../elements/ToastApp'
 import { TextInputApp } from '../elements/TextInputApp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconCopy } from '../icons/IconCopy'
+import { useActiveEvent } from '../../hooks/useActiveEvent'
 
 
 export const ScreenChatInfo = ({ navigation, route }) => {
     const { params } = route;
     const { name,description,participants, image, id} = params;
-    const [eventVisible, setEventVisible] = useState(false)
-    const [eventData, setEventData] = useState({nameEvent: '', startDate: '', description: ''})
-    const [eventId, setEventId] = useState({id: ''})
     const [codeF, setCodeF] = useState('')
     const userLoged = useSelector(state => state.authRed )
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
-    const isMounted = useRef(null)
-
+    const { activeEvent } = useActiveEvent({ id })
     const getCode = async () => {
         if( userLoged.uid !== null ) {
             const groupRef = db.collection('groups').doc(id);
@@ -47,6 +44,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
             }
         } 
     }
+    
 
     const handlecopyToClipboard = () => {
         Clipboard.setString( codeF)
@@ -54,18 +52,6 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         setMessages([...messages, 'Code copied!' + Math.random()])
     }
 
-    useEffect(() => {
-        const eid = eventId.id
-        if(eid === ''){
-            getIdEvent(id, eventId, setEventId, eventData, setEventData)
-            // getEvent(id,eid,eventData,setEventData)
-        } else {
-            console.log(eid)
-            console.log(eventData)
-            setEventVisible(true)
-        }
-
-    }, [eventData])
 
     useEffect(() => {
         getCode();
@@ -91,7 +77,6 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 <MenuScreenChat navigation={navigation} name = {name}/>
             <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
-
                     <Textapp 
                         size = { TEXTS_SIZE.medium } 
                         weight='bold' 
@@ -119,7 +104,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     />
                 </View>
                 {
-                (eventVisible) && <AlertEvent event={eventData}/>
+                ( !!activeEvent ) && <AlertEvent event = { activeEvent }/>
                 }
                 {
                         (codeF !== '') &&   <>

@@ -3,19 +3,23 @@ import React from 'react'
 import { Image, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { useActiveEvent } from '../../hooks/useActiveEvent';
 import { ButtonGradient } from '../elements/ButtonGradient';
 import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple';
+import { COLORS_APP } from '../ui/COLORS_APP';
 
 export const HeaderChat = ({ route }) => {
     const navigation = useNavigation();
+    const { params } = route;
    
+    const { activeEvent } = useActiveEvent( params )
     const { top } = useSafeAreaInsets();
     const handleGoToInfoGroup = () => {
-        const { params } = route;
         const { name, description, participants, image, id } = params;
         navigation.navigate('ScreenChatInfo',{ name,description,participants, image, id })
     }
     return (
+        <>
         <View style={{ width: '100%', height: 80, paddingTop:top,paddingHorizontal:10, justifyContent:'space-between',flexDirection:'row', alignItems:'center' }}>
         <ButtonGradient 
                 gradient ={['#F3F7FE','#F3F7FE']}
@@ -30,5 +34,10 @@ export const HeaderChat = ({ route }) => {
                 <Image style = {{width:50, height:50, borderRadius:50, margin:5} } source = {{uri:route.params.image}}/>
         </TouchableOpacity>
     </View>
+    { !!activeEvent 
+        && <View style={{ width:"100%", height:30, padding:5, backgroundColor:COLORS_APP.blue3}}>
+                <Text style={{color:COLORS_APP.primary, fontSize:12, fontWeight:'bold',}}>New event: { activeEvent.nameEvent } on {activeEvent.formatPeople}</Text>
+            </View>}
+    </>
     )
 }

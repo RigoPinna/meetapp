@@ -6,7 +6,8 @@ import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
-export const AlertEvent = ({event}) => {
+export const AlertEvent = ({ event }) => {
+    
     return (
         <View style={{width: '100%', minHeight: 100,padding: 10,marginTop:10, borderRadius:20, overflow: 'hidden', position: 'relative'}}>
             <LinearGradient colors={['#FFECD2','#FCB69F']} 
@@ -24,7 +25,7 @@ export const AlertEvent = ({event}) => {
             <Textapp 
                     size= {TEXTS_SIZE.small} 
                     color = {COLORS_APP.black2}
-                    text = { `This event start  on ${event.startDate}`}
+                    text = { `This event start  on ${event.formatPeople}`}
             />
             <Textapp 
                     size= {TEXTS_SIZE.extraMedium} 
