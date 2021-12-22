@@ -31,7 +31,7 @@ export const ScreenAgenda = ({route}) => {
                 }
             });
             setEvents(eventsGet)
-            // console.log('evento',events)
+            console.log('evento',events)
        })
     }, [])
     return (

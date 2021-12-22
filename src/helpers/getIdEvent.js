@@ -2,10 +2,13 @@ import { db } from "../firebase/firebase-config";
 
 export const getIdEvent = async(id, eventId, setEventId,eventData, setEventData) => {
     const eventRef = db.collection('groups').doc(id).collection('event')
-    const snapshot = await eventRef.orderBy('startDate', 'desc').limit(1).get()
+    const date = new Date()
+    let FDateState = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + ('0'+ date.getDate()).slice(-2)
+    // const snapshot = await eventRef.orderBy('startDate', 'desc').limit(1).get()
+    const snapshot = await eventRef.where('startDate','>=', FDateState).orderBy('startDate', 'asc').limit(1).get()
     if(!snapshot.empty){
         snapshot.forEach(doc => {
-            // console.log(doc.id,'id =>', doc.data())
+            console.log(doc.id,'id =>', doc.data())
             setEventId({...eventId,...{id: doc.id}})
             getEvent(id, doc.id, eventData, setEventData )
         })

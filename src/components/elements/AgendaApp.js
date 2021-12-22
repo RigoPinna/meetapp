@@ -35,7 +35,7 @@ export const AgendaApp = ({event}) => {
                     items[strTime].push({
                       name: dates[i+j].nameEvent,
                       description: dates[i+j].description,
-                      // color: dates[i+j].color
+                      color: dates[i+j].color
                     });
                   }
                 }
@@ -85,7 +85,7 @@ export const AgendaApp = ({event}) => {
                               size={TEXTS_SIZE.small}
                               text={item.description}/>
                       </View>
-                      <Avatar.Text label = {item.name.substring(0,2)} style={{backgroundColor: 'blue'}}/>
+                      <Avatar.Text label = {item.name.substring(0,2)} style={{backgroundColor: item.color}}/>
                       {/* <Avatar.Text label = {item.name.substring(0,2)} style={{backgroundColor: item.color}}/> */}
                     </View>
                 </Card.Content>
