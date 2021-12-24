@@ -15,7 +15,7 @@ export const initialState = {
     eventCreated:null
 };
 
-export const addNewEvent = ({ name, nameEvent, startDate, description }) => {
+export const addNewEvent = ({ name, nameEvent, startDate, description, color }) => {
     
     return async ( dispatch ) => {
         const groupRef = db.collection('groups')
@@ -28,12 +28,13 @@ export const addNewEvent = ({ name, nameEvent, startDate, description }) => {
                 nameEvent,
                 startDate,
                 description,
+                color,
             }, {merge: false})
             // console.log(name, '=>', nameEvent, ' => ', startDate, ' => ', description)
           });
         dispatch({
             type:'create-event',
-            payload:[{name, nameEvent, startDate, description}]
+            payload:[{name, nameEvent, startDate, description, color}]
         })
     }
 }

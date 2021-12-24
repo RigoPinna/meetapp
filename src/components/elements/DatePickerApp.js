@@ -5,7 +5,8 @@ import { BlurView } from 'expo-blur'
 import { Platform, View } from "react-native";
 import { COLORS_APP } from "../ui/COLORS_APP";
 import { ButtonGradient } from "./ButtonGradient";
-export const DatePickerApp = ({eventData, setEventData, decision}) => {
+
+export const DatePickerApp = ({eventData, setEventData, decision='start'}) => {
     const [visible, setVisible] = useState( false )
     const [text, setText] = useState("Select date...")
     const [date, setDate] = useState(new Date())
@@ -19,15 +20,16 @@ export const DatePickerApp = ({eventData, setEventData, decision}) => {
         if(event.type == "set") {
             const currentDate = selectedDate || date
             let tempDate = new Date( currentDate )
-            let fDate = tempDate.getDate() + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
+            let fDate = ('0'+ tempDate.getDate()).slice(-2) + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
+            let FDateState = tempDate.getFullYear() + "-" + (tempDate.getMonth() + 1) + "-" + ('0'+ tempDate.getDate()).slice(-2)
             setVisible( false )
             setText( fDate )
             setDate( currentDate )
             // setEventData( fDate )
             if(decision==='start'){
-                setEventData({...eventData, ...{startDate: fDate}}) 
+                setEventData({...eventData, ...{startDate: FDateState}}) 
             } else {
-                setEventData({...eventData, ...{finishDate: fDate}}) 
+                setEventData({...eventData, ...{finishDate: FDateState}}) 
             } 
         } else {
             setVisible(false)

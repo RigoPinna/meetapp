@@ -3,6 +3,7 @@ import { Animated, LogBox } from 'react-native';
 import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 import { MeetApp } from './MeetApp';
+import {ColorPickerApp} from './src/components/elements/ColorPickerApp'
 import { PresentationScreen } from './src/components/auth/PresentationScreen';
 
 
@@ -24,6 +25,7 @@ export default function App() {
     <Provider store = { store } >
        {/* <Animated.View style = {{opacity:opacity}}> */}
         <MeetApp />
+        {/* <ColorPickerApp/> */}
         {/* <PresentationScreen/> */}
       {/* </Animated.View > */}
     </Provider>

@@ -7,10 +7,10 @@ import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconCalendar } from '../icons/IconCalendar';
-export const MenuScreenChat = ({navigation, name}) => {
+export const MenuScreenChat = ({navigation, name, id}) => {
     const { top } = useSafeAreaInsets();
     const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
-    const hanldeNavigatorCalendar = () => navigation.navigate('ScreenAgenda');
+    const hanldeNavigatorCalendar = () => navigation.navigate('ScreenAgenda',{name, id});
     return (
             // <BlurView intensity={80} tint="dark" style={{flexDirection:'row',width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>
                 <LinearGradient locations={[0.2,1]} colors={['rgba(0,0,0,0.7)', 'transparent']} style={{flexDirection:'row', padding:13, width:'100%', height:60, marginTop:top,justifyContent:'space-between'}} >
