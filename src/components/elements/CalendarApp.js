@@ -1,39 +1,37 @@
-import { CardAnimationContext } from '@react-navigation/stack';
-import React, { useState } from 'react'
-import { ActivityIndicatorBase, View } from 'react-native';
-import {Calendar, CalendarList, Agenda} from 'react-native-calendars';
 
-
+import React, { useEffect, useState } from 'react'
+import { View } from 'react-native';
+import { useSelector } from 'react-redux';
+import { db } from '../../firebase/firebase-config';
+import { WrapperInfoCalendar } from '../Calendar/WrapperInfoCalendar';
 
 export const CalendarApp = () => {
-    const date = new Date()
-    const [selected, setSelected] = useState(date);
-    const RANGE = 24;
-  const markedDates = {
-    [selected]: {
-      selected: true,
-      disableTouchEvent: true,
-      selectedColor: '#5E60CE',
-      selectedTextColor: 'white'
+
+  const userLoged = useSelector(state => state.authRed )
+  const [ groups, setGroups ] = useState( undefined )
+  
+  useEffect( () => {
+    if( userLoged.uid !== null ) {
+        db.collection('groups').orderBy('createdat', 'desc').onSnapshot( querySnapshot => {
+            let allGroups = querySnapshot.docs.map( doc => {
+                const { image, name, creator, participants } = doc.data();
+                const gid = doc.id;
+                const prs = JSON.parse( participants );
+                const isSuscribed =  prs.some( pr => pr.uid === userLoged.uid )
+                return isSuscribed && { gid, image, name, creator }
+            })
+            setGroups( allGroups )
+        })
     }
-  };
-  const onDayPress = day => {
-    setSelected(day.dateString);
-  };
 
-    return (
-        <View style={{flex: 1}}>
-            <CalendarList
-    //   testID={testIDs.calendarList.CONTAINER}
-      current={date}
-      pastScrollRange={RANGE}
-      futureScrollRange={RANGE}
-    //   renderHeader={renderCustomHeader}
-    //   theme={theme}
-      onDayPress={onDayPress}
-      markedDates={markedDates}
-    />
+  }, [ userLoged.uid ])
+  
+  return (
+      <View style={{flex: 1}}>
+          {
+            !!groups && <WrapperInfoCalendar groups={ groups }/>
+          }
 
-        </View>
-    )
+      </View>
+  )
 }
