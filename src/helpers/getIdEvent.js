@@ -7,16 +7,10 @@ export const getIdEvent = async ( id, eventId, setEventId, eventData, setEventDa
     // const snapshot = await eventRef.orderBy('startDate', 'desc').limit(1).get()
     const snapshot = await eventRef.where('startDate','>=', FDateState).orderBy('startDate', 'asc').limit(1).get()
     if(!snapshot.empty){
-<<<<<<< HEAD
         snapshot.forEach(doc => {
             console.log(doc.id,'id =>', doc.data())
             setEventId({...eventId,...{id: doc.id}})
             getEvent(id, doc.id, eventData, setEventData )
-=======
-        snapshot.forEach( doc => {
-            // setEventId({...eventId,...{id: doc.id}})
-            // getEvent(id, doc.id, eventData, setEventData )
->>>>>>> e992c62035045f7c1dd2081a1d74f480fb6bf76a
         })
     }
 }

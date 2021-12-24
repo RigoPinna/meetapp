@@ -16,7 +16,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
     const {params} = route;
     const {name} = params
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
-    const [ eventData, setEventData ] = useState({name: name, nameEvent:'', description:'',startDate:'', color:'white'});
+    const [ eventData, setEventData ] = useState({name: name, nameEvent:'', description:'',startDate:'', color:'#74BBE3'});
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
     }
@@ -27,32 +27,28 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         dispatch( addNewEvent( eventData ) );
         navigation.goBack()
     }
-    const handleOpenColor = () => {
-        setStepColor({...stepColor, ...{stepGo: true, stepBack: false}})
-    }
+
      return (
         <>
             {
                 stepColor.stepBack && <>
                 <ModalApp navigation={navigation} textTitle={'Create Event'}>
                     <View style={{flex: 1, width: 380}}>
-                    <View>
-                            <Textapp 
-                                size={TEXTS_SIZE.small}
-                                text={'Name Event'}
-                                color={COLORS_APP.black2}
-                                weight={'bold'}
-                            />
-                            <TextInputApp 
-                                placeholder={'Name event'}
-                                value={ eventData.nameEvent } 
-                                onChange = { handleOnChange }
-                                styleT={{
-                                    width: '100%',
-                                    borderRadius:100,
-                                }}
-                            />
-                        </View>
+                        <Textapp 
+                            size={TEXTS_SIZE.small}
+                            text={'Name Event'}
+                            color={COLORS_APP.black2}
+                            weight={'bold'}
+                        />
+                        <TextInputApp 
+                            placeholder={'Name event'}
+                            value={ eventData.nameEvent } 
+                            onChange = { handleOnChange }
+                            styleT={{
+                                width: '100%',
+                                borderRadius:100,
+                            }}
+                        />
                         <View style={{marginTop: 20, }}>
                             <Textapp 
                                 size={TEXTS_SIZE.small}
@@ -88,14 +84,20 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             setEventData={setEventData}
                         />
                         <View style={{marginTop: 20, marginBottom: 10}}>
-                        <ButtonGradient
-                            gradient={['#48C6EF','#6F86D6']}
-                            sizeGradient = {{width:350, height:50}}
-                            textButton={`Select Color`}
-                            styleText={{color: eventData.color, fontWeight:'bold',}}
-                            styleButton={{justifyContent: 'center',width:350, height:50}}
-                            hanldeOnPress = { handleOpenColor }
-                        />
+                            <Textapp 
+                                size={TEXTS_SIZE.small}
+                                text={'Choose a color for your event'}
+                                color={COLORS_APP.black2}
+                                weight={'bold'}
+                            />
+                        </View>
+                        <View style={{marginTop: 5, marginBottom: 10}}>
+                            <ColorPickerApp
+                                eventData = {eventData}
+                                setEventData = {setEventData}
+                                stepColor = {stepColor}
+                                setStepColor = {setStepColor}
+                            />
                         </View>
 
                         {
@@ -115,21 +117,6 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                 </ModalApp>
                 </>
             }
-        {
-            stepColor.stepGo && <>
-            {/* <ModalApp navigation={navigation} textTitle={'Create Event'}> */}
-            <View style={{flex: 1}}>
-            <ColorPickerApp
-                                        eventData = {eventData}
-                                        setEventData = {setEventData}
-                                        stepColor = {stepColor}
-                                        setStepColor = {setStepColor}
-                                    />
-                                    </View>
-            {/* </ModalApp> */}
-                                    
-                                </>
-        }
         </>
          
     );
