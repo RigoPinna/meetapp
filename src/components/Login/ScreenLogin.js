@@ -23,11 +23,15 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const recaptchaVerifier = useRef( null );
     const [ userData, setUserData ] = useState({phone:'', countryCode:undefined, countries:[], verificationId:undefined, code:'' });
     const attemptInvisibleVerification = false;
-
+    const handleGoBack = () => {
+        // setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
+        // console.log('alo')
+    }
     useEffect(() => {
         const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
         setUserData({...userData, countries })
     }, [])
+
     const login = async () => {
         try {
             const phoneNumber = `+${userData.countryCode}${userData.phone}`;
@@ -51,20 +55,35 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
             console.log( err )
         }
     }
-    const goBack = () => {
-        setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
-    }
+
+
 
     return (
         <SafeAreaView>
+                       
             <KeyboardAvoidingView 
                 style={{flex:1}}
                 behavior={Platform.OS === "ios" ? "padding" : "height"}
                 keyboardVerticalOffset={90}
             >
+
              <HeaderDecoration />
+     
+
             <IconApp position={{position:'absolute',top:0,left:0, marginTop:150}} />
+            {
+                        (userData.phone !== 0) 
+                        &&              <ButtonGradient 
+                        gradient={['#F3F7FE','#F3F7FE']}
+                        sizeGradient = {{ width:50, height:50 }}
+                        styleButton = {{ position: 'absolute',width:50, height:50, alignItems: 'center',justifyContent: 'center',bottom: 180, left: 10 }}
+                        // 
+                        IconLeft = { IconArrowLeft }
+                        hanldeOnPress = { handleGoBack() }    
+                    />
+                    } 
                 <ScrollView style={{flex:1}}>
+
                     <View style={{ width:'100%',justifyContent: 'center'}}>
                     <Text style={{marginBottom:13,marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
                         {
@@ -74,6 +93,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                         }
                         
                     </Text>
+                    
                     <InputSelectapp 
                         itemsData = { userData.countries } 
                         setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
