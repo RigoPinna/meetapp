@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Image, Text, View, ScrollView, SafeAreaView, KeyboardAvoidingView} from 'react-native'
+import { Alert, Text, View, ScrollView, SafeAreaView, KeyboardAvoidingView} from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconApp } from '../IconApp'
@@ -48,7 +48,13 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                   setUserData({...userData, verificationId });
             }
         } catch( err ) {
-            console.log( err )
+            Alert.alert(
+                "Error",
+                `${err}`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
         }
     }
     const goBack = () => {
