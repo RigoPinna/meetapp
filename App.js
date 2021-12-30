@@ -24,9 +24,9 @@ export default function App() {
   return (
     <Provider store = { store } >
        {/* <Animated.View style = {{opacity:opacity}}> */}
-        <MeetApp />
+        {/* <MeetApp /> */}
         {/* <ColorPickerApp/> */}
-        {/* <PresentationScreen/> */}
+        <PresentationScreen/>
       {/* </Animated.View > */}
     </Provider>
   );
