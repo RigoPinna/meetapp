@@ -4,6 +4,8 @@ import { View } from 'react-native';
 import { useSelector } from 'react-redux';
 import { db } from '../../firebase/firebase-config';
 import { WrapperInfoCalendar } from '../Calendar/WrapperInfoCalendar';
+import * as Progress from 'react-native-progress';
+import { COLORS_APP } from '../ui/COLORS_APP';
 
 export const CalendarApp = () => {
 
@@ -29,7 +31,11 @@ export const CalendarApp = () => {
   return (
       <View style={{flex: 1}}>
           {
-            !!groups && <WrapperInfoCalendar groups={ groups }/>
+            !!groups 
+              ? <WrapperInfoCalendar groups={ groups }/>
+              : <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+                    <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
+                </View>
           }
 
       </View>

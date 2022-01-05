@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Animated, SafeAreaView, ScrollView, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { styles2 } from '../../theme/appTheme';
 import { StepInfoProfile } from './StepInfoProfile.js';
 import { StepRegisterUser } from './StepRegisterNumber';
@@ -21,25 +22,25 @@ export const PresentationScreen = () => {
     }, [])
     return (
         <Animated.View style = {{...styles2.wrapperPresentation, opacity:opacity}}>
-                {
-                    steps.stepWelcome 
-                        && <StepWelcome steps = { steps } setStep = { setStep } />
-                }
-                <SafeAreaView>
+                <SafeAreaProvider>
                     <ScrollView>
-                        <View style={{flex:1,alignItems:'center'}}>
+                        <View style={{flex:1,alignItems:'center', position:'relative'}}>
+                            {
+                                steps.stepWelcome 
+                                    && <StepWelcome steps = { steps } setStep = { setStep } />
+                            }
 
-                        {
-                            steps.stepInfoProfile 
-                                && <StepInfoProfile steps = { steps } setStep = { setStep } />
-                        }
-                        {
-                            steps.stepVerifyPhone 
-                                && <StepRegisterUser />
-                        }
+                            {
+                                steps.stepInfoProfile 
+                                    && <StepInfoProfile steps = { steps } setStep = { setStep } />
+                            }
+                            {
+                                steps.stepVerifyPhone 
+                                    && <StepRegisterUser />
+                            }
                         </View>
                     </ScrollView>
-                </SafeAreaView>
+                </SafeAreaProvider>
         </Animated.View >
     )
 }

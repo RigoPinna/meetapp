@@ -16,6 +16,7 @@ import { dataCountry } from '../../services/fetchGetCodeAndCountryName'
 import { useDispatch } from 'react-redux'
 import { setData } from '../../reducers/authReducer'
 import { HeaderDecoration } from '../auth/HeaderDecoration'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 // import { getAuth } from "firebase/auth";
 
 export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
@@ -23,9 +24,9 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const recaptchaVerifier = useRef( null );
     const [ userData, setUserData ] = useState({phone:'', countryCode:undefined, countries:[], verificationId:undefined, code:'' });
     const attemptInvisibleVerification = false;
+    const { top } = useSafeAreaInsets();
     const handleGoBack = () => {
-        // setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
-        // console.log('alo')
+        setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
     }
     useEffect(() => {
         const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
@@ -65,32 +66,25 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
 
 
     return (
-        <SafeAreaView>
+
+
+        <View>
                        
-            <KeyboardAvoidingView 
-                style={{flex:1}}
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                keyboardVerticalOffset={90}
-            >
-
+            <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={90}>
              <HeaderDecoration />
-     
-
             <IconApp position={{position:'absolute',top:0,left:0, marginTop:150}} />
-            {
-                        (userData.phone !== 0) 
-                        &&              <ButtonGradient 
+                <View style={{ width:50, height:50, position: 'absolute',top, left: 10}}>
+                    <ButtonGradient 
                         gradient={['#F3F7FE','#F3F7FE']}
                         sizeGradient = {{ width:50, height:50 }}
-                        styleButton = {{ position: 'absolute',width:50, height:50, alignItems: 'center',justifyContent: 'center',bottom: 180, left: 10 }}
-                        // 
+                        styleButton = {{width:50, height:50, alignItems: 'center',justifyContent: 'center' }}
                         IconLeft = { IconArrowLeft }
-                        hanldeOnPress = { handleGoBack() }    
-                    />
-                    } 
+                        hanldeOnPress = { handleGoBack }    
+                            />
+                </View>
                 <ScrollView style={{flex:1}}>
 
-                    <View style={{ width:'100%',justifyContent: 'center'}}>
+                    <View style={{ flex:1,height:500}}>
                     <Text style={{marginBottom:13,marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
                         {
                             !!userData.verificationId
@@ -156,6 +150,6 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                                 firebaseConfig={firebaseConfig}
                                 attemptInvisibleVerification={ attemptInvisibleVerification }
             />
-        </SafeAreaView>
+        </View>
     )
 }

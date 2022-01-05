@@ -254,7 +254,6 @@ export const styles2 = StyleSheet.create({
         alignItems:'center',
         overflow:'hidden',
         position:'relative',
-        backgroundColor:'pink'
         // marginHorizontal: 10,
     },
     buttonSeconday: {

@@ -16,7 +16,6 @@ export const WrapperInfoCalendar = ({ groups }) => {
     const onDayPress = day => {
         const { [day.dateString]:events } =  dots
         if ( !!events ) {
-            console.log("se ejecutó")
             setmodalMarker({
                 modalView:true,
                 events: events.dots
@@ -53,7 +52,9 @@ export const WrapperInfoCalendar = ({ groups }) => {
                     }
                 </ScrollView>
             </View>
-            <ModalViewDetailsEvent modalMarker={ modalMarker } setmodalMarker={ setmodalMarker }/>
+            {
+                modalMarker.modalView && <ModalViewDetailsEvent modalMarker={ modalMarker } setmodalMarker={ setmodalMarker }/>
+            }
         </>
     )
 }

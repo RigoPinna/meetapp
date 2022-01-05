@@ -23,3 +23,10 @@ function formateDate( date ) {
     return `${year}-${m}-${d}`
 
 } 
+export const isAfterTwoDay = ( date ) => {
+
+    const dateBeforTowDays = moment( date ).add(2, 'days').format();
+    const dateNow = moment().format()
+    return moment( date ).isBetween( dateNow, dateBeforTowDays)
+
+}
