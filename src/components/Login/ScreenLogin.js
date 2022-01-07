@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Image, Text, View, ScrollView, SafeAreaView, KeyboardAvoidingView} from 'react-native'
+import { Alert, Text, View, ScrollView, SafeAreaView, KeyboardAvoidingView} from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconApp } from '../IconApp'
@@ -16,6 +16,7 @@ import { dataCountry } from '../../services/fetchGetCodeAndCountryName'
 import { useDispatch } from 'react-redux'
 import { setData } from '../../reducers/authReducer'
 import { HeaderDecoration } from '../auth/HeaderDecoration'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 // import { getAuth } from "firebase/auth";
 
 export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
@@ -23,11 +24,15 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const recaptchaVerifier = useRef( null );
     const [ userData, setUserData ] = useState({phone:'', countryCode:undefined, countries:[], verificationId:undefined, code:'' });
     const attemptInvisibleVerification = false;
-
+    const { top } = useSafeAreaInsets();
+    const handleGoBack = () => {
+        setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
+    }
     useEffect(() => {
         const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
         setUserData({...userData, countries })
     }, [])
+
     const login = async () => {
         try {
             const phoneNumber = `+${userData.countryCode}${userData.phone}`;
@@ -48,24 +53,38 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                   setUserData({...userData, verificationId });
             }
         } catch( err ) {
-            console.log( err )
+            Alert.alert(
+                "Error",
+                `${err}`,
+                [
+                  { text: "OK", onPress: () => console.log("OK Pressed") }
+                ]
+              );
         }
     }
-    const goBack = () => {
-        setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
-    }
+
+
 
     return (
-        <SafeAreaView>
-            <KeyboardAvoidingView 
-                style={{flex:1}}
-                behavior={Platform.OS === "ios" ? "padding" : "height"}
-                keyboardVerticalOffset={90}
-            >
+
+
+        <View>
+                       
+            <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={90}>
              <HeaderDecoration />
             <IconApp position={{position:'absolute',top:0,left:0, marginTop:150}} />
+                <View style={{ width:50, height:50, position: 'absolute',top, left: 10}}>
+                    <ButtonGradient 
+                        gradient={['#F3F7FE','#F3F7FE']}
+                        sizeGradient = {{ width:50, height:50 }}
+                        styleButton = {{width:50, height:50, alignItems: 'center',justifyContent: 'center' }}
+                        IconLeft = { IconArrowLeft }
+                        hanldeOnPress = { handleGoBack }    
+                            />
+                </View>
                 <ScrollView style={{flex:1}}>
-                    <View style={{ width:'100%',justifyContent: 'center'}}>
+
+                    <View style={{ flex:1,height:500}}>
                     <Text style={{marginBottom:13,marginLeft: 10, fontSize: TEXTS_SIZE.small, color:COLORS_APP.black2 }}>
                         {
                             !!userData.verificationId
@@ -74,6 +93,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                         }
                         
                     </Text>
+                    
                     <InputSelectapp 
                         itemsData = { userData.countries } 
                         setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
@@ -130,6 +150,6 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                                 firebaseConfig={firebaseConfig}
                                 attemptInvisibleVerification={ attemptInvisibleVerification }
             />
-        </SafeAreaView>
+        </View>
     )
 }

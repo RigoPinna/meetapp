@@ -56,7 +56,7 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
                                             />
                         }
                     </View>
-                    <ScrollView style={{flex:1}}>
+                    <ScrollView style={{flex:1}} bounces={ false }>
                             {children}
                     </ScrollView>
                 </Animated.View>

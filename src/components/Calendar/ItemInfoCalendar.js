@@ -2,24 +2,27 @@ import React, { useEffect, useState } from 'react'
 
 import { db } from '../../firebase/firebase-config'
 
-import { formatDateCustom } from '../../helpers/formatDateCustom'
+import { formatDateCustom, isAfterTwoDay } from '../../helpers/formatDateCustom'
 import { ItemEvent } from './ItemEvent'
 export const ItemInfoCalendar = ( group ) => {
-
     const [ events, setEvent ] = useState(undefined)
-    
-
     useEffect( () => {
         db.collection('groups')
                 .doc( group.gid )
-                .collection('event').onSnapshot( async (snapshot) => {
+                .collection('event').onSnapshot( async ( snapshot ) => {
+
                     const evt  = snapshot.docs.map( doc => {
-                        const evt = {...doc.data()}
+
+                        const evt = {...doc.data() }
                         const { formatCalendar, formatPeople } = formatDateCustom( evt.startDate )
-                        const evtFormateDates = {...evt, startDate: formatCalendar, formatPeople }
-                        return { eid:doc.id, gid:group.gid, ...evtFormateDates }
+
+                        if ( isAfterTwoDay( formatCalendar ) ) {
+                            const evtFormateDates = {...evt, startDate: formatCalendar, formatPeople }
+                            return { eid:doc.id, gid:group.gid, ...evtFormateDates }
+                        }
                     });
-                    setEvent( evt )
+                    const evtFiltered = evt.filter( e => !!e && e)
+                    !!evt && setEvent( evtFiltered )
                 })
 
     }, [])
@@ -34,7 +37,7 @@ export const ItemInfoCalendar = ( group ) => {
     return (
         <>
             {
-                !!events 
+                (!!events && events.length > 0)
                     && events.map(evt => <ItemEvent key={`${evt.eid}-${group.gid}`} events = { evt } group = { group }/>)
             }
         </>

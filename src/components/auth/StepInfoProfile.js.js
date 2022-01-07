@@ -1,5 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Image, View } from 'react-native'
+import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import { useDispatch } from 'react-redux'
 import { addNameAndImg } from '../../reducers/registerReducer'
 import { styles } from '../../theme/appTheme'
@@ -8,29 +9,40 @@ import { ButtonGradient } from '../elements/ButtonGradient'
 import { Textapp } from '../elements/Textapp'
 import { TextInputApp } from '../elements/TextInputApp'
 import { IconArrowRight } from '../icons/IconArrowRight'
+import { IconArrowLeft } from '../icons/IconArrowLeft'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
 
 export const StepInfoProfile = ({ steps, setStep }) => {
     const dispatch = useDispatch()
-
+    const { top } = useSafeAreaInsets();
     const [ userData, setUserData ] = useState({ image:'', name:'' });
-
     const handleOnChange = ( text ) => {
         setUserData({...userData, ...{ name:text }})
     }
     const hanldeGoToNextStep = () => {
         dispatch( addNameAndImg( {...userData} ) )
         setStep({...steps, ...{ stepInfoProfile: false, stepVerifyPhone:true }})
-        // useAsyncStorag('@MyApp_USER','set', userData.name)
+    }
+    const hanldeGoBack = () => {
+        setStep({...steps, ...{stepInfoProfile: false, stepWelcome:true, stepBack:true }})
     }
     return (
         <>
+            <View style={{ width:50, height:50, position: 'absolute',top, left: 0}}>
+                <ButtonGradient 
+                    gradient={['#F3F7FE','#F3F7FE']}
+                    sizeGradient = {{ width:50, height:50 }}
+                    styleButton = {{width:50, height:50, alignItems: 'center',justifyContent: 'center' }}
+                    IconLeft = { IconArrowLeft }
+                    hanldeOnPress = { hanldeGoBack }    
+                />
+            </View>
             <Textapp 
                 size= {TEXTS_SIZE.medium} 
                 weight = {'bold'}
-                styles = {{marginBottom:13, marginTop: 13}}
+                styles = {{marginBottom:13, marginTop:top}}
                 text = {'Verify your information'}
             />
             <Textapp 

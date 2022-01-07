@@ -8,6 +8,7 @@ import { ButtonGradient } from '../elements/ButtonGradient'
 import { IconArrowRight } from '../icons/IconArrowRight'
 import { IconApp } from '../IconApp'
 import { ScreenLogin } from '../Login/ScreenLogin'
+import { SafeAreaProvider } from 'react-native-safe-area-context'
 
 export const StepWelcome = ({ steps, setStep }) => {
     const [stepLogin, setStepLoging] = useState({stepGo: false, stepBack: true})
@@ -66,10 +67,8 @@ export const StepWelcome = ({ steps, setStep }) => {
                             </>
             }
             {
-                stepLogin.stepGo 
-                    && <>
-                            <ScreenLogin stepLogin={stepLogin} setStepLogin={setStepLoging}/>
-                        </>
+                stepLogin.stepGo && <ScreenLogin stepLogin={stepLogin} setStepLogin={setStepLoging}/>
+
             }
         </>
     )

@@ -33,7 +33,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
             {
                 stepColor.stepBack && <>
                 <ModalApp navigation={navigation} textTitle={'Create Event'}>
-                    <View style={{flex: 1, width: 380}}>
+                    <View style={{flex: 1, width:340}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
                             text={'Name Event'}

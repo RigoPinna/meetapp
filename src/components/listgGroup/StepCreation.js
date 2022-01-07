@@ -91,34 +91,7 @@ export const StepCreation = ({steps, setStep}) => {
                         multiline={true}
                     />
                 </View>
-                <View style={{marginTop: 20, marginBottom: 10}}>
-                    <Textapp 
-                        size={TEXTS_SIZE.small}
-                        text={'Start Date'}
-                        color={COLORS_APP.black2}
-                        weight={'bold'}
-                    />
-                </View>
-                <DatePickerApp 
-                    eventData= {dataGroup} 
-                    setEventData={setDataGroup}
-                    decision={'start'}
-                />
-                                <View style={{marginTop: 20, marginBottom: 10}}>
-                    <Textapp 
-                        size={TEXTS_SIZE.small}
-                        text={'Finish Date'}
-                        color={COLORS_APP.black2}
-                        weight={'bold'}
-                    />
-                </View>
-                <DatePickerApp
-                    eventData= {dataGroup} 
-                    setEventData={setDataGroup}
-                    decision={'finish'}
-                />
                 {
-                // ( groupData.nameGroup.trim() !== '' && groupData.description.trim() !== '' && groupData.image.trim() !== '' )
                     ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '')
                     && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
                             <ButtonGradient
