@@ -20,8 +20,8 @@ export const DatePickerApp = ({eventData, setEventData, decision='start'}) => {
         if(event.type == "set") {
             const currentDate = selectedDate || date
             let tempDate = new Date( currentDate )
-            let fDate = ('0'+ tempDate.getDate()).slice(-2) + "/" + (tempDate.getMonth() + 1) + "/" + tempDate.getFullYear()
-            let FDateState = tempDate.getFullYear() + "-" + (tempDate.getMonth() + 1) + "-" + ('0'+ tempDate.getDate()).slice(-2)
+            let fDate = ('0'+ tempDate.getDate()).slice(-2) + "/" + ('0'+ (tempDate.getMonth() + 1)).slice(-2) + "/" + tempDate.getFullYear()
+            let FDateState = tempDate.getFullYear() + "-" + ('0'+ (tempDate.getMonth() + 1)).slice(-2) + "-" + ('0'+ tempDate.getDate()).slice(-2)
             setVisible( false )
             setText( fDate )
             setDate( currentDate )
