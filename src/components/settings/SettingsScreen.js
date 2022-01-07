@@ -99,15 +99,6 @@ export const SettingsScreen = ({ navigation }) => {
                             weight={'bold'}
                         />
                         <View style={{flexDirection: 'row',alignSelf: 'flex-start',alignItems: 'center'}}>
-                            <Image
-                                style={{padding: 10,
-                                    margin: 5,
-                                    height: 50,
-                                    width: 50,
-                                    resizeMode: 'cover',
-                                    }}
-                                source={{uri: userData.flag }}
-                            />
                             <Textapp 
                                 size= {TEXTS_SIZE.small} 
                                 color = {COLORS_APP.black2}

@@ -14,14 +14,22 @@ initState = [
 const initState = []
 export const addMessages = ({ gid, messages, tokenNotification, groupName }) => {
     return async( dispatch, getState ) => {
-        const userLoged = getState().authRed 
-        const { uid, message } = messages[messages.length-1]
-        const { name } = await getDataUser( uid )
-        if(userLoged.uid !== uid) {
-            dispatch( addNotification( gid ) )
-            await sendNotification( tokenNotification, groupName, `${name}: ${message}` )
+        try {
+            if( messages.length > 0 ) {
+                const userLoged = getState().authRed 
+                const { uid, message } = messages[messages.length-1]
+                const { name } = await getDataUser( uid )
+                if(userLoged.uid !== uid) {
+                    dispatch( addNotification( gid ) )
+                    await sendNotification( tokenNotification, groupName, `${name}: ${message}` )
+                }
+                dispatch({ type: 'add-msg', payload: { gid, messages: [...messages]} })
+            }
+
+        }catch( e) {
+            console.log(e)
+
         }
-        dispatch({ type: 'add-msg', payload: { gid, messages: [...messages]} })
     }
 }
 export const chatReducer = ( state = initState, action ) => {

@@ -38,24 +38,31 @@ export const setData = ( uid ) => {
 export const updateUser = ({ name, image, imageURL }) => {
 
     return async ( dispatch, getState ) => {
-        const userLoged = getState().authRed
-        if( name.trim() !== "" || imageURL.trim() !== "" ){
-            const userRef = db.collection('users').doc(  userLoged.uid )
-            if( name !== userLoged.name ) {
-                await userRef.update({ name })
-            }
-            if ( !!image ) {
-                const newImg =  await uploadImage( imageURL, userLoged.name,'img_profile' );
-                await userRef.update({ image: newImg })
-            }
-            dispatch({
-                type:'update-user',
-                payload:{ 
-                    name, 
-                    image:imageURL
+        try {
+            const userLoged = getState().authRed
+            if( name.trim() !== "" || imageURL.trim() !== "" ){
+                const userRef = db.collection('users').doc(  userLoged.uid )
+                if( name !== userLoged.name ) {
+                    await userRef.update({ name })
                 }
-            })
+                if ( !!image ) {
+                    const newImg =  await uploadImage( imageURL, userLoged.name,'img_profile' );
+                    await userRef.update({ image: newImg })
+                }
+                dispatch({
+                    type:'update-user',
+                    payload:{ 
+                        name, 
+                        image:imageURL
+                    }
+                })
+            }
+
+        } catch( e ) {
+            console.log(e)
+
         }
+       
     }
 }
 export const authRed = ( state = initialState, action ) => {

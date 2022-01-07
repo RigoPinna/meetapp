@@ -42,8 +42,6 @@ export const addNewGroup = ({ name, image='', description }) => {
             description,
             image: !!image ? imageURL : IMG_DEFAULT, 
             name: name.trim() !== '' ?name.trim() : "Group Name" ,
-            startDate: startDate,
-            finishDate: finishDate,
             participants:JSON.stringify([{uid: userLoged.uid, name: userLoged.name, image: userLoged.image}] )
         },{ merge: true });
 
@@ -56,8 +54,6 @@ export const addNewGroup = ({ name, image='', description }) => {
                 name: name.trim() !== '' ?name.trim() : "Group Name" , 
                 image: !!image ? imageURL : IMG_DEFAULT, 
                 createdat: date,
-                startDate,
-                finishDate,
                 participants:  userLoged}]
         })
     }
