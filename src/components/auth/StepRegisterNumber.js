@@ -48,6 +48,7 @@ export const StepRegisterUser = () => {
             );
             dispatch( addPhoneAndVerifyData({ verificationId,...userData,}) )
             setViewModal( true )
+            console.log('viewModal', viewModal)
         } catch( err ) {
             console.log( err )
         }
@@ -109,8 +110,8 @@ export const StepRegisterUser = () => {
                                                 hanldeOnPress = { hanldeSeendCode }
                                             />
             }   
-            { viewModal && <ModalFinallyRegister /> }
-            {/* <ModalFinallyRegister /> */}
+            {/* { viewModal && <ModalFinallyRegister /> } */}
+            <ModalFinallyRegister />
         </>
     )
 }
