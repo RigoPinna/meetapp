@@ -24,21 +24,26 @@ export const PresentationScreen = () => {
         <Animated.View style = {{...styles2.wrapperPresentation, opacity:opacity}}>
                 <SafeAreaProvider>
                     <ScrollView>
-                        <View style={{flex:1,alignItems:'center', position:'relative'}}>
                             {
                                 steps.stepWelcome 
-                                    && <StepWelcome steps = { steps } setStep = { setStep } />
+                                    && <View style={{flex:1,alignItems:'center', position:'relative'}}>
+                                            <StepWelcome steps = { steps } setStep = { setStep } />
+                                        </View>
                             }
-
                             {
+                                
                                 steps.stepInfoProfile 
-                                    && <StepInfoProfile steps = { steps } setStep = { setStep } />
+                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700, backgroundColor: 'red'}}>
+                                            <StepInfoProfile steps = { steps } setStep = { setStep } />
+                                        </View>
                             }
                             {
                                 steps.stepVerifyPhone 
-                                    && <StepRegisterUser />
+                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700, backgroundColor: 'red', top: 20}}>
+                                            <StepRegisterUser />
+                                        </View>
                             }
-                        </View>
+
                     </ScrollView>
                 </SafeAreaProvider>
         </Animated.View >

@@ -80,7 +80,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
             </View>
             {
                 ( userData.name.trim() !== '' && userData.image.trim() !== '')
-                    && <View style = {{flex:1, width:'100%', justifyContent:'flex-end', alignItems:'flex-end', padding:20}}>
+                    && <View style = {{flex:1, width:'100%', justifyContent:'flex-end', alignItems:'flex-end', padding:20, bottom: 150}}>
                            <ButtonGradient 
                                 gradient={['#48C6EF','#6F86D6']}
                                 sizeGradient = {{width:200, height:40}}
@@ -92,6 +92,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
                             />
                         </View>
             }
+            
         </>
     )
 }
