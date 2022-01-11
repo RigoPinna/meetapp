@@ -109,8 +109,8 @@ export const StepRegisterUser = () => {
                                                 hanldeOnPress = { hanldeSeendCode }
                                             />
             }   
-            {/* { viewModal && <ModalFinallyRegister /> } */}
-            <ModalFinallyRegister />
+            { viewModal && <ModalFinallyRegister closeModal={viewModal} /> }
+   
         </>
     )
 }

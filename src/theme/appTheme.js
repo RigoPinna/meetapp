@@ -405,7 +405,7 @@ export const  stylesChat = {
         borderRadius: 20,
     },
     wrapperItemMessage:{
-        width:'100%', 
+        width:'80%', 
         height:'auto', 
         flexDirection:'row',
         paddingVertical:10,

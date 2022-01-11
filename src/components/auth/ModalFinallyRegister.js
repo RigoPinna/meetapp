@@ -9,7 +9,7 @@ import { firebase } from '../../firebase/firebase-config'
 import { registerUser } from '../../reducers/registerReducer'
 import { SpinnerLoading } from '../SpinnerLoading/SpinnerLoading'
 
-export const ModalFinallyRegister = () => {
+export const ModalFinallyRegister = ({ closeModal }) => {
 
     const dispatch = useDispatch()
     const userData = useSelector(state => state.registerReducer )
@@ -31,7 +31,7 @@ export const ModalFinallyRegister = () => {
         })
     }
     return (
-        <ModalApp textTitle="Enter verification code" closeModal = { false }>
+        <ModalApp textTitle="Enter verification code" closeModal={ closeModal} >
             <Text style={{marginTop:10}}>Enter the verification code that we have sent to your phone number.</Text>
             <TextInputApp 
                 size={20}
