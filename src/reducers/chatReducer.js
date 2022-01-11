@@ -19,9 +19,10 @@ export const addMessages = ({ gid, messages, tokenNotification, groupName }) => 
                 const userLoged = getState().authRed 
                 const { uid, message } = messages[messages.length-1]
                 const { name } = await getDataUser( uid )
+                console.log("NUEVO MENSAJE",userLoged.uid, uid, userLoged.uid !== uid, "Token:",tokenNotification )
                 if(userLoged.uid !== uid) {
-                    dispatch( addNotification( gid ) )
                     await sendNotification( tokenNotification, groupName, `${name}: ${message}` )
+                    dispatch( addNotification( gid ) )
                 }
                 dispatch({ type: 'add-msg', payload: { gid, messages: [...messages]} })
             }

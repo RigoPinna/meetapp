@@ -38,7 +38,7 @@ export const ListGroup = ({ navigation }) => {
     return (
         <>
             {
-                (groups === STATE_GROUPS_LOADING.loading ) 
+                (groups === STATE_GROUPS_LOADING.loading || tokenNotification===""  ) 
                     ? <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
                     <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
                 </View>
