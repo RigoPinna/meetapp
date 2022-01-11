@@ -49,7 +49,8 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
                                                 styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
                                                 IconLeft = { IconClose }
                                                 hanldeOnPress = { () => { 
-                                                    setShowModal(false); navigation.goBack(); 
+                                                    setShowModal(false); 
+                                                    !!navigation && navigation.goBack(); 
                                                     (!!handle) && handle()
                                                 } }
                                                 colorIcon = {COLORS_APP.black2}    

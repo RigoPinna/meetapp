@@ -33,13 +33,13 @@ export const PresentationScreen = () => {
                             {
                                 
                                 steps.stepInfoProfile 
-                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700, backgroundColor: 'red'}}>
+                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700,top: 20}}>
                                             <StepInfoProfile steps = { steps } setStep = { setStep } />
                                         </View>
                             }
                             {
                                 steps.stepVerifyPhone 
-                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700, backgroundColor: 'red', top: 20}}>
+                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700,top: 20}}>
                                             <StepRegisterUser />
                                         </View>
                             }
