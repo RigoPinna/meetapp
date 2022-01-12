@@ -23,7 +23,7 @@ export const ModalFinallyRegister = ({ closeModal }) => {
         );
         firebase.auth().signInWithCredential( credential ).then( resp => {
             console.log( resp )
-            dispatch(registerUser( userData ))    
+            dispatch(registerUser( {...userData, uid: resp.user.uid} ))    
             setCode({ isLoading: false, ...code, uid:resp.user.uid })
         }).catch( err => {
             console.log( err )

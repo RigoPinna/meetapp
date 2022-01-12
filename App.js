@@ -4,6 +4,7 @@ import { Provider } from 'react-redux';
 import { store } from './src/store/store';
 import { MeetApp } from './MeetApp';
 import {ColorPickerApp} from './src/components/elements/ColorPickerApp'
+import { PresentationScreen } from './src/components/auth/PresentationScreen';
 // import { StepRegisterNumber } from './src/components/auth/StepRegisterNumber';
 
 export default function App() {
@@ -23,6 +24,7 @@ export default function App() {
   return (
     <Provider store = { store } >
         <MeetApp />
+        {/* <PresentationScreen/> */}
     </Provider>
   );
 }

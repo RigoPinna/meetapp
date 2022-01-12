@@ -38,8 +38,8 @@ export const registerUser = ({ name, image='', countryCode, phone, uid }) => {
             image: imageURL, 
             phone: phoneNumber,
         },{ merge: true })
-        await AsyncStorage.setItem( 'uid', userRef.id )
-        dispatch( setData(  userRef.id ) )
+        await AsyncStorage.setItem( 'uid', uid )
+        dispatch( setData(  uid ) )
     }
 }
 
