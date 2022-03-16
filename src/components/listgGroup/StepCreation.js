@@ -18,12 +18,14 @@ export const StepCreation = ({steps, setStep}) => {
     const IMG_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/meetapp-prueba.appspot.com/o/groups_imgs_defaults%2Fimg_3.png?alt=media&token=2724ab38-867a-4d98-b971-3880faa72e93';
     LogBox.ignoreLogs(['Setting a timer for a long period of time']);
     const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic, startDate: '', finishDate: ''});
+    const [ nameValidation, setNameValidation ] = useState(false);
     const dispatch = useDispatch();
     const handleOnChange = ( variable, text ) => setDataGroup({...dataGroup, [variable]: text})
     const hanldeSaveGroup = () => {
         dispatch( addNewGroup( dataGroup ) );
         setStep({...steps, ...{ stepCreation: false, stepCreated:true }});
     }
+
     return (
         <>
             <Textapp 
@@ -54,7 +56,7 @@ export const StepCreation = ({steps, setStep}) => {
                         IconPerson={IconPersons}
                         placeholder={'Name group'}
                         // value={ groupData.name } 
-                        onChange = { (value) => handleOnChange( 'name', value)}
+                        onChange = { (value) => { setNameValidation( (value.length > 25) ), handleOnChange( 'name', value)}}
                         paddingLeftT={35}
                         styleT={{ 
                             width: '100%',
@@ -63,6 +65,14 @@ export const StepCreation = ({steps, setStep}) => {
                             borderRadius: 100,
                         }}
                     />
+                    {
+                        (nameValidation) && <Textapp 
+                            size= {12} 
+                            styles = {{marginBottom:0, marginTop: 3, textAlign: 'center'}}
+                            color = {'#D10000'}
+                            text = {'Name too long. Max 25 characters'}
+                        />
+                    }
                 </View>
                 <View style={{marginTop: 20, }}>
                     <Textapp 
@@ -92,7 +102,7 @@ export const StepCreation = ({steps, setStep}) => {
                     />
                 </View>
                 {
-                    ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '')
+                    ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '' && !nameValidation)
                     && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
                             <ButtonGradient
                                 gradient={['#48C6EF','#6F86D6']}
