@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "565202488631",
+    "project_id": "meetapp-prueba",
+    "storage_bucket": "meetapp-prueba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565202488631:android:43f14ba0ecb40135c01eb2",
+        "android_client_info": {
+          "package_name": "com.meetapp.meetapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "565202488631-e8nfvacsjcp9p53qnph2elgjibpbrajr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAx2pvDyhPm2lAZbtG9ytazDlAXrnFHn7g"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "565202488631-e8nfvacsjcp9p53qnph2elgjibpbrajr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

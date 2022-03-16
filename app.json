@@ -23,6 +23,8 @@
     },
     "android": {
       "package": "com.meetapp.meetapp",
+      "useNextNotificationsApi":true,
+      "googleServicesFile": "./google-services.json",
       "versionCode": 1,
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
