@@ -18,6 +18,7 @@ export const StepJoined = ({steps, setStep}) => {
     const gid = steps.gid;
     const gname = steps.gname;
     const gimage = steps.gimage;
+    const desc = steps.description;
 
 
     const opacity = useRef(new Animated.Value(0) ).current;
@@ -57,14 +58,14 @@ export const StepJoined = ({steps, setStep}) => {
             </View>
                 <View style={{marginTop: 10}}>
                     <Textapp 
-                        size={TEXTS_SIZE.medium}
+                        size={TEXTS_SIZE.long}
                         text={gname}
-                        color={COLORS_APP.black2}
+                        color={COLORS_APP.black1}
                         weight={'bold'}
                         styles={{textAlign: 'center'}}
                     />
                 </View>
-                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
+                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
                     {/* <ButtonGradient
                         gradient={['#3CD2A5','#2FACA5']}
                         sizeGradient = {{width:350, height:50}}
@@ -74,9 +75,9 @@ export const StepJoined = ({steps, setStep}) => {
                         // hanldeOnPress = { handlecopyToClipboard }
                     /> */}
                     <Textapp 
-                        size={TEXTS_SIZE.long}
-                        text={'WELCOME!!!!!'}
-                        color={COLORS_APP.green}
+                        size={TEXTS_SIZE.small}
+                        text={desc}
+                        color={COLORS_APP.black2}
                         weight={'bold'}
                         styles={{textAlign: 'center'}}
                     />

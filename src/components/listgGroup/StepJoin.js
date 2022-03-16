@@ -21,9 +21,9 @@ export const StepJoin = ({steps, setStep}) => {
     const handleOnChangeName = ( text ) => {
         setCode(text)
     }
-    const changeParticipants = async(gid, allParticipants, gname, gimage) => {
+    const changeParticipants = async(gid, allParticipants, gname, gimage, desc) => {
         await db.collection('groups').doc(gid).update({participants: allParticipants})
-        setStep({...steps, ...{ stepJoin: false, stepJoined: true, gid: gid, gname: gname, gimage: gimage}})
+        setStep({...steps, ...{ stepJoin: false, stepJoined: true, gid: gid, gname: gname, gimage: gimage, description:desc}})
     }
     const hanldeGoToNextStep = async () => {
         if( userLoged.uid !== null ) {
@@ -44,7 +44,8 @@ export const StepJoin = ({steps, setStep}) => {
                     const gimage = data.image;
                     const participants = JSON.parse( data.participants );
                     const allParticipants = JSON.stringify([...participants, userLoged])
-                    changeParticipants(gid, allParticipants, gname, gimage)
+                    const desc = data.description;
+                    changeParticipants(gid, allParticipants, gname, gimage, desc)
                 }
             })
         }
