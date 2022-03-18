@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from 'react'
 import { firebaseConfig, phoneProvider} from '../../firebase/firebase-config';
 import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
 
-import { dataCountry, fetchGetCodeAndCountryName } from '../../services/fetchGetCodeAndCountryName';
+import { fetchGetCodeAndCountryName } from '../../services/fetchGetCodeAndCountryName';
 import { Image, View } from 'react-native';
 import { styles2 } from '../../theme/appTheme';
 import { InputSelectapp } from '../elements/InputSelectapp';
@@ -27,9 +27,9 @@ export const StepRegisterUser = () => {
         let controller = new AbortController();
         ( async ()=>{
             try {
-                // const dataCountries = await fetchGetCodeAndCountryName();
+                const dataCountries = await fetchGetCodeAndCountryName();
                 controller = null;
-                setCountries( dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code })) );
+                setCountries( dataCountries.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code })) );
             } catch( e ) {
 
             }
