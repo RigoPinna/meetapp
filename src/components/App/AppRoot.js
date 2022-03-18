@@ -8,7 +8,7 @@ import { TabNavigator } from '../TabNavigator';
 
 export const AppRoot = () => {
     return (
-        <Provider >
+        <Provider store = { store } >
             <RootSiblingParent>
                 <NavigationContainer>
                     <TabNavigator />
