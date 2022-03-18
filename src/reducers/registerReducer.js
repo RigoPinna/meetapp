@@ -33,7 +33,7 @@ export const registerUser = ({ name, image='', countryCode, phone, uid }) => {
         // console.log('NOMBRE=',name )
         const phoneNumber = `+${countryCode}${phone}`;
         const imageURL =  await uploadImage( image, name,'profile_photo' );
-        const userRef = await db.collection('users').doc( uid ).set({ 
+        await db.collection('users').doc( uid ).set({ 
             name: name,
             image: imageURL, 
             phone: phoneNumber,
