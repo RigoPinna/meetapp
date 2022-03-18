@@ -12,7 +12,7 @@ import { db, firebase,firebaseConfig, phoneProvider } from '../../firebase/fireb
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha'
 import { IconArrowLeft } from '../icons/IconArrowLeft'
 import { InputSelectapp } from '../elements/InputSelectapp'
-import { dataCountry } from '../../services/fetchGetCodeAndCountryName'
+import { fetchGetCodeAndCountryName } from '../../services/fetchGetCodeAndCountryName';
 import { useDispatch } from 'react-redux'
 import { setData } from '../../reducers/authReducer'
 import { HeaderDecoration } from '../auth/HeaderDecoration'
@@ -28,9 +28,26 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const handleGoBack = () => {
         setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
     }
+    // useEffect(() => {
+    //     const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
+    //     setUserData({...userData, countries })
+    // }, [])
+
     useEffect(() => {
-        const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
-        setUserData({...userData, countries })
+        let controller = new AbortController();
+        ( async ()=>{
+            try {
+                const dataCountries = await fetchGetCodeAndCountryName();
+                controller = null;
+                const countries =  dataCountries.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
+                setUserData({...userData, countries })
+            } catch( e ) {
+
+            }
+        })();
+        // console.log('data', data)
+        return () => controller?.abort();
+
     }, [])
 
     const login = async () => {

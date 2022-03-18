@@ -2,7 +2,7 @@
 
 export const fetchGetCodeAndCountryName = async() => {
     try {
-        const url = 'https://restcountries.eu/rest/v3.1/all';
+        const url = 'https://restcountries.com/v2/all';
 
         const resp = await fetch( url );
         const data = resp.json();
