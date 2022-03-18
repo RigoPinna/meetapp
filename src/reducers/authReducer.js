@@ -1,5 +1,6 @@
 import { db } from "../firebase/firebase-config";
 import { uploadImage } from '../helpers/uploadImage';
+import AsyncStorage  from "@react-native-async-storage/async-storage";
 
 const initialState = {
     uid: null,
@@ -65,6 +66,22 @@ export const updateUser = ({ name, image, imageURL }) => {
        
     }
 }
+
+export const logoutUser = () => {
+    return async ( dispatch ) => {
+        await AsyncStorage.removeItem('uid');
+        dispatch({
+            type: 'delete-id-user',
+            payload: {
+                uid: null,
+                name: null,
+                image: null,
+                phone: null,
+            }
+        })
+    }
+}
+
 export const authRed = ( state = initialState, action ) => {
     switch ( action.type ) {
         case 'set-data-user':
@@ -74,8 +91,9 @@ export const authRed = ( state = initialState, action ) => {
             return initialState
 
         case 'update-user':
-
             return { ...state, ...action.payload }
+        case 'delete-id-user' :
+            return action.payload;
         default:
             return state
     }

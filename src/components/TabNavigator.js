@@ -55,7 +55,8 @@ export const TabNavigator = () => {
                         title:'Settings',
                         tabBarIcon: props => <ButtonTabBarSettings {...props } />
                     }}
-                    component = {SettingsScreen} />
+                    component = {SettingsScreen} 
+                    />
             </Tab.Navigator>
     )
 }

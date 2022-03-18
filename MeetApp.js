@@ -14,7 +14,9 @@ export const MeetApp = () => {
     useEffect(() => {
         ( async () => {
             try {
+
                 //NO HAY AGUAAAAAAAAAAAAAAAAAAAAAAAAA AUXILIOOOOOOOOOOOOOOOOOOO
+
                 // await AsyncStorage.removeItem('uid')
                 // await AsyncStorage.setItem('uid','j6bRoNNgDqMs801MWPCkBYinZsW2')
                 const uid = await AsyncStorage.getItem('uid')
