@@ -17,8 +17,10 @@ import * as Progress from 'react-native-progress';
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../reducers/authReducer'
 import { Toastapp } from '../elements/ToastApp'
+import { firebase } from '../../firebase/firebase-config'
+import { logoutUser } from '../../reducers/authReducer';
 
-export const SettingsScreen = ({ navigation }) => {
+export const SettingsScreen = ({route}) => {
     const { top } = useSafeAreaInsets();
     const dispatch = useDispatch();
     const user = useSelector( state => state.authRed )
@@ -41,6 +43,9 @@ export const SettingsScreen = ({ navigation }) => {
         dispatch( updateUser( userData ) )
         setVisible(true)
         setMessages([...messages, 'User Update!' + Math.random()])
+    }
+    const hanldeLogoutUser = async () => {
+        dispatch( logoutUser())
     }
     return (
         <>
@@ -116,6 +121,14 @@ export const SettingsScreen = ({ navigation }) => {
                                     IconLeft = { IconSave }
                                     hanldeOnPress = { hanldeUpdateUser }
                                 />
+                            <ButtonGradient
+                                gradient={['#0BA360','#3CBA92']}
+                                sizeGradient = {{width:400, height:50}}
+                                textButton={`Log out`}
+                                styleText={{color:'white', fontWeight:'bold'}}
+                                styleButton={{width:400,height:50, justifyContent:'center', marginTop: 10}}
+                                hanldeOnPress = { hanldeLogoutUser }
+                            />
                         </View> 
                         {
                         visible && messages.map((message) => (
