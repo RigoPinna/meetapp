@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState, useReducer } from 'react'
+import { ModalApp } from '../elements/ModalApp'
+import { cleanGroup, updateGroup } from '../../reducers/groupReducer';
+import { useDispatch } from 'react-redux';
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
@@ -8,31 +11,32 @@ import { styles } from '../../theme/appTheme'
 import { ButtonCamera } from '../elements/ButtonCamera'
 import { IconPersons } from '../icons/IconPersons'
 import { IconDocument } from '../icons/IconDocument'
-import {  View, Image, LogBox } from 'react-native'
-import { addNewGroup } from '../../reducers/groupReducer'
-import { userStatic } from '../../firebase/firebase-config'
-import { useDispatch } from 'react-redux'
-import { DatePickerApp } from '../elements/DatePickerApp'
+import {  View, Image } from 'react-native'
 
-export const StepCreation = ({steps, setStep}) => {
-    const IMG_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/meetapp-prueba.appspot.com/o/groups_imgs_defaults%2Fimg_3.png?alt=media&token=2724ab38-867a-4d98-b971-3880faa72e93';
-    LogBox.ignoreLogs(['Setting a timer for a long period of time']);
-    const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic, startDate: '', finishDate: ''});
+export const ModalScreenEditInfo = ({navigation, route}) => {
+     const IMG_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/meetapp-prueba.appspot.com/o/groups_imgs_defaults%2Fimg_3.png?alt=media&token=2724ab38-867a-4d98-b971-3880faa72e93';
+    const { params } = route;
+    const { name, description, image, id} = params;
+    const [ dataGroup, setDataGroup ] = useState({name:name,image: image, description: description, id: id});
     const [ nameValidation, setNameValidation ] = useState(false);
     const dispatch = useDispatch();
     const handleOnChange = ( variable, text ) => setDataGroup({...dataGroup, [variable]: text})
     const hanldeSaveGroup = () => {
-        dispatch( addNewGroup( dataGroup ) );
-        setStep({...steps, ...{ stepCreation: false, stepCreated:true }});
+        console.log(dataGroup.image)
+        dispatch( updateGroup( dataGroup ) );
+        navigation.goBack()
     }
-
+    const clean = () => {
+        dispatch(cleanGroup())
+    }
     return (
-        <>
+        <ModalApp navigation={navigation} textTitle={'Create Group'} handle = {clean}>
             <Textapp 
                 size= {TEXTS_SIZE.small} 
                 styles = {{marginBottom:13, marginTop: 13, textAlign: 'center'}}
                 color = {COLORS_APP.black2}
-                text = {'Please, select a photo for the group'}
+                weight={'bold'}
+                text = {'Image of group'}
 
             />
 
@@ -42,12 +46,12 @@ export const StepCreation = ({steps, setStep}) => {
                         source = {{uri:dataGroup.image !== "" ? dataGroup.image :  IMG_DEFAULT }}
                     />
                 <ButtonCamera onPress={ ( uriImg, file ) => {
-                    setDataGroup({...dataGroup, ...{ image:uriImg, imageFile: file }})
+                    setDataGroup({...dataGroup, ...{ image:uriImg }})
                 }}/>
             </View>
                 <View style={{marginTop: 20}}>
                     <Textapp 
-                        size={TEXTS_SIZE.medium}
+                        size={TEXTS_SIZE.small}
                         text={'Name group'}
                         color={COLORS_APP.black2}
                         weight={'bold'}
@@ -55,7 +59,7 @@ export const StepCreation = ({steps, setStep}) => {
                     <TextInputApp 
                         IconPerson={IconPersons}
                         placeholder={'Name group'}
-                        // value={ groupData.name } 
+                        value={ dataGroup.name } 
                         onChange = { (value) => { setNameValidation( (value.length > 25) ), handleOnChange( 'name', value)}}
                         paddingLeftT={35}
                         styleT={{ 
@@ -84,7 +88,7 @@ export const StepCreation = ({steps, setStep}) => {
                     <TextInputApp 
                         IconPerson={IconDocument}
                         placeholder={'Description'}
-                        // value={ groupData.description } 
+                        value={ dataGroup.description } 
                         onChange = { (value) => handleOnChange( 'description', value)}
                         height={120}
                         paddingLeftT={35}
@@ -102,19 +106,18 @@ export const StepCreation = ({steps, setStep}) => {
                     />
                 </View>
                 {
-                    ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '' && !nameValidation)
+                    ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '' && dataGroup.image.trim() !== '' && !nameValidation)
                     && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
                             <ButtonGradient
                                 gradient={['#48C6EF','#6F86D6']}
                                 sizeGradient = {{width:350, height:50}}
-                                textButton={`Create Group`}
+                                textButton={`Update Group`}
                                 styleText={{color:'white', fontWeight:'bold',}}
                                 styleButton={{width:350, height:50}}
                                 hanldeOnPress = { hanldeSaveGroup }
                             />
                         </View>
                 }
-                
-        </>
-    )
+        </ModalApp>    
+    );
 }

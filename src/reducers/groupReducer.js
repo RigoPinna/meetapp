@@ -18,6 +18,13 @@ export const initialState = {
     groupCreated:null
 };
 
+export const setGroups = (groups) => {
+    return {
+        type: 'set-groups',
+        payload: {listGroup: groups}
+    }
+}
+
 export const addNewGroup = ({ name, image='', description }) => {
     
     return async ( dispatch, getState ) => {
@@ -35,6 +42,7 @@ export const addNewGroup = ({ name, image='', description }) => {
         const groupRef = db.collection('groups').doc();
         const imageURL = !!image && await uploadImage( image, name,'img_group' );
         await groupRef.set({ 
+            gid: groupRef.id,
             code, 
             creator:  userLoged.uid, 
             createdat: firebase.firestore.Timestamp.fromDate(new Date()),
@@ -48,6 +56,7 @@ export const addNewGroup = ({ name, image='', description }) => {
         dispatch({
             type:'create-group',
             payload:[{ 
+                gid: groupRef.id,
                 code, 
                 creator:  userLoged.uid, 
                 description, 
@@ -57,8 +66,45 @@ export const addNewGroup = ({ name, image='', description }) => {
                 participants:  userLoged}]
         })
     }
+}
 
+export const updateGroup = ({ name,image, description, id }) => {
 
+    return async ( dispatch, getState) => {
+        try {
+            const {groupReducer} = getState()
+            const group = groupReducer.listGroup.find(g => id == g.gid)
+
+            // console.log(group)
+            if( name.trim() !== "" || image.trim() !== "" || description.trim() !== ""){
+                const groupRef = db.collection('groups').doc( id )
+                if( name !== group.name ) {
+                    await groupRef.update({ name })
+                }
+                if( description !== group.description ) {
+                    await groupRef.update({ description })
+                }
+                if (!!image) {
+                    const newImg =  await uploadImage( image, name,'img_group' );
+                    await groupRef.update({ image: newImg })
+                }
+                dispatch({
+                    type:'update-group',
+                    payload:{ 
+                        gid: id,
+                        name, 
+                        description,
+                        image:image
+                    }
+                })
+            }
+
+        } catch( e ) {
+            console.log(e)
+
+        }
+       
+    }
 }
 
 export const cleanGroup = () =>{
@@ -84,7 +130,13 @@ export const groupReducer = ( state = initialState, action ) => {
                 listGroup:[...state.listGroup,...action.payload ], 
                 groupCreated:null
             };
-        
+            case 'update-group':
+                const groups = state.listGroup.map(g => {
+                                                        return action.payload.id == g.gid ? action.payload : g
+                                                        })
+                return { ...state, listGroup: groups }
+                case 'set-groups':
+                return { ...state, ...action.payload }
         default:
             return state;
     }
