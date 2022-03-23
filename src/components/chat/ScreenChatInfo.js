@@ -18,15 +18,18 @@ import { TextInputApp } from '../elements/TextInputApp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconCopy } from '../icons/IconCopy'
 import { useActiveEvent } from '../../hooks/useActiveEvent'
+import { IconEditInfo } from '../icons/IconEditInfo'
 
 
 export const ScreenChatInfo = ({ navigation, route }) => {
     const { params } = route;
     const { name,description,participants, image, id} = params;
+    const {groupReducer} = useSelector(state => state)
     const [codeF, setCodeF] = useState('')
     const userLoged = useSelector(state => state.authRed )
     const [messages, setMessages] = useState([]);
     const [visible, setVisible] = useState(false)
+    const [infoGroup, setInfoGroup] = useState({...params})
     const { activeEvent } = useActiveEvent({ id })
     const getCode = async () => {
         if( userLoged.uid !== null ) {
@@ -45,6 +48,9 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         } 
     }
     
+    const handleModalEdit = () => {
+        navigation.navigate('ModalEditInfo', {name: infoGroup.name, description: infoGroup.description, image: infoGroup.image, id})
+    }
 
     const handlecopyToClipboard = () => {
         Clipboard.setString( codeF)
@@ -57,6 +63,15 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         getCode();
     }, [])
 
+    useEffect(() => {
+        if(!!groupReducer.listGroup){
+            const group = groupReducer.listGroup.find(g => id == g.gid)
+            if(!!group){
+                setInfoGroup(group)
+            }
+        }
+    }, [groupReducer.listGroup])
+    
 
     const hanldeGoToModal = () => {
         navigation.navigate('ModalParticipants',{participants})
@@ -73,29 +88,39 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomLeftRadius:25,
                 borderBottomRightRadius:25,
                }} 
-                source = {{ uri: image }} />
+                source = {{ uri: infoGroup.image }} />
                 <MenuScreenChat navigation={navigation} name = {name} id={id}/>
             <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
-                    <Textapp 
-                        size = { TEXTS_SIZE.medium } 
-                        weight='bold' 
-                        text ={name} 
-                        styles={{width:'100%', textAlign: 'center', padding: 10}} 
-                    />
+                    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10}}>
+                        <Textapp 
+                            size = { TEXTS_SIZE.medium } 
+                            weight='bold' 
+                            text ={infoGroup.name} 
+                            styles={{width: 150, textAlign: 'center', padding: 10, marginTop: 12}} 
+                        />
+                        {
+                            (codeF !== '') &&   <ButtonGradient
+                                                    IconLeft={IconEditInfo}
+                                                    gradient={['white','white']}
+                                                    styleButton={{width:75, height:75,justifyContent:'center', marginLeft: -30}}
+                                                    hanldeOnPress = { handleModalEdit }
+                                                />
+                        }
+                    </View>
                     <Textapp 
                         size = { TEXTS_SIZE.small } 
-                        text ={description} 
-                        styles={{width:'100%'}} 
+                        text ={infoGroup.description} 
+                        styles={{width:'100%', padding: 10}} 
                     />
 
                 </View>
                 <Textapp 
-                        size = { TEXTS_SIZE.small } 
-                        weight='bold' 
-                        text ={'Participants'} 
-                        styles={{padding:13}} 
-                    />
+                    size = { TEXTS_SIZE.small } 
+                    weight='bold' 
+                    text ={'Participants'} 
+                    styles={{padding:13}} 
+                />
                 <View style={{justifyContent:'flex-start', paddingTop: 30,width:140}}>
                     <ListParticipants participants={ participants } colorColorBordersAvatars = {'white'} />
                     <Buttonapp

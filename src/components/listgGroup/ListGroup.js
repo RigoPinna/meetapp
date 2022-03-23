@@ -6,17 +6,19 @@ import { EmptyList } from './EmptyList'
 import { ItemListGroup } from './ItemListGroup'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import * as Progress from 'react-native-progress';
-import {useSelector } from 'react-redux'
+import {useDispatch, useSelector } from 'react-redux'
 import { useNotification } from '../../hooks/useNotification'
+import { setGroups } from '../../reducers/groupReducer';
 
 const STATE_GROUPS_LOADING = {
     loading:undefined,
     empty: [],
 }
 export const ListGroup = ({ navigation }) => {
-    const [ groups, setGroups ] = useState( STATE_GROUPS_LOADING.loading );
-    const userLoged = useSelector(state => state.authRed )
+    // const [ groups, setGroups2 ] = useState( STATE_GROUPS_LOADING.loading );
+    const {authRed: userLoged, groupReducer} = useSelector(state => state )
     const { Token:tokenNotification } = useNotification();
+    const dispatch = useDispatch()
     useEffect(() => {
         if( userLoged.uid !== null ) {
             db.collection('groups').orderBy('createdat', 'desc').onSnapshot( querySnapshot => {
@@ -31,7 +33,8 @@ export const ListGroup = ({ navigation }) => {
                     return isSuscribed && { gid, ...data, participants, createdat }
                 })
                 //Se limpia el array de valores false y se establece como state
-                setGroups( groups.filter( group => group !== false ) )
+                // setGroups2( groups.filter( group => group !== false ) )
+                dispatch(setGroups(groups.filter( group => group !== false ) ) )
             })
         } 
     }, [ userLoged.uid ])
@@ -39,14 +42,14 @@ export const ListGroup = ({ navigation }) => {
         <>
             {
                 // (groups === STATE_GROUPS_LOADING.loading || tokenNotification===""  ) 
-                (groups === STATE_GROUPS_LOADING.loading ) 
+                (groupReducer.listGroup === STATE_GROUPS_LOADING.loading ) 
                     ? <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
                     <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
                 </View>
-                    : ( groups?.length > 0 ) 
+                    : ( groupReducer.listGroup?.length > 0 ) 
                         ? <ScrollView>
                             {
-                                groups.map( ({ gid, name,image,createdat,participants, description }) =>{
+                                groupReducer.listGroup.map( ({ gid, name,image,createdat,participants, description }) =>{
                                     return ( 
                                         !!gid 
                                             ? <ItemListGroup
