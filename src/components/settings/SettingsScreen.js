@@ -62,20 +62,29 @@ export const SettingsScreen = ({route}) => {
                             text = {'Settings'}
                             weight={'bold'}
                         />
-
-                        <View>
-                            <Image
-                                    style={styles.tinyLogo}
-                                    source = {
-                                            userData.imageURL === '' 
-                                                ? require('../../assets/avatarDefault.png')
-                                                : {uri:userData.imageURL}
-                                            }
-                                    
-                                />
-                            <ButtonCamera onPress={ ( uriImg, file ) => {
-                                setUserData({...userData, ...{ imageURL:uriImg, image: file }})
-                            }}/>
+                        <View style={{width: '105%'}}>
+                            <ButtonGradient
+                                gradient={['#FFF','#FFF']}
+                                sizeGradient = {{width:400, height:50}}
+                                textButton={`Log out`}
+                                styleText={{color:'#FF3838', fontWeight:'bold'}}
+                                styleButton={{width:100,height:40, justifyContent:'center', marginTop: 0, borderWidth: 1, borderColor: '#FF3838', position: 'absolute', alignSelf: 'flex-end'}}
+                                hanldeOnPress = { hanldeLogoutUser }
+                            />
+                            <View style={{alignSelf: 'center'}}>
+                                <Image
+                                        style={styles.tinyLogo}
+                                        source = {
+                                                userData.imageURL === '' 
+                                                    ? require('../../assets/avatarDefault.png')
+                                                    : {uri:userData.imageURL}
+                                                }
+                                        
+                                    />
+                                <ButtonCamera onPress={ ( uriImg, file ) => {
+                                    setUserData({...userData, ...{ imageURL:uriImg, image: file }})
+                                }}/>
+                            </View>
                         </View>
                         
                         <View style={{ width:'100%'}}>
@@ -121,14 +130,6 @@ export const SettingsScreen = ({route}) => {
                                     IconLeft = { IconSave }
                                     hanldeOnPress = { hanldeUpdateUser }
                                 />
-                            <ButtonGradient
-                                gradient={['#0BA360','#3CBA92']}
-                                sizeGradient = {{width:400, height:50}}
-                                textButton={`Log out`}
-                                styleText={{color:'white', fontWeight:'bold'}}
-                                styleButton={{width:400,height:50, justifyContent:'center', marginTop: 10}}
-                                hanldeOnPress = { hanldeLogoutUser }
-                            />
                         </View> 
                         {
                         visible && messages.map((message) => (

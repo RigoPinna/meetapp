@@ -68,8 +68,8 @@ export const updateUser = ({ name, image, imageURL }) => {
 }
 
 export const logoutUser = () => {
-    return async ( dispatch ) => {
-        await AsyncStorage.removeItem('uid');
+    return ( dispatch ) => {
+        AsyncStorage.removeItem('uid');
         dispatch({
             type: 'delete-id-user',
             payload: {
