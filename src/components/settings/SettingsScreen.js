@@ -67,8 +67,8 @@ export const SettingsScreen = ({route}) => {
                                 gradient={['#FFF','#FFF']}
                                 sizeGradient = {{width:400, height:50}}
                                 textButton={`Log out`}
-                                styleText={{color:'red', fontWeight:'bold'}}
-                                styleButton={{width:100,height:40, justifyContent:'center', marginTop: 0, borderWidth: 1, borderColor: 'red', position: 'absolute', alignSelf: 'flex-end'}}
+                                styleText={{color:'#FF3838', fontWeight:'bold'}}
+                                styleButton={{width:100,height:40, justifyContent:'center', marginTop: 0, borderWidth: 1, borderColor: '#FF3838', position: 'absolute', alignSelf: 'flex-end'}}
                                 hanldeOnPress = { hanldeLogoutUser }
                             />
                             <View style={{alignSelf: 'center'}}>
