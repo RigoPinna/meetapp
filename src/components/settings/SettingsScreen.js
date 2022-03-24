@@ -109,7 +109,7 @@ export const SettingsScreen = ({route}) => {
                             size= {TEXTS_SIZE.medium} 
                             styles = {{marginTop: 20, alignSelf: 'flex-start'}}
                             color = {COLORS_APP.black2}
-                            text = {'Number phone'}
+                            text = {'Phone Number'}
                             weight={'bold'}
                         />
                         <View style={{flexDirection: 'row',alignSelf: 'flex-start',alignItems: 'center'}}>

@@ -14,7 +14,7 @@ export const ModalScreenCreateGroup = ({navigation}) => {
         dispatch(cleanGroup())
     }
      return (
-        <ModalApp navigation={navigation} textTitle={'Create Group'} handle = {clean}>
+        <ModalApp navigation={navigation} textTitle={'Create New Group'} handle = {clean}>
                 {
                     steps.stepCreation 
                         && <StepCreation steps = { steps } setStep = { setStep } />

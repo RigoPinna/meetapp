@@ -32,16 +32,16 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         <>
             {
                 stepColor.stepBack && <>
-                <ModalApp navigation={navigation} textTitle={'Create Event'}>
+                <ModalApp navigation={navigation} textTitle={'Create New Event'}>
                     <View style={{flex: 1, width:340}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
-                            text={'Name Event'}
+                            text={'Event Name'}
                             color={COLORS_APP.black2}
                             weight={'bold'}
                         />
                         <TextInputApp 
-                            placeholder={'Name event'}
+                            placeholder={'Event name'}
                             value={ eventData.nameEvent } 
                             onChange = { handleOnChange }
                             styleT={{
