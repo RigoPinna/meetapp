@@ -31,7 +31,7 @@ export const AlertEvent = ({ event }) => {
                     size= {TEXTS_SIZE.extraMedium} 
                     styles = {{marginTop: 10}}
                     color = {COLORS_APP.black2}
-                    text = {'Descrption:'}
+                    text = {'Description:'}
                     weight={'bold'}
             />
             <Textapp 

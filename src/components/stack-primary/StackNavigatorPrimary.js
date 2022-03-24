@@ -11,6 +11,7 @@ import { ModalScreenEliminateGroup } from '../listgGroup/ModalScreenEliminateGro
 import { ModalCalendar } from '../chat/ModalCalendar';
 import { ScreenAgenda } from '../chat/ScreenAgenda';
 import { PresentationScreen } from '../auth/PresentationScreen';
+import { ModalScreenEditInfo } from '../chat/ModalScreenEditInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -72,6 +73,16 @@ export const StackNavigatorPrimary = () => {
                 <Stack.Screen
                     name="ModalCreateGroup"
                     component={ModalScreenCreateGroup}
+                    options={{
+                        headerTransparent: true,
+                        headerShadowVisible: false,
+                        presentation: 'transparentModal',
+                        headerTitle: '', 
+                        headerBackVisible: false}}
+                />
+                <Stack.Screen
+                    name="ModalEditInfo"
+                    component={ModalScreenEditInfo}
                     options={{
                         headerTransparent: true,
                         headerShadowVisible: false,
