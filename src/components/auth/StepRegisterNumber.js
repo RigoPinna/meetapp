@@ -64,7 +64,7 @@ export const StepRegisterUser = () => {
                 size= {TEXTS_SIZE.small} 
                 styles = {{marginBottom:13, marginTop: 13, marginLeft: 10}}
                 color = {COLORS_APP.black2}
-                text = {'Meetapp will send a SMS message to verify yoru phone number. Enter your country and phone number '}
+                text = {'Meetapp will send a SMS message to verify your phone number. Enter your country and phone number '}
 
             />
             <Image style={{resizeMode: 'cover'}} source ={require('../../../assets/Illusration-phone.png')}/>

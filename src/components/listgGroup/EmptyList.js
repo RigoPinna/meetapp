@@ -13,7 +13,7 @@ export const EmptyList = () => {
                         weight = {'bold'}
                         size= {TEXTS_SIZE.small}
                         color = { COLORS_APP.black3 }
-                        text ={`You don't seem to have any group chat, click on create a group or join a group....`}
+                        text ={`Looks like you don't have any group chat yet, click on create a group or join a group....`}
                         styles = {{textAlign:'center',}}
                     />
                     <Image source = {require('../../../assets/Illustration-Empty-List-Messages.png')}/>

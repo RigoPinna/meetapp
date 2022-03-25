@@ -29,6 +29,6 @@ const getTimeDiff = ( time ) => {
 export const useTimeAgo = ( time ) => {
     const { unit } = getTimeDiff( time );
     const date = moment( time );
-    return `${moment().diff( date, unit )} ago ${ unit }`;
+    return `${moment().diff( date, unit )} ${ unit } ago`;
     
 }

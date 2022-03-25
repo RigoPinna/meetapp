@@ -48,13 +48,13 @@ export const StepCreation = ({steps, setStep}) => {
                 <View style={{marginTop: 20}}>
                     <Textapp 
                         size={TEXTS_SIZE.medium}
-                        text={'Name group'}
+                        text={'Group name'}
                         color={COLORS_APP.black2}
                         weight={'bold'}
                     />
                     <TextInputApp 
                         IconPerson={IconPersons}
-                        placeholder={'Name group'}
+                        placeholder={'Group name'}
                         // value={ groupData.name } 
                         onChange = { (value) => { setNameValidation( (value.length > 25) ), handleOnChange( 'name', value)}}
                         paddingLeftT={35}

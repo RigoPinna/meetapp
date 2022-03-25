@@ -106,7 +106,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                         {
                             !!userData.verificationId
                             ? "Enter the verification code that we have sent to your phone number."
-                            : "Meetapp will send a SMS message to verify yoru phone number. Enter your country and phone number"
+                            : "Meetapp will send a SMS message to verify your phone number. Enter your country and phone number"
                         }
                         
                     </Text>
