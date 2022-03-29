@@ -6,12 +6,12 @@ import { ButtonGradient } from '../elements/ButtonGradient'
 import { useNavigation } from '@react-navigation/native'
 
 export const ModalScreenColorChooser = ({navigation, route}) => {
-    const nav = useNavigation()
-    const [color, setColor] = useState(route.params.dataGroup.color);
+    // const nav = useNavigation()
+    // const [color, setColor] = useState(route.params.dataGroup.color);
     const [visibleModal, setVisibleModal] = useState(true);
     const handlePickColor = () => {
-        route.params.setDataGroup({...route.params.dataGroup, color: color.color});
-        nav.goBack();
+        // route.params.setDataGroup({...route.params.dataGroup, color: color.color});
+        navigation.goBack();
     }
 
     return (
@@ -19,8 +19,8 @@ export const ModalScreenColorChooser = ({navigation, route}) => {
             borderBottomLeftRadius: 20,}} navigation={navigation} textTitle={'Pick a color for the group'} needScroll={false}>
             <View style={{width: 350, height: 200, marginTop: 35}}>
                 <ColorPickerApp
-                    eventData = {color}
-                    setEventData = {setColor}
+                    eventData = {route.params.eventData}
+                    setEventData = {route.params.setEventData}
                 />
             </View>
             <ButtonGradient

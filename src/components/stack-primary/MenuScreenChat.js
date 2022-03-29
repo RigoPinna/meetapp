@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconCalendar } from '../icons/IconCalendar';
 import { IconCalendarGradient } from '../icons/IconCalendarGradient';
-export const MenuScreenChat = ({navigation, name, id}) => {
+export const MenuScreenChat = ({navigation, name, id, code}) => {
     const { top } = useSafeAreaInsets();
     const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
     const hanldeNavigatorCalendar = () => navigation.navigate('ScreenAgenda',{name, id});
@@ -35,15 +35,18 @@ export const MenuScreenChat = ({navigation, name, id}) => {
                         IconLeft ={ IconCalendarGradient }
                         hanldeOnPress = { hanldeNavigatorCalendar }
                     />
-                    <ButtonGradient
-                        gradient ={['#F3F7FE','#F3F7FE']}
-                        textButton = {'New event'}
-                        styleText = {{color:'#35A8FD',fontWeight:'bold', fontSize:12}}
-                        styleButton = {{height:35, marginRight:2}}
-                        sizeGradient={{width:150, height:100}}
-                        IconLeft ={ IconCreateEvent }
-                        hanldeOnPress = { hanldeNavigatorChat }
-                    />
+                    {
+                        (!!code) && <ButtonGradient
+                                        gradient ={['#F3F7FE','#F3F7FE']}
+                                        textButton = {'New event'}
+                                        styleText = {{color:'#35A8FD',fontWeight:'bold', fontSize:12}}
+                                        styleButton = {{height:35, marginRight:2}}
+                                        sizeGradient={{width:150, height:100}}
+                                        IconLeft ={ IconCreateEvent }
+                                        hanldeOnPress = { hanldeNavigatorChat }
+                                    />
+                    }
+                    
                     
                 </View>
                 </LinearGradient>

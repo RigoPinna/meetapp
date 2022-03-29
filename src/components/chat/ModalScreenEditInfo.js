@@ -30,7 +30,7 @@ export const ModalScreenEditInfo = ({navigation, route}) => {
         dispatch(cleanGroup())
     }
     return (
-        <ModalApp navigation={navigation} textTitle={'Create Group'} handle = {clean}>
+        <ModalApp navigation={navigation} textTitle={'Edit Group'} handle = {clean}>
             <Textapp 
                 size= {TEXTS_SIZE.small} 
                 styles = {{marginBottom:13, marginTop: 13, textAlign: 'center'}}
