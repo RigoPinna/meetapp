@@ -2,9 +2,9 @@ import { LinearGradient } from 'expo-linear-gradient'
 import React from 'react'
 import { Text, TouchableOpacity, View } from 'react-native'
 
-export const ButtonGradient = ({styleButton = {}, gradient, textButton='', styleText = {}, sizeGradient={}, IconLeft = undefined,IconRight=undefined,hanldeOnPress=()=>{},disabled=false, colorIcon='white' }) => {
+export const ButtonGradient = ({styleOpacity={}, styleButton = {}, gradient, textButton='', styleText = {}, sizeGradient={}, IconLeft = undefined,IconRight=undefined,hanldeOnPress=()=>{},disabled=false, colorIcon='white' }) => {
     return (
-        <TouchableOpacity onPress={ hanldeOnPress } disabled={ disabled }>
+        <TouchableOpacity onPress={ hanldeOnPress } disabled={ disabled } style={{...styleOpacity}}>
             <View style={{ 
                 flexDirection:'row',
                 borderRadius: 100,

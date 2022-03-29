@@ -8,7 +8,7 @@ import { ButtonGradient } from './ButtonGradient'
 import { IconClose } from '../icons/IconClose'
 import { COLORS_APP } from '../ui/COLORS_APP'
 
-export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleContainer, handle = () => {}}) => {
+export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleContainer, handle = () => {}, needScroll=true}) => {
     const [ showModal, setShowModal ] = useState(closeModal);
     const scaleValue = useRef(new Animated.Value(0)).current;
     useEffect(() => {
@@ -57,9 +57,16 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
                                             />
                         }
                     </View>
-                    <ScrollView style={{flex:1}} bounces={ false }>
+                    {
+                        needScroll ?
+                        <ScrollView style={{flex:1}} bounces={ false }>
                             {children}
-                    </ScrollView>
+                        </ScrollView>
+                        :
+                        <View style={{flex:1}} bounces={ false }>
+                            {children}
+                        </View>
+                    }
                 </Animated.View>
             </BlurView>
         </Modal>

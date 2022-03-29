@@ -6,6 +6,7 @@ import { ModalScreenCreateEvent } from '../chat/ModalScreenCreateEvent';
 import { ScreenChatGroup } from '../chat/ScreenChatGroup';
 import { ModalScreenParticipants } from '../chat/ModalScreenParticipants';
 import { ModalScreenCreateGroup } from '../listgGroup/ModalScreenCreateGroup';
+import { ModalScreenColorChooser } from '../listgGroup/ModalScreenColorChooser';
 import { ModalScreenJoinGroup } from '../listgGroup/ModalScreenJoinGroup';
 import { ModalScreenEliminateGroup } from '../listgGroup/ModalScreenEliminateGroup';
 import { ModalCalendar } from '../chat/ModalCalendar';
@@ -73,6 +74,16 @@ export const StackNavigatorPrimary = () => {
                 <Stack.Screen
                     name="ModalCreateGroup"
                     component={ModalScreenCreateGroup}
+                    options={{
+                        headerTransparent: true,
+                        headerShadowVisible: false,
+                        presentation: 'transparentModal',
+                        headerTitle: '', 
+                        headerBackVisible: false}}
+                />
+                <Stack.Screen
+                    name="ModalColorChooser"
+                    component={ModalScreenColorChooser}
                     options={{
                         headerTransparent: true,
                         headerShadowVisible: false,

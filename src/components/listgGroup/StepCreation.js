@@ -13,17 +13,23 @@ import { addNewGroup } from '../../reducers/groupReducer'
 import { userStatic } from '../../firebase/firebase-config'
 import { useDispatch } from 'react-redux'
 import { DatePickerApp } from '../elements/DatePickerApp'
+import { useNavigation } from '@react-navigation/native'
 
 export const StepCreation = ({steps, setStep}) => {
+    const navigation = useNavigation()
     const IMG_DEFAULT = 'https://firebasestorage.googleapis.com/v0/b/meetapp-prueba.appspot.com/o/groups_imgs_defaults%2Fimg_3.png?alt=media&token=2724ab38-867a-4d98-b971-3880faa72e93';
     LogBox.ignoreLogs(['Setting a timer for a long period of time']);
-    const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic, startDate: '', finishDate: ''});
+    const [ dataGroup, setDataGroup ] = useState({name:'',imageFile: null, image:'', description: '',code:'', creator: userStatic, startDate: '', finishDate: '', color:'#fff'});
     const [ nameValidation, setNameValidation ] = useState(false);
     const dispatch = useDispatch();
     const handleOnChange = ( variable, text ) => setDataGroup({...dataGroup, [variable]: text})
     const hanldeSaveGroup = () => {
         dispatch( addNewGroup( dataGroup ) );
         setStep({...steps, ...{ stepCreation: false, stepCreated:true }});
+    }
+
+    const handleColorClick = () => {
+        navigation.navigate('ModalColorChooser', {dataGroup, setDataGroup});
     }
 
     return (
@@ -36,14 +42,16 @@ export const StepCreation = ({steps, setStep}) => {
 
             />
 
-            <View style={{alignItems:'flex-end', alignSelf: 'center'}}>
-                <Image
-                        style={styles.tinyLogo}
-                        source = {{uri:dataGroup.image !== "" ? dataGroup.image :  IMG_DEFAULT }}
-                    />
-                <ButtonCamera onPress={ ( uriImg, file ) => {
-                    setDataGroup({...dataGroup, ...{ image:uriImg, imageFile: file }})
-                }}/>
+            <View style={{backgroundColor: dataGroup.color, width: 230, height: 230, borderRadius: 110, alignSelf: 'center', justifyContent: 'center'}}>
+                <View style={{alignItems:'flex-end', alignSelf: 'center'}}>
+                    <Image
+                            style={styles.tinyLogo}
+                            source = {{uri:dataGroup.image !== "" ? dataGroup.image :  IMG_DEFAULT }}
+                        />
+                    <ButtonCamera onPress={ ( uriImg, file ) => {
+                        setDataGroup({...dataGroup, ...{ image:uriImg, imageFile: file }})
+                    }}/>
+            </View>
             </View>
                 <View style={{marginTop: 20}}>
                     <Textapp 
@@ -100,6 +108,16 @@ export const StepCreation = ({steps, setStep}) => {
                         }}
                         multiline={true}
                     />
+                    <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
+                        <ButtonGradient
+                            gradient={['#48C6EF','#48C6EF']}
+                            sizeGradient = {{width:350, height:50}}
+                            textButton={`Choose a color for the group`}
+                            styleText={{color:'white', fontWeight:'bold',}}
+                            styleButton={{width:350, height:50}}
+                            hanldeOnPress = { handleColorClick }
+                        />
+                    </View>
                 </View>
                 {
                     ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '' && !nameValidation)
