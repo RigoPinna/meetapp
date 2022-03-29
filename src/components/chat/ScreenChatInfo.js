@@ -89,7 +89,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomRightRadius:25,
                }} 
                 source = {{ uri: infoGroup.image }} />
-                <MenuScreenChat navigation={navigation} name = {name} id={id}/>
+                <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF}/>
             <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10}}>
