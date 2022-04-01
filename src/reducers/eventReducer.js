@@ -39,6 +39,38 @@ export const addNewEvent = ({ name, nameEvent, startDate, description, color }) 
     }
 }
 
+export const joinEvent = ({ gid, eid, uid }) => {
+    return async ( ) => {
+        const eventRef = await db.collection('groups').doc(gid).collection('event').doc(eid);
+        const event = await eventRef.get();
+        const data = event.data();
+
+        if(data.participants == undefined){
+            const participants = JSON.stringify([uid]);
+            await eventRef.update({ ...data, participants })
+        } else {
+            const arrayParticipants = JSON.parse(data.participants);
+            const participants = JSON.stringify([...arrayParticipants, uid]);
+            await eventRef.update({ ...data, participants})
+        }
+    }
+}
+
+
+export const leaveEvent = ({ gid, eid, uid }) => {
+    return async ( ) => {
+        const eventRef = await db.collection('groups').doc(gid).collection('event').doc(eid);
+        const event = await eventRef.get();
+        const data = event.data();
+
+        if(data.participants != undefined){
+            const arrayParticipants = JSON.parse(data.participants);
+            const participants = JSON.stringify(arrayParticipants.filter( p => p != uid));
+            await eventRef.update({ ...data, participants})
+        }
+    }
+}
+
 // export const getIdEvent = (id, eventId, setEventId) => {
 
 //     return async ( dispatch ) => {
