@@ -24,6 +24,8 @@ import { StarEnabled } from '../icons/StarEnabled'
 import { StarDisabled } from '../icons/StarDisabled'
 import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LeftArrow } from '../icons/IconLeft'
+import { formatDateCustom } from '../../helpers/formatDateCustom'
+import moment from 'moment'
 
 
 export const ScreenChatInfo = ({ navigation, route }) => {
@@ -36,7 +38,8 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const [visible, setVisible] = useState(false)
     const [infoGroup, setInfoGroup] = useState({...params})
     const { activeEvent } = useActiveEvent({ id })
-    const [star, setStart] = useState(true)
+    const [activeEvents, setActiveEvents] = useState([])
+    const [star, setStar] = useState(true)
 
     const getCode = async () => {
         if( userLoged.uid !== null ) {
@@ -55,6 +58,10 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         } 
     }
     
+    const handleListEvents =  () => {
+        navigation.navigate('ScreenListEvents', {events: activeEvents});
+    }
+
     const handleModalEdit = () => {
         navigation.navigate('ModalEditInfo', {name: infoGroup.name, description: infoGroup.description, image: infoGroup.image, id})
     }
@@ -79,10 +86,31 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         }
     }, [groupReducer.listGroup])
     
+    useEffect(() => {
+        if( !!id ) {
+            db.collection('groups')
+                .doc( id )
+                .collection('event')
+                .orderBy('startDate', 'desc')
+                .onSnapshot(( snapshot ) => {
+                    const evt  = snapshot.docs.map( doc => {
+                        const evt = {...doc.data() }
+                        const { formatCalendar, dateNowForated } = formatDateCustom( evt.startDate )
+                        if ( moment( dateNowForated ).isBefore( formatCalendar ) || moment( formatCalendar ).isSame( dateNowForated )) {
+                            return {...evt, eid: doc.id}
+                        }
+                    })
+                    const events = evt.filter( e => !!e )
+                    setActiveEvents(events);
+                    setStar(events.length !== 0)
+                })
+        }
+    }, [activeEvents.length])
 
     const hanldeGoToModal = () => {
         navigation.navigate('ModalParticipants',{participants})
     }
+
     return (
         <View style={{flex: 1, backgroundColor:'white'}}>
             
@@ -103,17 +131,9 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                         <Textapp 
                             size = { TEXTS_SIZE.medium } 
                             weight='bold' 
-                            text ={infoGroup.name} 
-                            styles={{width: 150, textAlign: 'center', padding: 10}} 
+                            text ={(infoGroup.name.length > 20) ? `${infoGroup.name.substring(0,20)}...` : infoGroup.name} 
+                            styles={{textAlign: 'center', padding: 10}} 
                         />
-                        {/*
-                            (codeF !== '') &&   <ButtonGradient
-                                                    IconLeft={IconEditInfo}
-                                                    gradient={['white','white']}
-                                                    styleButton={{width:75, height:75,justifyContent:'center', marginLeft: -30}}
-                                                    hanldeOnPress = { handleModalEdit }
-                                                />
-                        */}
                     </View>
                     <Textapp 
                         size = { TEXTS_SIZE.small } 
@@ -122,11 +142,8 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     />
 
                 </View>
-                {/*
-                ( !!activeEvent ) && <AlertEvent event = { activeEvent }/>
-                */}
                 <View style={{width: '100%', borderTopColor: '#EEEEEC', borderTopWidth: 1, borderBottomColor: '#EEEEEC', borderBottomWidth: 1}}>
-                    <TouchableOpacity style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 8}} onPress={() => {console.log('events')}}>
+                    <TouchableOpacity style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 8}} onPress={handleListEvents}>
                         <View style={{justifyContent: 'center', paddingLeft: 10, paddingTop: 5}}>
                             {
                                 (star) ? <StarEnabled/> : <StarDisabled/>
