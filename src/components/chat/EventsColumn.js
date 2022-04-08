@@ -10,8 +10,11 @@ import { LeftArrow } from '../icons/IconLeft'
 import { useSelector } from 'react-redux'
 
 export const EventsColumn = ( evtList ) => {
-    const [ events, setEvents ] = useState( evtList.events );
+    const [ events, setEvents ] = useState();
     const user = useSelector(state => state.authRed )
+    const { gid } = evtList;
+
+    useEffect(()=> {setEvents(evtList.events)} , [evtList])
 
     const isParticipant = (participants, uid) => {
         if(participants != undefined){
@@ -26,12 +29,20 @@ export const EventsColumn = ( evtList ) => {
         }
     }
 
+    const goToEventInfo = (eid) => {
+        evtList.events.forEach( evt => {
+            if(evt.eid === eid){
+                evtList.navigation.navigate('ScreenEventInfo', {event: evt, gid, navigation: evtList.navigation})
+            }
+        })
+    }
+
     return (
         <View style={{width:'100%'}}>
-            {
+            { events != undefined &&
                 events.map( ({ nameEvent, color, startDate, eid, participants }) => {
                     return <View key={eid} style={{flexDirection:'row', paddingTop: 10, paddingLeft: 10}}>
-                                <TouchableOpacity style={{flexDirection: 'row', paddingTop: 5}} onPress={() => {console.log('event')}}>
+                                <TouchableOpacity style={{flexDirection: 'row', paddingTop: 5}} onPress={() => {goToEventInfo(eid)}}>
                                     <View style = {{...styleListGroups.avatarListItemParticipants, backgroundColor: color}}></View>
                                     <View style={{width: '80%', marginTop: 5}}>
                                         <Textapp text={(nameEvent.length < 25) ? nameEvent : `${nameEvent.substring(0, 25)}...`} styles={{marginTop:10, marginLeft: 10}} weight={'bold'} size={17}/>

@@ -1,26 +1,38 @@
 import React from 'react'
 import { useState } from 'react'
-import { Image, View } from 'react-native';
-import { styleListGroups } from '../../theme/appTheme'
-import { Textapp } from '../elements/Textapp';
-import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
+import { View } from 'react-native';
+import { UserListItem } from './UserListItem';
 
-export const ParticipantsColumn = ( list ) => {
-    const [ participants, setParticipants ] = useState( list.participants );
+export const ParticipantsColumn = ( {groupMembers, colorColorBordersAvatars, eventParticipants, type } ) => {
+    const [ members, setMembers ] = useState( groupMembers );
+    const [ participants, setParticipants ] = useState( eventParticipants );
+    
+    const usersData = () => {
+        console.log('1 ' + type);
+        if(type === 'participants'){
+            console.log('2 ' + participants);
+            return participants.map( ( uid ) => {
+                console.log('3 ' + uid);
+                {(uid != undefined) 
+                    return <UserListItem key={uid} uid={uid} colorColorBordersAvatars={colorColorBordersAvatars}/>
+                }
+            })
+        } else if(type === 'members') {
+            return members.map( ({ uid }) => {
+                console.log('4 ' + uid);
+                {(uid != undefined) 
+                    return <UserListItem key={uid} uid={uid} colorColorBordersAvatars={colorColorBordersAvatars}/>
+                }
+            })
+        }
+        
+    }
+
     return (
-        <View style={{width:'100%'}}>
+        <View style={{minHeight: 200, width:'100%', backgroundColor: 'green'}}>
             {
-                participants.map( ({ uid, image, name, phone}, i ) => {
-                    return <View key={uid} style={{flexDirection:'row'}}>
-                                <Image style = {{...styleListGroups.avatarListItemParticipants,...{borderColor:list.colorColorBordersAvatars}}} source = {{uri: image }} />
-                                <View>
-                                    <Textapp text={name} styles={{marginTop:10, marginLeft: 10}} weight={'bold'} size={TEXTS_SIZE.medium}/>
-                                    <Textapp text={phone} styles={{marginLeft: 10}}/>
-                                </View>
-                            </View>
-                })
+                usersData()
             }
-                    
         </View>
     )
 }
