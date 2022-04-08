@@ -12,7 +12,7 @@ export const TimeData = ({children}) => {
         setShow(!show)
     }
   return (
-    <View style={{flex: 1, marginTop: 20}}>
+    <View style={{marginTop: 20, alignItems: 'center', width: '100%'}}>
             <ButtonGradient
                 gradient={['#48C6EF','#48C6EF']}
                 sizeGradient = {{width:350, height:50}}
@@ -23,7 +23,7 @@ export const TimeData = ({children}) => {
             />
 
     {
-        (show) && <Animatable.View ref={viewRef} animation="fadeInDown">
+        (show) && <Animatable.View ref={viewRef} animation="fadeInDown" style={{margin: 10, alignItems: 'center', width: '75%'}}>
                     {children}
                 </Animatable.View>
     }

@@ -18,7 +18,20 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
     const {params} = route;
     const {name} = params
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
-    const [ eventData, setEventData ] = useState({name: name, nameEvent:'', description:'',startDate:'',endDate: '', startTime: '', endTime:'', color:''});
+    const [ eventData, setEventData ] = useState({
+                                                 name: name, 
+                                                 nameEvent:'', 
+                                                 description:'',
+                                                 startDate:'',
+                                                 endDate: '', 
+                                                 startTime: '',
+                                                 repeatTimes: '1', 
+                                                 weeklyDays: '',
+                                                 decisionMenOrAnnu: '', 
+                                                 color:'',
+                                                choose: 'No Repeat'});
+
+
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
     }
@@ -35,12 +48,16 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         }
         navigation.navigate('ModalColorChooser', {eventData, setEventData});
     }
+
+    const handleRepeatPreferences = () => {
+        navigation.navigate('ModalPreferences', {eventData, setEventData});
+    }
      return (
         <>
             {
                 stepColor.stepBack && <>
                 <ModalApp navigation={navigation} textTitle={'Create New Event'}>
-                    <View style={{flex: 1, width:'100%'}}>
+                    <View style={{width: 350}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
                             text={'Event Name'}
@@ -52,7 +69,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             value={ eventData.nameEvent } 
                             onChange = { handleOnChange }
                             styleT={{
-                                width: '100%',
+                                width: '95%',
                                 borderRadius:100,
                             }}
                         />
@@ -69,7 +86,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 onChange = { handleOnChangeDescription }
                                 height={150}
                                 styleT={{
-                                    width: '100%',
+                                    width: '95%',
                                     borderTopRightRadius: 20,
                                     borderBottomRightRadius: 20,
                                     borderBottomLeftRadius: 20,
@@ -109,110 +126,36 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
 
                         }
                         <TimeData>
-                            <View style={{marginTop: 10, }}>
-                                <View style={{flex: 1}}>
-                                    <Textapp 
-                                        size={TEXTS_SIZE.small}
-                                        text={'DATES'}
-                                        color={COLORS_APP.black2}
-                                        weight={'bold'}
-                                    />
-                                    <View style={{borderWidth: 2, padding: 10}}>
+                            <View>
+                                <View style={{backgroundColor: '#F0F0F0', borderRadius: 25}}>
+                                    <View style={{padding: 10}}>
                                         <Textapp 
                                             size={TEXTS_SIZE.small}
-                                            text={'Start:'}
+                                            text={'Starts:'}
                                             color={COLORS_APP.black2}
-                                            styles={{marginTop: 5}}
+                                            styles={{margin: 10}}
                                         />
-                                        <DatePickerApp 
-                                            eventData= {eventData} 
-                                            setEventData={setEventData}
-                                        /> 
-                                        <Textapp 
-                                            size={TEXTS_SIZE.small}
-                                            text={'End:'}
-                                            color={COLORS_APP.black2}
-                                            styles={{marginTop: 10}}
-                                        />
-                                        <DatePickerApp 
-                                            eventData= {eventData} 
-                                            setEventData={setEventData}
-                                            decision={"end"}
-                                        />
-                                    </View>
-                                </View>
-                                <View style={{flex: 1, marginTop: 10}}>
-                                    <Textapp 
-                                        size={TEXTS_SIZE.small}
-                                        text={'TIME'}
-                                        color={COLORS_APP.black2}
-                                        weight={'bold'}
-                                    />
-                                    <View style={{borderWidth: 2, padding: 10}}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Textapp 
-                                                size={TEXTS_SIZE.small}
-                                                text={'Start:'}
-                                                color={COLORS_APP.black2}
-                                                styles={{marginTop: 5, marginRight: 10}}
-                                            />
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
                                             <DatePickerApp 
                                                 eventData= {eventData} 
                                                 setEventData={setEventData}
-                                                mode={'time'}
                                             /> 
-                                        </View>
-                                        <View style={{flexDirection: 'row', marginTop: 10}}>
-                                            <Textapp 
-                                                size={TEXTS_SIZE.small}
-                                                text={'End:'}
-                                                color={COLORS_APP.black2}
-                                                styles={{marginTop: 5, marginRight: 18}}
-                                            />
                                             <DatePickerApp 
-                                                eventData= {eventData} 
-                                                setEventData={setEventData}
-                                                mode={'time'}
-                                                decision={"end"}
+                                                    eventData= {eventData} 
+                                                    setEventData={setEventData}
+                                                    mode={'time'}
                                             />
+                                            
                                         </View>
-                                    </View>
-                                </View>
-                                <View style={{flex: 1, marginVertical: 10}}>
-                                    <Textapp 
-                                        size={TEXTS_SIZE.small}
-                                        text={'RECURRENCE'}
-                                        color={COLORS_APP.black2}
-                                        weight={'bold'}
-                                    />
-                                    <View style={{borderWidth: 2, padding: 10}}>
-                                        <View style={{flexDirection: 'row'}}>
-                                            <Textapp 
-                                                size={TEXTS_SIZE.small}
-                                                text={'Start:'}
-                                                color={COLORS_APP.black2}
-                                                styles={{marginTop: 5, marginRight: 10}}
+                                            <ButtonGradient
+                                                gradient={['#F0F0F0','#F0F0F0']}
+                                                sizeGradient = {{width:300, height:50}}
+                                                textButton={eventData.choose}
+                                                styleText={{color:'black', fontWeight:'bold',justifyContent: 'flex-start'}}
+                                                styleButton={{width:300, height:50, margin: 10,borderTopWidth: 2, borderBottomWidth: 2}}
+                                                hanldeOnPress = { handleRepeatPreferences }
                                             />
-                                            <DatePickerApp 
-                                                eventData= {eventData} 
-                                                setEventData={setEventData}
-                                                mode={'time'}
-                                            /> 
-                                        </View>
-                                        <View style={{flexDirection: 'row', marginTop: 10}}>
-                                            <Textapp 
-                                                size={TEXTS_SIZE.small}
-                                                text={'End:'}
-                                                color={COLORS_APP.black2}
-                                                styles={{marginTop: 5, marginRight: 18}}
-                                            />
-                                            <DatePickerApp 
-                                                eventData= {eventData} 
-                                                setEventData={setEventData}
-                                                mode={'time'}
-                                                decision={"end"}
-                                            />
-                                        </View>
+
                                     </View>
                                 </View>
                             </View>

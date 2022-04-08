@@ -6,7 +6,7 @@ import { Platform, View } from "react-native";
 import { COLORS_APP } from "../ui/COLORS_APP";
 import { ButtonGradient } from "./ButtonGradient";
 
-export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date'}) => {
+export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style}) => {
     const [visible, setVisible] = useState( false )
     const [text, setText] = useState(`Select ${mode}...`)
     const [date, setDate] = useState(new Date())
@@ -52,20 +52,23 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
         <>
             <ButtonGradient 
                 gradient={['#F0F0F0','#F0F0F0']}
-                sizeGradient = {{width:'120%', height:50}}
+                // sizeGradient = {{width:'120%', height:50}}
                 textButton={ text }
                 styleText={{ 
                     color:COLORS_APP.black2, 
                     fontWeight: (( text.includes("Select")) ? 'normal':'bold'),
-                    paddingLeft:Platform.OS === "ios" && visible ? 10 : 10
+                    paddingLeft:Platform.OS === "ios" && visible ? 10 : 10,
                 }}
                 styleButton={{ 
-                            width: ((mode === "date") ? '100%' : '130%'), 
+                            width: ((mode === "date") ? '80%' : '60%'), 
                             height:50, 
-                            justifyContent:'flex-start',
+                            justifyContent:'center',
                             borderRadius: 25,
+                            borderWidth: 2,
                             borderBottomLeftRadius: Platform.OS === "ios" && visible ? 0 : 25,
-                            borderBottomRightRadius:Platform.OS === "ios" &&  visible ? 0 : 25, 
+                            borderBottomRightRadius:Platform.OS === "ios" &&  visible ? 0 : 25,
+                            marginRight: ((mode === "time") ? 20 : 0),
+                            ...style
                         }}
                 hanldeOnPress = { showDateTimePicker }/>
             {

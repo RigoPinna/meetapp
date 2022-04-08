@@ -13,6 +13,7 @@ import { ModalCalendar } from '../chat/ModalCalendar';
 import { ScreenAgenda } from '../chat/ScreenAgenda';
 import { PresentationScreen } from '../auth/PresentationScreen';
 import { ModalScreenEditInfo } from '../chat/ModalScreenEditInfo';
+import { ModalScreenPreferences } from '../chat/ModalScreenPreferences';
 
 const Stack = createNativeStackNavigator();
 
@@ -84,6 +85,16 @@ export const StackNavigatorPrimary = () => {
                 <Stack.Screen
                     name="ModalColorChooser"
                     component={ModalScreenColorChooser}
+                    options={{
+                        headerTransparent: true,
+                        headerShadowVisible: false,
+                        presentation: 'transparentModal',
+                        headerTitle: '', 
+                        headerBackVisible: false}}
+                />
+                <Stack.Screen
+                    name="ModalPreferences"
+                    component={ModalScreenPreferences}
                     options={{
                         headerTransparent: true,
                         headerShadowVisible: false,
