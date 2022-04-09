@@ -22,13 +22,13 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                                  name: name, 
                                                  nameEvent:'', 
                                                  description:'',
-                                                 startDate:'',
+                                                 startDate:'2022-04-08',
                                                  endDate: '', 
                                                  startTime: '',
                                                  repeatTimes: '1', 
                                                  weeklyDays: '',
                                                  decisionMenOrAnnu: '', 
-                                                 color:'',
+                                                 color:'#74BBE3',
                                                 choose: 'No Repeat'});
 
 
@@ -96,7 +96,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             />
                         </View>
                         {
-                            (eventData.color == '')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
+                            (eventData.color == '#74BBE3')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
                                                 <ButtonGradient
                                                     gradient={['#48C6EF','#48C6EF']}
                                                     sizeGradient = {{width:350, height:50}}
@@ -113,7 +113,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                                     color={COLORS_APP.black2}
                                                     weight={'bold'}
                                                 />
-                                                <View style={{width: 30, height: 30,backgroundColor: eventData.color, borderRadius: 100}}/>
+                                                <View style={{width: 30, height: 30,backgroundColor: eventData.color, borderRadius: 100 }}/>
                                                 <ButtonGradient
                                                     gradient={['#48C6EF','#48C6EF']}
                                                     sizeGradient = {{width:100, height:50}}
@@ -161,7 +161,8 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             </View>
                         </TimeData>
                         {
-                            ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
+                            // ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
+                            ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '')
                             &&  <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>
                                     <ButtonGradient
                                         gradient={['#48C6EF','#6F86D6']}

@@ -112,7 +112,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     }
 
     return (
-        <View style={{flex: 1, backgroundColor:'white'}}>
+        <View style={{flex: 1,backgroundColor: 'white'}}>
             
             <Image style = {{
                 position: 'absolute',
@@ -125,7 +125,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                }} 
                 source = {{ uri: infoGroup.image }} />
                 <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF} hanldeEditGroup={handleModalEdit}/>
-            <ScrollView style={{flex:1, marginTop:10, paddingTop:10, paddingBottom: 10 }} nestedScrollEnabled = {true}>
+            <ScrollView style={{flex:1, marginTop: (codeF === '') ? 50 : 10, paddingBottom: 10}} nestedScrollEnabled = {true}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <Textapp 
@@ -168,7 +168,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     text ={participants.length +' Participants'} 
                     styles={{paddingTop:13, paddingLeft: 13}} 
                 />
-                <ScrollView nestedScrollEnabled = {true} style={{flex:1, height: 200}}>
+                <ScrollView nestedScrollEnabled = {true} style={{flex:1, height: 220}}>
                     <ParticipantsColumn participants={participants} colorColorBordersAvatars = {'white'}/>
                 </ScrollView>
                 {
@@ -190,7 +190,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                                                     }}
                                                     editable={false}
                                                 />    
-                                                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 15}}>
+                                                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10, marginBottom: 10}}>
                                                         <ButtonGradient
                                                             IconLeft={IconCopy}
                                                             gradient={['#F3F7FE','#F3F7FE']}
