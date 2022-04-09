@@ -11,13 +11,27 @@ import { useDispatch } from 'react-redux'
 import { addNewEvent } from '../../reducers/eventReducer'
 import { ColorPickerApp } from '../elements/ColorPickerApp'
 import { color } from 'react-native-reanimated'
+import { TimeData } from './TimeData'
 
 export const ModalScreenCreateEvent = ({navigation, route}) => {
     const dispatch = useDispatch();
     const {params} = route;
     const {name} = params
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
-    const [ eventData, setEventData ] = useState({name: name, nameEvent:'', description:'',startDate:'', color:''});
+    const [ eventData, setEventData ] = useState({
+                                                 name: name, 
+                                                 nameEvent:'', 
+                                                 description:'',
+                                                 startDate:'',
+                                                 endDate: '', 
+                                                 startTime: '',
+                                                 repeatTimes: '1', 
+                                                 weeklyDays: '',
+                                                 decisionMenOrAnnu: '', 
+                                                 color:'',
+                                                choose: 'No Repeat'});
+
+
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
     }
@@ -34,12 +48,16 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         }
         navigation.navigate('ModalColorChooser', {eventData, setEventData});
     }
+
+    const handleRepeatPreferences = () => {
+        navigation.navigate('ModalPreferences', {eventData, setEventData});
+    }
      return (
         <>
             {
                 stepColor.stepBack && <>
                 <ModalApp navigation={navigation} textTitle={'Create New Event'}>
-                    <View style={{flex: 1, width:350}}>
+                    <View style={{width: 350}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
                             text={'Event Name'}
@@ -51,7 +69,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             value={ eventData.nameEvent } 
                             onChange = { handleOnChange }
                             styleT={{
-                                width: '100%',
+                                width: '95%',
                                 borderRadius:100,
                             }}
                         />
@@ -68,7 +86,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 onChange = { handleOnChangeDescription }
                                 height={150}
                                 styleT={{
-                                    width: '100%',
+                                    width: '95%',
                                     borderTopRightRadius: 20,
                                     borderBottomRightRadius: 20,
                                     borderBottomLeftRadius: 20,
@@ -77,18 +95,6 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 multiline={true}
                             />
                         </View>
-                        <View style={{marginTop: 20, marginBottom: 10}}>
-                            <Textapp 
-                                size={TEXTS_SIZE.small}
-                                text={'Start Date'}
-                                color={COLORS_APP.black2}
-                                weight={'bold'}
-                            />
-                        </View>
-                        <DatePickerApp 
-                            eventData= {eventData} 
-                            setEventData={setEventData}
-                        />
                         {
                             (eventData.color == '')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
                                                 <ButtonGradient
@@ -119,16 +125,41 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                             </View>
 
                         }
+                        <TimeData>
+                            <View>
+                                <View style={{backgroundColor: '#F0F0F0', borderRadius: 25}}>
+                                    <View style={{padding: 10}}>
+                                        <Textapp 
+                                            size={TEXTS_SIZE.small}
+                                            text={'Starts:'}
+                                            color={COLORS_APP.black2}
+                                            styles={{margin: 10}}
+                                        />
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
+                                            <DatePickerApp 
+                                                eventData= {eventData} 
+                                                setEventData={setEventData}
+                                            /> 
+                                            <DatePickerApp 
+                                                    eventData= {eventData} 
+                                                    setEventData={setEventData}
+                                                    mode={'time'}
+                                            />
+                                            
+                                        </View>
+                                            <ButtonGradient
+                                                gradient={['#F0F0F0','#F0F0F0']}
+                                                sizeGradient = {{width:300, height:50}}
+                                                textButton={eventData.choose}
+                                                styleText={{color:'black', fontWeight:'bold',justifyContent: 'flex-start'}}
+                                                styleButton={{width:300, height:50, margin: 10,borderTopWidth: 2, borderBottomWidth: 2}}
+                                                hanldeOnPress = { handleRepeatPreferences }
+                                            />
 
-                        {/* <View style={{marginTop: 5, marginBottom: 10}}>
-                            <ColorPickerApp
-                                eventData = {eventData}
-                                setEventData = {setEventData}
-                                stepColor = {stepColor}
-                                setStepColor = {setStepColor}
-                            />
-                        </View>  */}
-
+                                    </View>
+                                </View>
+                            </View>
+                        </TimeData>
                         {
                             ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
                             &&  <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>
