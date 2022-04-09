@@ -19,6 +19,13 @@ import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconCopy } from '../icons/IconCopy'
 import { useActiveEvent } from '../../hooks/useActiveEvent'
 import { IconEditInfo } from '../icons/IconEditInfo'
+import { ParticipantsColumn } from './ParticipantsColumn'
+import { StarEnabled } from '../icons/StarEnabled'
+import { StarDisabled } from '../icons/StarDisabled'
+import { TouchableOpacity } from 'react-native-gesture-handler'
+import { LeftArrow } from '../icons/IconLeft'
+import { formatDateCustom } from '../../helpers/formatDateCustom'
+import moment from 'moment'
 
 
 export const ScreenChatInfo = ({ navigation, route }) => {
@@ -31,6 +38,9 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const [visible, setVisible] = useState(false)
     const [infoGroup, setInfoGroup] = useState({...params})
     const { activeEvent } = useActiveEvent({ id })
+    const [activeEvents, setActiveEvents] = useState([])
+    const [star, setStar] = useState(true)
+
     const getCode = async () => {
         if( userLoged.uid !== null ) {
             const groupRef = db.collection('groups').doc(id);
@@ -48,6 +58,10 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         } 
     }
     
+    const handleListEvents =  () => {
+        navigation.navigate('ScreenListEvents', {events: activeEvents});
+    }
+
     const handleModalEdit = () => {
         navigation.navigate('ModalEditInfo', {name: infoGroup.name, description: infoGroup.description, image: infoGroup.image, id})
     }
@@ -72,10 +86,31 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         }
     }, [groupReducer.listGroup])
     
+    useEffect(() => {
+        if( !!id ) {
+            db.collection('groups')
+                .doc( id )
+                .collection('event')
+                .orderBy('startDate', 'desc')
+                .onSnapshot(( snapshot ) => {
+                    const evt  = snapshot.docs.map( doc => {
+                        const evt = {...doc.data() }
+                        const { formatCalendar, dateNowForated } = formatDateCustom( evt.startDate )
+                        if ( moment( dateNowForated ).isBefore( formatCalendar ) || moment( formatCalendar ).isSame( dateNowForated )) {
+                            return {...evt, eid: doc.id}
+                        }
+                    })
+                    const events = evt.filter( e => !!e )
+                    setActiveEvents(events);
+                    setStar(events.length !== 0)
+                })
+        }
+    }, [activeEvents.length])
 
     const hanldeGoToModal = () => {
         navigation.navigate('ModalParticipants',{participants})
     }
+
     return (
         <View style={{flex: 1, backgroundColor:'white'}}>
             
@@ -89,24 +124,16 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomRightRadius:25,
                }} 
                 source = {{ uri: infoGroup.image }} />
-                <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF}/>
-            <ScrollView style={{flex:1, marginTop:145, padding:10 }}>
+                <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF} hanldeEditGroup={handleModalEdit}/>
+            <ScrollView style={{flex:1, marginTop:10, paddingTop:10, paddingBottom: 10 }} nestedScrollEnabled = {true}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
-                    <View style={{flexDirection: 'row', justifyContent: 'space-evenly', marginTop: 10}}>
+                    <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <Textapp 
                             size = { TEXTS_SIZE.medium } 
                             weight='bold' 
-                            text ={infoGroup.name} 
-                            styles={{width: 150, textAlign: 'center', padding: 10, marginTop: 12}} 
+                            text ={(infoGroup.name.length > 20) ? `${infoGroup.name.substring(0,20)}...` : infoGroup.name} 
+                            styles={{textAlign: 'center', padding: 10}} 
                         />
-                        {
-                            (codeF !== '') &&   <ButtonGradient
-                                                    IconLeft={IconEditInfo}
-                                                    gradient={['white','white']}
-                                                    styleButton={{width:75, height:75,justifyContent:'center', marginLeft: -30}}
-                                                    hanldeOnPress = { handleModalEdit }
-                                                />
-                        }
                     </View>
                     <Textapp 
                         size = { TEXTS_SIZE.small } 
@@ -115,32 +142,45 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     />
 
                 </View>
+                <View style={{width: '100%', borderTopColor: '#EEEEEC', borderTopWidth: 1, borderBottomColor: '#EEEEEC', borderBottomWidth: 1}}>
+                    <TouchableOpacity style={{flexDirection: 'row', paddingTop: 8, paddingBottom: 8}} onPress={handleListEvents}>
+                        <View style={{justifyContent: 'center', paddingLeft: 10, paddingTop: 5}}>
+                            {
+                                (star) ? <StarEnabled/> : <StarDisabled/>
+                            }
+                        </View>
+                        <Textapp 
+                            size = { 23 } 
+                            weight='bold' 
+                            text ={(star) ? 'Group events' : 'There are no events'}
+                            styles={{textAlign: 'left'}} 
+                        />
+                        <View style={{position: 'absolute', right: 15, top: 18}}>
+                            {
+                                (star) && <LeftArrow />
+                            }
+                        </View>
+                    </TouchableOpacity>
+                </View>
                 <Textapp 
                     size = { TEXTS_SIZE.small } 
                     weight='bold' 
-                    text ={'Participants'} 
-                    styles={{padding:13}} 
+                    text ={participants.length +' Participants'} 
+                    styles={{paddingTop:13, paddingLeft: 13}} 
                 />
-                <View style={{justifyContent:'flex-start', paddingTop: 30,width:140}}>
-                    <ListParticipants participants={ participants } colorColorBordersAvatars = {'white'} />
-                    <Buttonapp
-                        styleT={{backgroundColor:'transparent',width:'100%',marginLeft:10,marginTop:-35}}
-                        onPress={hanldeGoToModal}
-                    />
-                </View>
+                <ScrollView nestedScrollEnabled = {true} style={{flex:1, height: 200}}>
+                    <ParticipantsColumn participants={participants} colorColorBordersAvatars = {'white'}/>
+                </ScrollView>
                 {
-                ( !!activeEvent ) && <AlertEvent event = { activeEvent }/>
-                }
-                {
-                        (codeF !== '') &&   <>
+                        (codeF !== '') &&   <View style={{alignItems: 'center'}}>
                                                 <TextInputApp 
                                                     placeholder={codeF}
-                                                    height={150}
+                                                    height={110}
                                                     size={TEXTS_SIZE.long}
                                                     weight={'bold'}
                                                     color={COLORS_APP.green}
                                                     styleT={{ 
-                                                        width: '100%',
+                                                        width: '90%',
                                                         borderTopRightRadius: 10,
                                                         borderBottomRightRadius: 10,
                                                         borderBottomLeftRadius: 10,
@@ -150,7 +190,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                                                     }}
                                                     editable={false}
                                                 />    
-                                                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35,}}>
+                                                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 15}}>
                                                         <ButtonGradient
                                                             IconLeft={IconCopy}
                                                             gradient={['#F3F7FE','#F3F7FE']}
@@ -161,7 +201,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                                                             hanldeOnPress = { handlecopyToClipboard }
                                                         />
                                                 </View>
-                                            </>
+                                            </View>
                 }
                 {
                     visible && messages.map((message) => (
