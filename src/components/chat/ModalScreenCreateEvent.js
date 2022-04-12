@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {  View } from 'react-native'
+import {  Text, View } from 'react-native'
 import { ModalApp } from '../elements/ModalApp'
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
@@ -12,6 +12,7 @@ import { addNewEvent } from '../../reducers/eventReducer'
 import { ColorPickerApp } from '../elements/ColorPickerApp'
 import { color } from 'react-native-reanimated'
 import { TimeData } from './TimeData'
+import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
 export const ModalScreenCreateEvent = ({navigation, route}) => {
     const dispatch = useDispatch();
@@ -29,7 +30,10 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                                  weeklyDays: '',
                                                  decisionMenOrAnnu: '', 
                                                  color:'',
-                                                choose: 'No Repeat'});
+                                                choose: 'No Repeat',
+                                                paid: false,
+                                                admin: false,
+                                                participants: {}});
 
 
     const handleOnChange = ( text ) => {
@@ -160,6 +164,29 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 </View>
                             </View>
                         </TimeData>
+
+                        <View style={{paddingTop: 5,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                            <BouncyCheckbox
+                                style={{position: 'relative', width: 30}}
+                                fillColor='#48C6EF'
+                                isChecked={eventData.paid}
+                                onPress={() => {setEventData({...eventData, ...{paid: !eventData.paid}})}}
+                            />
+                            <Text style={{flex: 1, marginLeft: 5}}> 
+                                This event has a cost?
+                            </Text>
+                        </View>
+                        <View style={{paddingTop: 5,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                            <BouncyCheckbox
+                                style={{position: 'relative', width: 30}}
+                                fillColor='#48C6EF'
+                                isChecked={eventData.admin}
+                                // onPress={() => {setEventData({...eventData, ...{admin: !eventData.admin, participants: {uid}}})}}
+                            />
+                            <Text style={{flex: 1, marginLeft: 5}}> 
+                                You will participate?
+                            </Text>
+                        </View>
                         {
                             ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
                             &&  <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>

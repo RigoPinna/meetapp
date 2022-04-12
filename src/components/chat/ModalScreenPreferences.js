@@ -9,13 +9,16 @@ import { Textapp } from '../elements/Textapp';
 import { TextInputApp } from '../elements/TextInputApp';
 import { COLORS_APP } from '../ui/COLORS_APP';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
+import { DaysList } from './DaysList';
 
 export const ModalScreenPreferences = ({navigation, route}) => {
     const [data, setData] = useState(route.params.eventData)
     const [textInformation, setTextInformation] = useState('This event will not repeat')
     const [showSettings, setshowSettings] = useState(false)
     const isMounted = useRef( null )
-    // const [showSettings, setshowSettings] = useState({daily: false, weekly: false, montly: false, annually: false})
+    const date = new Date()
+    const day = ('0'+ date.getDate()).slice(-2)
+    const month = ('0'+ (date.getMonth() + 1)).slice(-2)
     const iconStyle = (borderColor) => ({
         height: 40,
         width: 40,
@@ -172,7 +175,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         eventData= {data} 
                                                         setEventData={setData}
                                                         mode={'time'}
-                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '25%'}}
+                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '25%', marginLeft: 20}}
                                                     />
                                                     <Textapp 
                                                         size={TEXTS_SIZE.small}
@@ -195,7 +198,8 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         color={COLORS_APP.black2}
                                                         weight={'bold'}
                                                     />
-                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2, flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
+                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2}}>
+                                                    <View style={{ flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
                                                     <TextInputApp 
                                                         value={ data.repeatTimes } 
                                                         onChange = { handleOnChange }
@@ -209,11 +213,13 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                     />
                                                     <Textapp 
                                                         size={TEXTS_SIZE.small}
-                                                        text={'once a week'}
+                                                        text={(data.repeatTimes < 1) ? 'time a week' : 'times a week'}
                                                         color={'#48C6EF'}
                                                         weight={'bold'}
                                                         styles={{marginTop: 5}}
                                                     /> 
+                                                    </View>
+                                                    <DaysList/>
                                                     </View>
                                                 </View>
                     }
@@ -221,78 +227,97 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                         (showSettings && textInformation.endsWith('montly')) && 
 
                         <View style={{width: '100%', alignContent: 'center'}}>
-                        {/* <Textapp 
-                            size={TEXTS_SIZE.small}
-                            text={'Settings'}
-                            color={COLORS_APP.black2}
-                            weight={'bold'}
-                        /> */}
-                        <View style={{borderTopWidth: 2, borderBottomWidth: 2, flexDirection: 'row',justifyContent: 'center', alignItems: 'center', padding: 20}}>
-                        {/* <TextInputApp 
-                            value={ data.repeatTimes } 
-                            onChange = { handleOnChange }
-                            styleT={{
-                                width: '15%',
-                                borderRadius:100,
-                                margin: 10,
-                            }}
-                            color={'#48C6EF'}
-                            type={'numeric'}
-                        />
-                        <Textapp 
-                            size={TEXTS_SIZE.small}
-                            text={'once a week'}
-                            color={'#48C6EF'}
-                            weight={'bold'}
-                            styles={{marginTop: 5}}
-                        />  */}
-                        <Textapp 
-                            size={TEXTS_SIZE.small}
-                            text={'Coming soon'}
-                            color={COLORS_APP.black2}
-                            weight={'bold'}
-                        />
+                            <Textapp 
+                                size={TEXTS_SIZE.small}
+                                text={'Settings'}
+                                color={COLORS_APP.black2}
+                                weight={'bold'}
+                            />
+                            <View style={{borderTopWidth: 2, borderBottomWidth: 2}}>
+                                <View style={{ flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
+                                    <TextInputApp 
+                                        value={ data.repeatTimes } 
+                                        onChange = { handleOnChange }
+                                        styleT={{
+                                            width: '15%',
+                                            borderRadius:100,
+                                            margin: 10,
+                                        }}
+                                        color={'#48C6EF'}
+                                        type={'numeric'}
+                                    />
+                                    <Textapp 
+                                        size={TEXTS_SIZE.small}
+                                        text={(data.repeatTimes <= 1) ? 'time a month' : 'times a month'}
+                                        color={'#48C6EF'}
+                                        weight={'bold'}
+                                        styles={{marginTop: 5}}
+                                    /> 
+                                </View>
+                                <ButtonGradient
+                                    gradient={['white','white']}
+                                    sizeGradient = {{width:350, height:50}}
+                                    textButton={`Repeat every ${day}`}
+                                    styleText={{color:'#48C6EF', fontWeight:'bold'}}
+                                    styleButton={{justifyContent: 'center',height: 35,
+                                    width: 200,
+                                    borderRadius: 25,
+                                    borderColor: 'black',
+                                    borderWidth: 2,
+                                    alignSelf: 'center',
+                                    marginBottom: 20}}
+                                    // hanldeOnPress = { handlePickColor }
+                                />
+                            </View>
                         </View>
-                    </View>
                     }
                      {
                         (showSettings && textInformation.endsWith('annually')) && 
 
-                                                <View style={{width: '100%', alignContent: 'center'}}>
-                                                    {/* <Textapp 
-                                                        size={TEXTS_SIZE.small}
-                                                        text={'Settings'}
-                                                        color={COLORS_APP.black2}
-                                                        weight={'bold'}
-                                                    /> */}
-                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2, flexDirection: 'row',justifyContent: 'center', alignItems: 'center', padding: 20}}>
-                                                    {/* <TextInputApp 
-                                                        value={ data.repeatTimes } 
-                                                        onChange = { handleOnChange }
-                                                        styleT={{
-                                                            width: '15%',
-                                                            borderRadius:100,
-                                                            margin: 10,
-                                                        }}
-                                                        color={'#48C6EF'}
-                                                        type={'numeric'}
-                                                    />
-                                                    <Textapp 
-                                                        size={TEXTS_SIZE.small}
-                                                        text={'once a week'}
-                                                        color={'#48C6EF'}
-                                                        weight={'bold'}
-                                                        styles={{marginTop: 5}}
-                                                    />  */}
-                                                    <Textapp 
-                                                        size={TEXTS_SIZE.small}
-                                                        text={'Coming soon'}
-                                                        color={COLORS_APP.black2}
-                                                        weight={'bold'}
-                                                    />
-                                                    </View>
-                                                </View>
-                                                
+                            <View style={{width: '100%', alignContent: 'center'}}>
+                            <Textapp 
+                                size={TEXTS_SIZE.small}
+                                text={'Settings'}
+                                color={COLORS_APP.black2}
+                                weight={'bold'}
+                            />
+                            <View style={{borderTopWidth: 2, borderBottomWidth: 2}}>
+                                <View style={{ flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
+                                    <TextInputApp 
+                                        value={ data.repeatTimes } 
+                                        onChange = { handleOnChange }
+                                        styleT={{
+                                            width: '15%',
+                                            borderRadius:100,
+                                            margin: 10,
+                                        }}
+                                        color={'#48C6EF'}
+                                        type={'numeric'}
+                                    />
+                                    <Textapp 
+                                        size={TEXTS_SIZE.small}
+                                        text={(data.repeatTimes <= 1) ? 'time a month' : 'times a month'}
+                                        color={'#48C6EF'}
+                                        weight={'bold'}
+                                        styles={{marginTop: 5}}
+                                    /> 
+                                </View>
+                                <ButtonGradient
+                                    gradient={['white','white']}
+                                    sizeGradient = {{width:350, height:50}}
+                                    textButton={`Repeat every ${day}/${month}`}
+                                    styleText={{color:'#48C6EF', fontWeight:'bold'}}
+                                    styleButton={{justifyContent: 'center',height: 35,
+                                    width: 200,
+                                    borderRadius: 25,
+                                    borderColor: 'black',
+                                    borderWidth: 2,
+                                    alignSelf: 'center',
+                                    marginBottom: 20}}
+                                    // hanldeOnPress = { handlePickColor }
+                                />
+                            </View>
+                    </View>
                     }
                 <ButtonGradient
                     gradient={['#48C6EF','#6F86D6']}
@@ -303,13 +328,6 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                     hanldeOnPress = { handlePickColor }
                 />
             </View>
-
-                                
-                                
-                                
-
-
-            
         </ModalApp>    
         </KeyboardAvoidingView>
         </>
