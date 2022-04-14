@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Image, View, Text } from 'react-native';
 import { styleListGroups } from '../../theme/appTheme'
 import { Textapp } from '../elements/Textapp';
