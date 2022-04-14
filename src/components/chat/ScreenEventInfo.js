@@ -116,7 +116,7 @@ export const ScreenEventInfo = ({ route }) => {
                             text ={`${participants.length} Participants`} 
                             styles={{paddingTop:13, paddingLeft: 13, width: '98%'}} 
                         />
-                        { participants.length != 0 && <ParticipantsColumn eventParticipants={participants} type={'participants'} colorColorBordersAvatars = {'white'} isCreator={isCreator} eid={eid} gid={gid} needPaid={paid}/>}
+                        <ParticipantsColumn eventParticipants={participants} type={'participants'} colorColorBordersAvatars = {'white'} isCreator={isCreator} eid={eid} gid={gid} needPaid={paid}/>
                     </View>
                 </ScrollView>
             </View>

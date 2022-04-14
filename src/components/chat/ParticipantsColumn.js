@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useState } from 'react'
 import { View } from 'react-native';
 import { UserListItem } from './UserListItem';
@@ -9,6 +9,14 @@ export const ParticipantsColumn = ( {groupMembers, colorColorBordersAvatars, eve
     const dispatch = useDispatch();
     const [ members, setMembers ] = useState( groupMembers );
     const [ participants, setParticipants ] = useState( eventParticipants );
+
+    useEffect(()=>{
+        if(!!eventParticipants){
+            setParticipants( eventParticipants );
+        } else if(!!groupMembers){
+            setMembers( groupMembers );
+        }
+    }, [eventParticipants, groupMembers])
 
     const modifyPayment = (uid) => {
         dispatch( modifyUserPayment({ gid, eid, uid }) );
@@ -29,6 +37,8 @@ export const ParticipantsColumn = ( {groupMembers, colorColorBordersAvatars, eve
             return members.map( ({ uid }) => {
                 return ( uid != undefined && <UserListItem key={uid} uid={uid} colorColorBordersAvatars={colorColorBordersAvatars} type={type}/>)
             })
+        } else {
+            return <></>
         }
     }
 
