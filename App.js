@@ -9,6 +9,7 @@ import { PresentationScreen } from './src/components/auth/PresentationScreen';
 
 export default function App() {
   LogBox.ignoreLogs(['Setting a timer for a long period of time']);
+  LogBox.ignoreLogs(['Encountered two children with the same']);
   const opacity = useRef(new Animated.Value(0) ).current;
         useEffect(() => {
             Animated.timing(

@@ -22,7 +22,10 @@ import { ListParticipants } from './ListParticipants'
 export const ItemListGroup = ( props ) => {
 
     const {  hanldeNavigatorChat, onLongPressButton } = useItemListGroup( props )
-    const time = useTimeAgo(  props.createdat )
+    
+    // const time = useTimeAgo(  props.createdat )
+    const tempDate = new Date(props.createdat)
+    let fDate = ('0'+ tempDate.getDate()).slice(-2) + "/" + ('0'+ (tempDate.getMonth() + 1)).slice(-2) + "/" + tempDate.getFullYear()
 
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } onLongPress={onLongPressButton}>
@@ -38,7 +41,7 @@ export const ItemListGroup = ( props ) => {
                 <Textapp 
                     size={TEXTS_SIZE.small} 
                     weight='200' 
-                    text ={`Created on ${time}`} 
+                    text ={`Created on ${fDate}`} 
                     styles = {{marginTop:2}} 
                 />
                 <ListParticipants participants={  props.participants } colorColorBordersAvatars = {'#EEEEEC'} />
