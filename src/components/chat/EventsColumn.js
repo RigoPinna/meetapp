@@ -36,7 +36,7 @@ export const EventsColumn = ( evtList ) => {
     const goToEventInfo = (eid) => {
         evtList.events.forEach( evt => {
             if(evt.eid === eid){
-                evtList.navigation.navigate('ScreenEventInfo', {event: evt, gid, navigation: evtList.navigation})
+                evtList.navigation.navigate('ScreenEventInfo', {event: evt, gid, navigation: evtList.navigation, origin: 'events'})
             }
         })
     }

@@ -13,7 +13,7 @@ import { leaveEvent } from '../../reducers/eventReducer'
 import { MenuProvider } from 'react-native-popup-menu';
 
 export const ScreenEventInfo = ({ route }) => {
-    const { gid, event, navigation } = route.params;
+    const { gid, event, navigation, origin } = route.params;
     const dispatch = useDispatch();
     const user = useSelector( state => state.authRed )
     const [ suscribed, setSuscribed ] = useState(false)
@@ -66,8 +66,12 @@ export const ScreenEventInfo = ({ route }) => {
                             styleButton={{width:35, height:35, backgroundColor:'pink'}}
                             IconRight = { IconArrowLeftSimple }
                             colorIcon = {'#35A8FD'}
-                            hanldeOnPress = { () => navigation.goBack()}
-                            
+                            hanldeOnPress = { () => {
+                                if(origin === 'calendar'){
+                                    navigation.navigate('ScreenListGroups')
+                                } 
+                                navigation.goBack();
+                            } }
                         />
                     <View style={{backgroundColor: color, height: 25, width: 25, borderRadius: 50, marginLeft: 10, marginTop: 8}}></View>
                     <Text numberOfLines={1} style={{fontWeight:'bold', height: 30, textAlignVertical: 'center', fontSize: 20, marginTop: 5, marginLeft: 8}}>{nameEvent}</Text> 

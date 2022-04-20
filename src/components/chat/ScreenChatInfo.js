@@ -59,7 +59,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     }
     
     const handleListEvents =  () => {
-        navigation.navigate('ScreenListEvents', {events: activeEvents, gid: id});
+        navigation.navigate('ScreenListEvents', {gid: id});
     }
 
     const handleModalEdit = () => {

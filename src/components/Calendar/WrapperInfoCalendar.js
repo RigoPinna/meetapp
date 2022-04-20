@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Calendar } from 'react-native-calendars';
 
 import { View, Text, ScrollView } from 'react-native'
@@ -22,6 +22,7 @@ export const WrapperInfoCalendar = ({ groups }) => {
             })
         }
     };
+
     return (
         <>
             <Calendar

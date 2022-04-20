@@ -1,5 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
-import { ScrollView, View, Text, BackHandler} from 'react-native'
+import React, { useEffect, useState } from 'react'
+import { ScrollView, View, Text} from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { IconArrowLeftSimple } from '../icons/IconArrowLeftSimple'
 import { LinearGradient } from 'expo-linear-gradient';
