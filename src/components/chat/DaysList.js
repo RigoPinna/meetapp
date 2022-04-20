@@ -10,7 +10,7 @@ export const DaysList = () => {
         width: 35,
         borderRadius: 25,
         borderColor: borderColor,
-        marginLeft: 10
+        marginLeft: 5
       });
 
   return (
@@ -22,7 +22,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={true}
                 onPress={() => {setCheked(!isChecked.sun)}}
-                textComponent={<Text style={{position: 'absolute', left: 20, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.sun) ? 'red' : 'white')}}>S</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 16, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.sun) ? 'red' : 'white')}}>S</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox
@@ -32,7 +32,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={isChecked.mon}
                 onPress={() => {setCheked(!isChecked.mon)}}
-                textComponent={<Text style={{position: 'absolute', left: 18, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.mon) ? 'black' : 'white')}}>M</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 14, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.mon) ? 'black' : 'white')}}>M</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox
@@ -42,7 +42,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={isChecked.tue}
                 onPress={() => {setCheked(!isChecked.tue)}}
-                textComponent={<Text style={{position: 'absolute', left: 20, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.tue) ? 'black' : 'white')}}>T</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 16, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.tue) ? 'black' : 'white')}}>T</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox
@@ -52,7 +52,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={isChecked.wed}
                 onPress={() => {setCheked(!isChecked.wed)}}
-                textComponent={<Text style={{position: 'absolute', left: 18, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.wed) ? 'black' : 'white')}}>W</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 14, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.wed) ? 'black' : 'white')}}>W</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox
@@ -62,7 +62,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={isChecked.thu}
                 onPress={() => {setCheked(!isChecked.thu)}}
-                textComponent={<Text style={{position: 'absolute', left: 20, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.thu) ? 'black' : 'white')}}>T</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 16, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.thu) ? 'black' : 'white')}}>T</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox
@@ -72,7 +72,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={isChecked.fri}
                 onPress={() => {setCheked(!isChecked.fri)}}
-                textComponent={<Text style={{position: 'absolute', left: 20, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.fri) ? 'black' : 'white')}}>F</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 16, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.fri) ? 'black' : 'white')}}>F</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox
@@ -82,7 +82,7 @@ export const DaysList = () => {
                 iconStyle={iconStyle("black")} 
                 isChecked={isChecked.sat}
                 onPress={() => {setCheked(!isChecked.sat)}}
-                textComponent={<Text style={{position: 'absolute', left: 20, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.sat) ? 'black' : 'white')}}>S</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 16, fontSize: TEXTS_SIZE.medium, color: ((!isChecked.sat) ? 'black' : 'white')}}>S</Text>}
                 checkIconImageSource={<Image></Image>}
             />
       </View>

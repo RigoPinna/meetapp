@@ -8,7 +8,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { LinearGradient } from 'expo-linear-gradient';
 import { IconCalendar } from '../icons/IconCalendar';
 import { IconCalendarGradient } from '../icons/IconCalendarGradient';
-export const MenuScreenChat = ({navigation, name, id, code}) => {
+export const MenuScreenChat = ({navigation, name, id, code, user}) => {
     const { top } = useSafeAreaInsets();
     const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
     const hanldeNavigatorCalendar = () => navigation.navigate('ScreenAgenda',{name, id});

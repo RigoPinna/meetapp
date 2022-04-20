@@ -6,7 +6,7 @@ import { Platform, View } from "react-native";
 import { COLORS_APP } from "../ui/COLORS_APP";
 import { ButtonGradient } from "./ButtonGradient";
 
-export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style}) => {
+export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style, event=false}) => {
     const [visible, setVisible] = useState( false )
     const [text, setText] = useState(`Select ${mode}...`)
     const [date, setDate] = useState(new Date())
@@ -37,7 +37,11 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
                 setText( Ftime )
                 setDate( currentDate )
                 if(decision==='start'){
+                    if(event){
+                        setEventData({...eventData, endless: {...eventData.endless, time: Ftime}}) 
+                    }else {
                     setEventData({...eventData, ...{startTime: Ftime}}) 
+                    }
                 } else {
                     setEventData({...eventData, ...{endTime: Ftime}}) 
                 } 
@@ -53,7 +57,7 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
             <ButtonGradient 
                 gradient={['#F0F0F0','#F0F0F0']}
                 // sizeGradient = {{width:'120%', height:50}}
-                textButton={ text }
+                textButton={ (event && eventData.endless.time !== undefined) ? eventData.endless.time : text }
                 styleText={{ 
                     color:COLORS_APP.black2, 
                     fontWeight: (( text.includes("Select")) ? 'normal':'bold'),
