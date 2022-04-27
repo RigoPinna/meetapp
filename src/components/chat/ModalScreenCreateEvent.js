@@ -18,6 +18,9 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
     const dispatch = useDispatch();
     const {params} = route;
     const {name, user} = params
+    const date = new Date()
+    const day = ('0'+ date.getDate()).slice(-2)
+    const month = ('0'+ (date.getMonth() + 1)).slice(-2)
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
     // const [ eventData, setEventData ] = useState({
     //                                                 name: name, 
@@ -38,15 +41,18 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         nameEvent:'', 
         description:'',
         startDate:'',
-        endless: {initial: undefined, time: undefined}, 
+        end: {type: undefined, time: undefined}, 
         startTime: '',
         repeatTimes: '1', 
         color:'',
-        choose: 'No Repeat',
-        initial: 0,
+        choose: 'More recurrence options',
         paid: false,
         admin: false,
-        recurrence: {}});
+        day: day,
+        month: month,
+        textInformation: 'Choose the most convenient repetition',
+        recurrence: {type: undefined,when: undefined, timeSttgs: undefined, duration: undefined},
+        checkedDays: {sun: false, mon: false, tue: false, wed: false, thu: false, fri: false, sat: false}});
 
     const {uid} = useSelector(state => state.authRed )
 
