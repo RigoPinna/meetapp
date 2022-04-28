@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import {  View } from 'react-native'
+import {  Text, View } from 'react-native'
 import { ModalApp } from '../elements/ModalApp'
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
@@ -7,30 +7,40 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { TextInputApp } from '../elements/TextInputApp'
 import { DatePickerApp } from '../elements/DatePickerApp'
 import { ButtonGradient } from '../elements/ButtonGradient'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addNewEvent } from '../../reducers/eventReducer'
 import { ColorPickerApp } from '../elements/ColorPickerApp'
 import { color } from 'react-native-reanimated'
 import { TimeData } from './TimeData'
+import BouncyCheckbox from 'react-native-bouncy-checkbox'
 
 export const ModalScreenCreateEvent = ({navigation, route}) => {
     const dispatch = useDispatch();
     const {params} = route;
-    const {name} = params
+    const {name, user} = params
+    const date = new Date()
+    const day = ('0'+ date.getDate()).slice(-2)
+    const month = ('0'+ (date.getMonth() + 1)).slice(-2)
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
-    const [ eventData, setEventData ] = useState({
-                                                 name: name, 
-                                                 nameEvent:'', 
-                                                 description:'',
-                                                 startDate:'2022-04-08',
-                                                 endDate: '', 
-                                                 startTime: '',
-                                                 repeatTimes: '1', 
-                                                 weeklyDays: '',
-                                                 decisionMenOrAnnu: '', 
-                                                 color:'#74BBE3',
-                                                choose: 'No Repeat'});
+   const [ eventData, setEventData ] = useState({
+        name: name, 
+        nameEvent:'', 
+        description:'',
+        startDate:'',
+        end: {type: undefined, time: undefined}, 
+        startTime: '',
+        repeatTimes: '1', 
+        color:'',
+        choose: 'More recurrence options',
+        paid: false,
+        admin: false,
+        day: day,
+        month: month,
+        textInformation: 'Choose the most convenient repetition',
+        recurrence: {type: undefined,when: undefined, timeSttgs: undefined, duration: undefined},
+        checkedDays: {sun: false, mon: false, tue: false, wed: false, thu: false, fri: false, sat: false}});
 
+    const {uid} = useSelector(state => state.authRed )
 
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
@@ -41,6 +51,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
     const handleCreateEvent = () => {
         dispatch( addNewEvent( eventData ) );
         navigation.goBack()
+        // console.log(eventData)
     }
     const handleColorClick = () => {
         if(eventData.color != ''){
@@ -49,7 +60,8 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         navigation.navigate('ModalColorChooser', {eventData, setEventData});
     }
 
-    const handleRepeatPreferences = () => {
+    const handleRepeatPreferences = () => 
+    {
         navigation.navigate('ModalPreferences', {eventData, setEventData});
     }
      return (
@@ -139,11 +151,13 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                             <DatePickerApp 
                                                 eventData= {eventData} 
                                                 setEventData={setEventData}
+                                                texty={(eventData.startDate.trim()!== '') ? eventData.startDate : 'Select Date...'}
                                             /> 
                                             <DatePickerApp 
                                                     eventData= {eventData} 
                                                     setEventData={setEventData}
                                                     mode={'time'}
+                                                    texty={(eventData.startTime.trim()!== '') ? eventData.startTime : 'Select the Time...'}
                                             />
                                             
                                         </View>
@@ -160,9 +174,31 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 </View>
                             </View>
                         </TimeData>
+
+                        <View style={{paddingTop: 5,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20}}>
+                            <BouncyCheckbox
+                                style={{position: 'relative', width: 30}}
+                                fillColor='#48C6EF'
+                                isChecked={eventData.paid}
+                                onPress={() => {setEventData({...eventData, ...{paid: !eventData.paid}})}}
+                            />
+                            <Text style={{flex: 1, marginLeft: 5}}> 
+                                This event has a cost?
+                            </Text>
+                        </View>
+                        <View style={{paddingTop: 5,flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 20, marginBottom: 20}}>
+                            <BouncyCheckbox
+                                style={{position: 'relative', width: 30}}
+                                fillColor='#48C6EF'
+                                isChecked={eventData.admin}
+                                onPress={() => {setEventData({...eventData, ...{admin: !eventData.admin}})}}
+                            />
+                            <Text style={{flex: 1, marginLeft: 5}}> 
+                                You will participate?
+                            </Text>
+                        </View>
                         {
-                            // ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
-                            ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '')
+                            ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '' && eventData.recurrence.type !== undefined && eventData.startTime.trim() !== '' && eventData.color.trim() !== '')
                             &&  <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>
                                     <ButtonGradient
                                         gradient={['#48C6EF','#6F86D6']}
@@ -174,6 +210,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                     />
                                 </View>
                         }
+
                     </View>
                 </ModalApp>
                 </>

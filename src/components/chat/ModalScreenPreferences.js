@@ -1,5 +1,5 @@
-import React, { useRef, useState } from 'react'
-import { View, KeyboardAvoidingView } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react'
+import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
 import BouncyCheckboxGroup from 'react-native-bouncy-checkbox-group';
 import { stylesChat } from '../../theme/appTheme';
 import { ButtonGradient } from '../elements/ButtonGradient';
@@ -9,13 +9,15 @@ import { Textapp } from '../elements/Textapp';
 import { TextInputApp } from '../elements/TextInputApp';
 import { COLORS_APP } from '../ui/COLORS_APP';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
+import { DaysList } from './DaysList';
 
 export const ModalScreenPreferences = ({navigation, route}) => {
     const [data, setData] = useState(route.params.eventData)
-    const [textInformation, setTextInformation] = useState('This event will not repeat')
     const [showSettings, setshowSettings] = useState(false)
+    const [showDuration, setDuration] = useState({text: '', show: false})
     const isMounted = useRef( null )
-    // const [showSettings, setshowSettings] = useState({daily: false, weekly: false, montly: false, annually: false})
+    const [showError, setShowError] = useState(false)
+
     const iconStyle = (borderColor) => ({
         height: 40,
         width: 40,
@@ -81,15 +83,79 @@ export const ModalScreenPreferences = ({navigation, route}) => {
           iconImageStyle: styles.iconImageStyle,
         },
       ];
-    const handlePickColor = () => {
-        navigation.goBack();
+      const durationStaticData = [
+        {
+            id: 0,
+            text: "Always",
+            fillColor: "#48C6EF",
+            unfillColor: "white",
+            iconStyle: iconStyle("black"),
+            textStyle: styles.textStyle,
+            style: styles.verticalStyle,
+            iconImageStyle: styles.iconImageStyle,
+          },
+        {
+          id: 1,
+          text: "End Date",
+          fillColor: "#48C6EF",
+          unfillColor: "white",
+          iconStyle: iconStyle("black"),
+          textStyle: styles.textStyle,
+          style: styles.verticalStyle,
+          iconImageStyle: styles.iconImageStyle,
+        },
+      
+      ];
+
+      useEffect(() => {
+        if(data.recurrence.type >0){
+            setshowSettings(!showSettings)
+
+        }
+      }, [])
+      
+    const handleSavePreferences = () => {
+        if(!data.textInformation.endsWith('repeat')){
+            if((data.textInformation.endsWith('daily') && data.recurrence.timeSttgs === undefined)
+                || (data.textInformation.endsWith('weekly') && (data.checkedDays.sun === false && data.checkedDays.mon === false && data.checkedDays.tue === false &&
+                    data.checkedDays.wed === false && data.checkedDays.thu === false && data.checkedDays.fri === false &&
+                    data.checkedDays.sat === false))){
+                setShowError(true)
+            } else {
+                setShowError(false)
+                route.params.setEventData(data)
+                navigation.goBack();
+            }
+            // } else if(){
+            //                 setShowError(true)
+            // } else {
+            //     setShowError(false)
+            //     route.params.setEventData(data)
+            //     navigation.goBack();
+            // }
+
+            // if(data.recurrence.type === 2 && ()) {
+            //             setShowError(true)
+            // } else {
+            //     setShowError(false)
+            //     route.params.setEventData(data)
+            //     navigation.goBack();
+            // }
+        } else {
+            route.params.setEventData(data)
+            navigation.goBack();
+        }
+
     }
     const handleOnChange = ( text ) => {
         // ({...route.params.eventData, ...{repeatTimes:text}})
         setData({...data, ...{repeatTimes: text}})
     }
+    // const handleOnChangeTimes = ( text ) => setData(setData({...data, ...{...endless, ...{times: text }}}))
+    const handleOnTimes = ( text ) => setData({...data, ...{repeatTimes: text}})
     return (
-        <>
+
+                             <>
         <KeyboardAvoidingView
         ref={isMounted} 
         style={ stylesChat.wrapperKeyboard }
@@ -97,40 +163,44 @@ export const ModalScreenPreferences = ({navigation, route}) => {
         keyboardVerticalOffset={Platform.OS === "ios" ? 0 :90 }
             >
                 
-        <ModalApp styleContainer={{height: '100%',}} navigation={navigation} textTitle={'Repeat'} needScroll={false}>
+        <ModalApp styleContainer={{height: '100%',}} navigation={navigation} textTitle={'Repeat'} needScroll={true}>
 
                                 <View style={{width: 350, height: '80%', marginTop: 10}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
-                            text={textInformation}
+                            text={data.textInformation}
                             color={COLORS_APP.black2}
-                            // weight={'bold'}
                         />
                 <BouncyCheckboxGroup
                     data={verticalStaticData}
                     style={{ flexDirection: "column",}}
-                    initial={0}
+                    initial={data.recurrence.type}
                     onChange={(selectedItem) => {
                         switch (selectedItem.text) {
                             case 'No Repeat':
-                                setTextInformation('This event will not repeat')
+                                setData({...data, ...{textInformation: 'This event will not repeat', choose: selectedItem.text, recurrence: {type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
+                                console.log(data.recurrence)
                                 setshowSettings(false)
                                 break;
                             case 'Daily':
-                                setTextInformation('This event will repeat daily')
+                                console.log(data.recurrence)
+                                setData({...data, ...{textInformation: 'This event will repeat daily', choose: selectedItem.text, recurrence: {type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
                                 setshowSettings(true)
                                 break;
                             case 'Weekly':
-                                setTextInformation('This event will repeat weekly')
+                                console.log(data.recurrence)
+                                setData({...data, ...{textInformation: 'This event will repeat weekly', choose: selectedItem.text, recurrence: { type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
                                 setshowSettings(true)
                                 break;
                             case 'Montly':
-                            setTextInformation('This event will repeat montly')
-                            setshowSettings(true)
+                                console.log(data.recurrence)
+                                setData({...data, ...{textInformation: 'This event will repeat montly', choose: selectedItem.text, recurrence: { type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
+                                setshowSettings(true)
                             break;
                             case 'Annually':
-                            setTextInformation('This event will repeat annually')
-                            setshowSettings(true)
+                                console.log(data.recurrence)
+                                setData({...data, ...{textInformation: 'This event will repeat annually', choose: selectedItem.text, recurrence: { type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
+                                setshowSettings(true)
                             break;
                             default:
                                 break;
@@ -138,7 +208,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                     }}
                 />
                     {
-                        (showSettings && textInformation.endsWith('daily')) && 
+                        (showSettings && data.recurrence.type === 1) && 
 
                                                 <View style={{width: '100%', alignContent: 'center'}}>
                                                     <Textapp 
@@ -148,19 +218,6 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         weight={'bold'}
                                                     />
                                                     <View style={{borderTopWidth: 2, borderBottomWidth: 2, justifyContent: 'center', alignItems: 'center'}}>
-                                                    {/* <TextInputApp 
-                                                        // placeholder={'Event name'}
-                                                        value={ data.repeatTimes } 
-                                                        onChange = { handleOnChange }
-                                                        styleT={{
-                                                            width: '15%',
-                                                            borderRadius:100,
-                                                            margin: 10,
-                                                                                                                        // color: '#48C6EF',
-                                                        }}
-                                                        color={'#48C6EF'}
-                                                        type={'numeric'}
-                                                    />*/}
                                                     <Textapp 
                                                         size={TEXTS_SIZE.small}
                                                         text={'It will be remembered at'}
@@ -168,11 +225,14 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         weight={'bold'}
                                                         styles={{marginTop: 20}}
                                                     /> 
-                                                    <DatePickerApp 
+                                   
+                                                        <DatePickerApp
                                                         eventData= {data} 
                                                         setEventData={setData}
                                                         mode={'time'}
-                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '25%'}}
+                                                        evento={true}
+                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '25%', marginLeft: 20}}
+                                                        texty={data.recurrence.timeSttgs}
                                                     />
                                                     <Textapp 
                                                         size={TEXTS_SIZE.small}
@@ -181,12 +241,22 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         weight={'bold'}
                                                         styles={{marginBottom: 10}}
                                                     /> 
+                                                    {
+                                                        (showError) &&
+                                                                        <Textapp 
+                                                                            size={TEXTS_SIZE.small}
+                                                                            text={'Enter the information correctly'}
+                                                                            color={'red'}
+                                                                            weight={'bold'}
+                                                                            styles={{marginBottom: 10, textAlign: 'center'}}
+                                                                        /> 
+                                                    }
                                                     </View>
                                                 </View>
 
                     }
                                        {
-                        (showSettings && textInformation.endsWith('weekly')) && 
+                        (showSettings && data.recurrence.type === 2) && 
 
                                                 <View style={{width: '100%', alignContent: 'center'}}>
                                                     <Textapp 
@@ -195,10 +265,11 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         color={COLORS_APP.black2}
                                                         weight={'bold'}
                                                     />
-                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2, flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
+                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2}}>
+                                                    <View style={{ flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
                                                     <TextInputApp 
                                                         value={ data.repeatTimes } 
-                                                        onChange = { handleOnChange }
+                                                        onChange = { handleOnTimes }
                                                         styleT={{
                                                             width: '15%',
                                                             borderRadius:100,
@@ -209,110 +280,212 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                     />
                                                     <Textapp 
                                                         size={TEXTS_SIZE.small}
-                                                        text={'once a week'}
+                                                        text={(data.repeatTimes < 1) ? 'time a week' : 'times a week'}
                                                         color={'#48C6EF'}
                                                         weight={'bold'}
                                                         styles={{marginTop: 5}}
                                                     /> 
                                                     </View>
+                                                    <DaysList data={data} setData={setData}/>
+                                                    {
+                                                        (showError) &&
+                                                                        <Textapp 
+                                                                            size={TEXTS_SIZE.small}
+                                                                            text={'You must select at least one day of the week'}
+                                                                            color={'red'}
+                                                                            weight={'bold'}
+                                                                            styles={{marginBottom: 10, textAlign: 'center'}}
+                                                                        /> 
+                                                    }
+                                                    </View>
                                                 </View>
                     }
                      {
-                        (showSettings && textInformation.endsWith('montly')) && 
+                         
+                        (showSettings &&  data.recurrence.type === 3) && 
 
                         <View style={{width: '100%', alignContent: 'center'}}>
-                        {/* <Textapp 
-                            size={TEXTS_SIZE.small}
-                            text={'Settings'}
-                            color={COLORS_APP.black2}
-                            weight={'bold'}
-                        /> */}
-                        <View style={{borderTopWidth: 2, borderBottomWidth: 2, flexDirection: 'row',justifyContent: 'center', alignItems: 'center', padding: 20}}>
-                        {/* <TextInputApp 
-                            value={ data.repeatTimes } 
-                            onChange = { handleOnChange }
-                            styleT={{
-                                width: '15%',
-                                borderRadius:100,
-                                margin: 10,
-                            }}
-                            color={'#48C6EF'}
-                            type={'numeric'}
-                        />
-                        <Textapp 
-                            size={TEXTS_SIZE.small}
-                            text={'once a week'}
-                            color={'#48C6EF'}
-                            weight={'bold'}
-                            styles={{marginTop: 5}}
-                        />  */}
-                        <Textapp 
-                            size={TEXTS_SIZE.small}
-                            text={'Coming soon'}
-                            color={COLORS_APP.black2}
-                            weight={'bold'}
-                        />
+                            <Textapp 
+                                size={TEXTS_SIZE.small}
+                                text={'Settings'}
+                                color={COLORS_APP.black2}
+                                weight={'bold'}
+                            />
+                            <View style={{borderTopWidth: 2, borderBottomWidth: 2}}>
+                                <View style={{ flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
+                                    <TextInputApp 
+                                        value={ data.repeatTimes } 
+                                        onChange = { handleOnTimes }
+                                        styleT={{
+                                            width: '15%',
+                                            borderRadius:100,
+                                            margin: 10,
+                                        }}
+                                        color={'#48C6EF'}
+                                        type={'numeric'}
+                                    />
+                                    <Textapp 
+                                        size={TEXTS_SIZE.small}
+                                        text={(data.repeatTimes <= 1) ? 'time a month' : 'times a month'}
+                                        color={'#48C6EF'}
+                                        weight={'bold'}
+                                        styles={{marginTop: 5}}
+                                    /> 
+                                </View>
+                                {/* <ButtonGradient
+                                    gradient={['white','white']}
+                                    sizeGradient = {{width:350, height:50}}
+                                    textButton={`Repeat every ${data.day}`}
+                                    styleText={{color:'#48C6EF', fontWeight:'bold'}}
+                                    styleButton={{justifyContent: 'center',height: 35,
+                                    width: 200,
+                                    borderRadius: 25,
+                                    borderColor: 'black',
+                                    borderWidth: 2,
+                                    alignSelf: 'center',
+                                    marginBottom: 20}}
+                                    hanldeOnPress = { handleDayMonthClick }
+                                /> */}
+                                <DatePickerApp 
+                                    eventData= {data} 
+                                    setEventData={setData}
+                                    evento={true}
+                                    texty={`Repeat every ${data.day}`}
+                                    style={{justifyContent: 'center',height: 35,
+                                    width: 200,
+                                    borderRadius: 25,
+                                    borderColor: 'black',
+                                    borderWidth: 2,
+                                    alignSelf: 'center',
+                                    marginBottom: 20}}
+                                />
+                            </View>
                         </View>
-                    </View>
                     }
                      {
-                        (showSettings && textInformation.endsWith('annually')) && 
+                        (showSettings && data.recurrence.type === 4) && 
+
+                            <View style={{width: '100%', alignContent: 'center'}}>
+                            <Textapp 
+                                size={TEXTS_SIZE.small}
+                                text={'Settings'}
+                                color={COLORS_APP.black2}
+                                weight={'bold'}
+                            />
+                            <View style={{borderTopWidth: 2, borderBottomWidth: 2}}>
+                                <View style={{ flexDirection: 'row',justifyContent: 'center', alignItems: 'center'}}>
+                                    <TextInputApp 
+                                        value={ data.repeatTimes } 
+                                        onChange = { handleOnChange }
+                                        styleT={{
+                                            width: '15%',
+                                            borderRadius:100,
+                                            margin: 10,
+                                        }}
+                                        color={'#48C6EF'}
+                                        type={'numeric'}
+                                    />
+                                    <Textapp 
+                                        size={TEXTS_SIZE.small}
+                                        text={(data.repeatTimes <= 1) ? 'time a month' : 'times a month'}
+                                        color={'#48C6EF'}
+                                        weight={'bold'}
+                                        styles={{marginTop: 5}}
+                                    /> 
+                                </View>
+                                <DatePickerApp 
+                                    eventData= {data} 
+                                    setEventData={setData}
+                                    evento={true}
+                                    texty={`Repeat every ${data.day}/${data.month}`}
+                                    style={{justifyContent: 'center',height: 35,
+                                            width: 200,
+                                            borderRadius: 25,
+                                            borderColor: 'black',
+                                            borderWidth: 2,
+                                            alignSelf: 'center',
+                                            marginBottom: 20}}
+                                    month={true}
+                                />
+                            </View>
+                    </View>
+                    }
+                    {
+                        (showSettings || data.recurrence.type >0) &&
+                        <View style={{marginTop: 40}}>
+                        <Textapp 
+                            size={TEXTS_SIZE.small}
+                            text={'Duration'}
+                            color={COLORS_APP.black2}
+                            weight={'bold'}
+                        />
+                                        <BouncyCheckboxGroup
+                        data={durationStaticData}
+                        style={{ flexDirection: "column",}}
+                        initial={data.end.type }
+                        onChange={(selectedItem) => {
+                        switch (selectedItem.text) {
+                            case 'Always':
+                                setData({...data, end:{type: 0,}, recurrence: {...data.recurrence, duration: ''}})
+                                setDuration({...showDuration, ...{show: false}})
+                                break;
+                            case 'End Date':
+                                setData({...data, end:{type: 1}})
+                                setDuration({...showDuration, ...{text: selectedItem.text, show: true}})
+                                break;
+                            default:
+                                break;
+                        }
+                        }}
+                        />            
+                        {
+                        (data.end.type === 1) && 
 
                                                 <View style={{width: '100%', alignContent: 'center'}}>
-                                                    {/* <Textapp 
+                                                    <Textapp 
                                                         size={TEXTS_SIZE.small}
                                                         text={'Settings'}
                                                         color={COLORS_APP.black2}
                                                         weight={'bold'}
-                                                    /> */}
-                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2, flexDirection: 'row',justifyContent: 'center', alignItems: 'center', padding: 20}}>
-                                                    {/* <TextInputApp 
-                                                        value={ data.repeatTimes } 
-                                                        onChange = { handleOnChange }
-                                                        styleT={{
-                                                            width: '15%',
-                                                            borderRadius:100,
-                                                            margin: 10,
-                                                        }}
-                                                        color={'#48C6EF'}
-                                                        type={'numeric'}
                                                     />
+                                                    <View style={{borderTopWidth: 2, borderBottomWidth: 2, justifyContent: 'center', alignItems: 'center', flexDirection: 'row'}}>
                                                     <Textapp 
                                                         size={TEXTS_SIZE.small}
-                                                        text={'once a week'}
+                                                        text={'Until'}
                                                         color={'#48C6EF'}
                                                         weight={'bold'}
-                                                        styles={{marginTop: 5}}
-                                                    />  */}
-                                                    <Textapp 
-                                                        size={TEXTS_SIZE.small}
-                                                        text={'Coming soon'}
-                                                        color={COLORS_APP.black2}
-                                                        weight={'bold'}
-                                                    />
+                                                        styles={{marginTop: 20}}
+                                                    /> 
+                                                    <DatePickerApp 
+                                                        eventData= {data} 
+                                                        setEventData={setData}
+                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '80%', marginLeft: 20}}
+                                                        decision={'end'}
+                                                        evento={true}
+                                                        texty={data.end.time}
+                                                    /> 
                                                     </View>
                                                 </View>
-                                                
+
+                        }
+                        </View>
                     }
-                <ButtonGradient
-                    gradient={['#48C6EF','#6F86D6']}
-                    sizeGradient = {{width:350, height:50}}
-                    textButton={`Save`}
-                    styleText={{color:'white', fontWeight:'bold'}}
-                    styleButton={{justifyContent: 'center',width:350, height:50, marginTop: 25}}
-                    hanldeOnPress = { handlePickColor }
-                />
+                   {
+                       (data.end.type !== undefined || data.recurrence.type === 0) &&                 <ButtonGradient
+                                                            gradient={['#48C6EF','#6F86D6']}
+                                                            sizeGradient = {{width:350, height:50}}
+                                                            textButton={`Save`}
+                                                            styleText={{color:'white', fontWeight:'bold'}}
+                                                            styleButton={{justifyContent: 'center',width:350, height:50, marginTop: 25, marginBottom: 20}}
+                                                            hanldeOnPress = { handleSavePreferences }
+                                                        />
+                   }
+
             </View>
-
-                                
-                                
-                                
-
-
-            
         </ModalApp>    
         </KeyboardAvoidingView>
         </>
+       
         
     );
 }

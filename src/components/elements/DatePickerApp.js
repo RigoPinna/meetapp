@@ -1,14 +1,12 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import DateTimePicker from '@react-native-community/datetimepicker';
-import { Textapp } from "./Textapp";
-import { BlurView } from 'expo-blur'
 import { Platform, View } from "react-native";
 import { COLORS_APP } from "../ui/COLORS_APP";
 import { ButtonGradient } from "./ButtonGradient";
 
-export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style}) => {
+export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style,evento=false, texty = `Select ${mode}...`, month=false}) => {
     const [visible, setVisible] = useState( false )
-    const [text, setText] = useState(`Select ${mode}...`)
+    const [text, setText] = useState(texty)
     const [date, setDate] = useState(new Date())
 
     const showDateTimePicker = () => {
@@ -24,25 +22,41 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
                 let fDate = ('0'+ tempDate.getDate()).slice(-2) + "/" + ('0'+ (tempDate.getMonth() + 1)).slice(-2) + "/" + tempDate.getFullYear()
                 let FDateState = tempDate.getFullYear() + "-" + ('0'+ (tempDate.getMonth() + 1)).slice(-2) + "-" + ('0'+ tempDate.getDate()).slice(-2)
                 setVisible( false )
-                setText( fDate )
+                    setText( fDate )
+
                 setDate( currentDate )
                 if(decision==='start'){
-                    setEventData({...eventData, ...{startDate: FDateState}}) 
-                } else {
-                    setEventData({...eventData, ...{endDate: FDateState}}) 
+    
+                    if(evento){
+                        if(month) {
+                            setText(`Repeat every ${('0'+ tempDate.getDate()).slice(-2)}/${('0'+ (tempDate.getMonth() + 1)).slice(-2)}`)
+                        } else {
+                            setText(`Repeat every ${('0'+ tempDate.getDate()).slice(-2)}`)
+                        }
+                        setEventData({...eventData, day:('0'+ tempDate.getDate()).slice(-2) ,
+                                                    month: ('0'+ (tempDate.getMonth() + 1)).slice(-2),
+                                                    recurrence: {...eventData.recurrence, when: FDateState}})
+                    }else {
+                        setEventData({...eventData, ...{startDate: FDateState}}) 
+                    }
+                } else if(decision==='end') {
+                    setEventData({...eventData, recurrence: {...eventData.recurrence, duration: FDateState}, end: {...eventData.end, time: fDate}}) 
                 } 
             } else {
                 let Ftime = ('0'+(tempDate.getHours())).slice(-2) + ':'+ ('0'+(tempDate.getMinutes())).slice(-2)
                 setVisible( false )
-                setText( Ftime )
+                    setText( Ftime )
+
+
                 setDate( currentDate )
                 if(decision==='start'){
-                    setEventData({...eventData, ...{startTime: Ftime}}) 
-                } else {
-                    setEventData({...eventData, ...{endTime: Ftime}}) 
-                } 
+                    if(evento){
+                        setEventData({...eventData, recurrence: {...eventData.recurrence, timeSttgs: Ftime}}) 
+                    }else {
+                        setEventData({...eventData, ...{startTime: Ftime}}) 
+                    }
+                }
             }
-            // console.log(selectedDate)
         } else {
             setVisible(false)
         }
@@ -53,7 +67,8 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
             <ButtonGradient 
                 gradient={['#F0F0F0','#F0F0F0']}
                 // sizeGradient = {{width:'120%', height:50}}
-                textButton={ text }
+                // textButton={ (evento && eventData.end.time !== undefined) ? eventData.end.time : text }
+                textButton={text}
                 styleText={{ 
                     color:COLORS_APP.black2, 
                     fontWeight: (( text.includes("Select")) ? 'normal':'bold'),
