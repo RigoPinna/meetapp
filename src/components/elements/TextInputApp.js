@@ -29,7 +29,7 @@ export const TextInputApp = ({size = (TEXTS_SIZE.extraSmall),weight = 'normal', 
                             onChangeText = {(text)=> { onChange(text) } }
                             value = { value }
                             placeholder = { placeholder } 
-                            style = {styles2.textInput}
+                            style = {{...styles2.textInput, fontSize: size, fontWeight:weight, color: color}}
                             keyboardType = { type }
                         />
                     :   <TextInput

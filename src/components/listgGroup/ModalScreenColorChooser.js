@@ -6,11 +6,8 @@ import { ButtonGradient } from '../elements/ButtonGradient'
 import { useNavigation } from '@react-navigation/native'
 
 export const ModalScreenColorChooser = ({navigation, route}) => {
-    // const nav = useNavigation()
-    // const [color, setColor] = useState(route.params.dataGroup.color);
-    const [visibleModal, setVisibleModal] = useState(true);
+    // const [visibleModal, setVisibleModal] = useState(true);
     const handlePickColor = () => {
-        // route.params.setDataGroup({...route.params.dataGroup, color: color.color});
         navigation.goBack();
     }
 
