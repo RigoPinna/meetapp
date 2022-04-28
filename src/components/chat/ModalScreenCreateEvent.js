@@ -22,21 +22,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
     const day = ('0'+ date.getDate()).slice(-2)
     const month = ('0'+ (date.getMonth() + 1)).slice(-2)
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
-    // const [ eventData, setEventData ] = useState({
-    //                                                 name: name, 
-    //                                                 nameEvent:'', 
-    //                                                 description:'',
-    //                                                 startDate:'',
-    //                                                 endless: {always: false, spec: {selected: false, times: '10', to: {selected: false, day: ''}}}, 
-    //                                                 startTime: '',
-    //                                                 repeatTimes: '1', 
-    //                                                 color:'',
-    //                                                 choose: 'No Repeat',
-    //                                                 initial: 0,
-    //                                                 paid: false,
-    //                                                 admin: false,
-    //                                                 recurrence: {daily: false, week: {days: {}, weekly: false }, month: {option: false, monty: false}, ann: {option: false, anny: false}}});
-    const [ eventData, setEventData ] = useState({
+   const [ eventData, setEventData ] = useState({
         name: name, 
         nameEvent:'', 
         description:'',
@@ -63,9 +49,9 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         setEventData({...eventData, ...{description:text}})
     }
     const handleCreateEvent = () => {
-        // dispatch( addNewEvent( eventData ) );
-        // navigation.goBack()
-        console.log(eventData)
+        dispatch( addNewEvent( eventData ) );
+        navigation.goBack()
+        // console.log(eventData)
     }
     const handleColorClick = () => {
         if(eventData.color != ''){
@@ -165,11 +151,13 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                             <DatePickerApp 
                                                 eventData= {eventData} 
                                                 setEventData={setEventData}
+                                                texty={(eventData.startDate.trim()!== '') ? eventData.startDate : 'Select Date...'}
                                             /> 
                                             <DatePickerApp 
                                                     eventData= {eventData} 
                                                     setEventData={setEventData}
                                                     mode={'time'}
+                                                    texty={(eventData.startTime.trim()!== '') ? eventData.startTime : 'Select the Time...'}
                                             />
                                             
                                         </View>
@@ -203,14 +191,14 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 style={{position: 'relative', width: 30}}
                                 fillColor='#48C6EF'
                                 isChecked={eventData.admin}
-                                onPress={() => {setEventData({...eventData, ...{admin: !eventData.admin, participants: {uid}}})}}
+                                onPress={() => {setEventData({...eventData, ...{admin: !eventData.admin}})}}
                             />
                             <Text style={{flex: 1, marginLeft: 5}}> 
                                 You will participate?
                             </Text>
                         </View>
-                        {/* {
-                            ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '')
+                        {
+                            ( eventData.nameEvent.trim() !== '' && eventData.description.trim() !== '' && eventData.startDate.trim() !== '' && eventData.recurrence.type !== undefined && eventData.startTime.trim() !== '' && eventData.color.trim() !== '')
                             &&  <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>
                                     <ButtonGradient
                                         gradient={['#48C6EF','#6F86D6']}
@@ -221,17 +209,8 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                         hanldeOnPress = { handleCreateEvent }
                                     />
                                 </View>
-                        } */}
-                        <View style={{ flex: 1,justifyContent: 'center', alignItems:'center',marginTop: 25, paddingBottom:10}}>
-                                    <ButtonGradient
-                                        gradient={['#48C6EF','#6F86D6']}
-                                        sizeGradient = {{width:350, height:50}}
-                                        textButton={`Create Event`}
-                                        styleText={{color:'white', fontWeight:'bold',}}
-                                        styleButton={{justifyContent: 'center',width:350, height:50}}
-                                        hanldeOnPress = { handleCreateEvent }
-                                    />
-                                </View>
+                        }
+
                     </View>
                 </ModalApp>
                 </>

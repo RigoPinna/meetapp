@@ -55,9 +55,7 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
                     }else {
                         setEventData({...eventData, ...{startTime: Ftime}}) 
                     }
-                } else {
-                    setEventData({...eventData, ...{endTime: Ftime}}) 
-                } 
+                }
             }
         } else {
             setVisible(false)
