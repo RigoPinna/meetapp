@@ -14,6 +14,7 @@ import { PresentationScreen } from '../auth/PresentationScreen';
 import { ModalScreenEditInfo } from '../chat/ModalScreenEditInfo';
 import { ModalScreenPreferences } from '../chat/ModalScreenPreferences';
 import { ScreenEvents } from '../chat/ScreenEvents';
+import { ScreenEventInfo } from '../chat/ScreenEventInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -59,6 +60,13 @@ export const StackNavigatorPrimary = () => {
                         headerShown:false,
                     }}
                     component={ ScreenEvents } />
+                <Stack.Screen 
+                    name="ScreenEventInfo"
+                    options={{
+                        headerTitle: 'info', 
+                        headerShown:false,
+                    }}
+                    component={ ScreenEventInfo } />
                 <Stack.Screen
                     name="ModalCreateEvent"
                     component={ModalScreenCreateEvent}

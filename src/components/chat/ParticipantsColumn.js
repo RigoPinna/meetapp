@@ -1,26 +1,53 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useState } from 'react'
-import { Image, View } from 'react-native';
-import { styleListGroups } from '../../theme/appTheme'
-import { Textapp } from '../elements/Textapp';
-import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
+import { View } from 'react-native';
+import { UserListItem } from './UserListItem';
+import { useDispatch } from 'react-redux'
+import { modifyUserPayment } from '../../reducers/eventReducer';
 
-export const ParticipantsColumn = ( list ) => {
-    const [ participants, setParticipants ] = useState( list.participants );
-    return (
-        <View style={{width:'100%'}}>
-            {
-                participants.map( ({ uid, image, name, phone}, i ) => {
-                    return <View key={uid} style={{flexDirection:'row'}}>
-                                <Image style = {{...styleListGroups.avatarListItemParticipants,...{borderColor:list.colorColorBordersAvatars}}} source = {{uri: image }} />
-                                <View>
-                                    <Textapp text={name} styles={{marginTop:10, marginLeft: 10}} weight={'bold'} size={TEXTS_SIZE.medium}/>
-                                    <Textapp text={phone} styles={{marginLeft: 10}}/>
-                                </View>
-                            </View>
+export const ParticipantsColumn = ( {groupMembers, colorColorBordersAvatars, eventParticipants, type, isCreator = false, eid, gid, needPaid} ) => {
+    const dispatch = useDispatch();
+    const [ members, setMembers ] = useState( groupMembers );
+    const [ participants, setParticipants ] = useState( eventParticipants );
+
+    useEffect(()=>{
+        if(!!eventParticipants){
+            setParticipants( eventParticipants );
+        } else if(!!groupMembers){
+            setMembers( groupMembers );
+        }
+    }, [eventParticipants, groupMembers])
+
+    const modifyPayment = (uid) => {
+        dispatch( modifyUserPayment({ gid, eid, uid }) );
+    }
+
+    const usersData = () => {
+        if(type === 'participants' && participants.length != 0){
+            if(needPaid){
+                return participants.map( ( {uid, paid} ) => {
+                    return ( uid != undefined && <UserListItem key={uid} uid={uid} needPaid={needPaid} paidStatus={paid} colorColorBordersAvatars={colorColorBordersAvatars} type={type} isCreator={isCreator} modifyPayment={modifyPayment}/>)
+                })
+            } else {
+                return participants.map( uid => {
+                    return ( uid != undefined && <UserListItem key={uid} uid={uid} colorColorBordersAvatars={colorColorBordersAvatars} type={type} modifyPayment={modifyPayment}/>)
                 })
             }
-                    
+        } else if(type === 'members') {
+            return members.map( ({ uid }) => {
+                return ( uid != undefined && <UserListItem key={uid} uid={uid} colorColorBordersAvatars={colorColorBordersAvatars} type={type}/>)
+            })
+        } else {
+            return <></>
+        }
+    }
+
+    return (
+        <View style={{minHeight: 200, width:'100%'}}>
+            {
+                (!!participants || !!members) && usersData()
+            }
         </View>
     )
 }
+

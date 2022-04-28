@@ -29,7 +29,7 @@ export const MenuScreenChat = ({navigation, name, id, code, hanldeEditGroup}) =>
                             
                         />
                 <View style = {{flexDirection: 'row'}}>
-                    {/* <ButtonGradient
+                    <ButtonGradient
                         gradient ={['#F3F7FE','#F3F7FE']}
                         textButton = {'Calendar'}
                         styleText = {{color:'#35A8FD',fontWeight:'bold', fontSize:12}}
@@ -37,7 +37,7 @@ export const MenuScreenChat = ({navigation, name, id, code, hanldeEditGroup}) =>
                         sizeGradient={{width:150, height:100}}
                         IconLeft ={ IconCalendarGradient }
                         hanldeOnPress = { hanldeNavigatorCalendar }
-                    /> */}
+                    />
                     {
                         (!!code) && <ButtonGradient
                                         gradient ={['#F3F7FE','#F3F7FE']}

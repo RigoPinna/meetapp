@@ -27,7 +27,7 @@ export const TabNavigator = () => {
                     },
 
                 }}
-               
+                initialRouteName="ListGroup"
             >
                 <Tab.Screen 
                     name ="Calendar" 

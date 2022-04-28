@@ -59,7 +59,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     }
     
     const handleListEvents =  () => {
-        navigation.navigate('ScreenListEvents', {events: activeEvents});
+        navigation.navigate('ScreenListEvents', {gid: id});
     }
 
     const handleModalEdit = () => {
@@ -168,9 +168,11 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                     text ={participants.length +' Participants'} 
                     styles={{paddingTop:13, paddingLeft: 13}} 
                 />
+
                 <ScrollView nestedScrollEnabled = {true} style={{flex:1, height: 220}}>
-                    <ParticipantsColumn participants={participants} colorColorBordersAvatars = {'white'}/>
+                    <ParticipantsColumn groupMembers={participants} colorColorBordersAvatars = {'white'} type={'members'}/>
                 </ScrollView>
+
                 {
                         (codeF !== '') &&   <View style={{alignItems: 'center'}}>
                                                 <TextInputApp 

@@ -32,7 +32,7 @@ export const CalendarApp = () => {
       <View style={{flex: 1}}>
           {
             !!groups 
-              ? <WrapperInfoCalendar groups={ groups }/>
+              ? <WrapperInfoCalendar groups={ groups } />
               : <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
                     <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
                 </View>
