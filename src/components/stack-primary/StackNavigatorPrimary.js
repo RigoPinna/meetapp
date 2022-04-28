@@ -4,7 +4,6 @@ import { ScreenListGroups } from '../listgGroup/ScreenListGroups';
 import { ScreenChatInfo } from '../chat/ScreenChatInfo';
 import { ModalScreenCreateEvent } from '../chat/ModalScreenCreateEvent';
 import { ScreenChatGroup } from '../chat/ScreenChatGroup';
-import { ModalScreenParticipants } from '../chat/ModalScreenParticipants';
 import { ModalScreenCreateGroup } from '../listgGroup/ModalScreenCreateGroup';
 import { ModalScreenColorChooser } from '../listgGroup/ModalScreenColorChooser';
 import { ModalScreenJoinGroup } from '../listgGroup/ModalScreenJoinGroup';
@@ -14,6 +13,8 @@ import { ScreenAgenda } from '../chat/ScreenAgenda';
 import { PresentationScreen } from '../auth/PresentationScreen';
 import { ModalScreenEditInfo } from '../chat/ModalScreenEditInfo';
 import { ModalScreenPreferences } from '../chat/ModalScreenPreferences';
+import { ScreenEvents } from '../chat/ScreenEvents';
+import { ScreenEventInfo } from '../chat/ScreenEventInfo';
 
 const Stack = createNativeStackNavigator();
 
@@ -52,19 +53,23 @@ export const StackNavigatorPrimary = () => {
                         headerShown:false,
                     }}
                     component={ ScreenChatInfo } />
+                <Stack.Screen 
+                    name="ScreenListEvents"
+                    options={{
+                        headerTitle: 'info', 
+                        headerShown:false,
+                    }}
+                    component={ ScreenEvents } />
+                <Stack.Screen 
+                    name="ScreenEventInfo"
+                    options={{
+                        headerTitle: 'info', 
+                        headerShown:false,
+                    }}
+                    component={ ScreenEventInfo } />
                 <Stack.Screen
                     name="ModalCreateEvent"
                     component={ModalScreenCreateEvent}
-                    options={{
-                        headerTransparent: true,
-                        headerShadowVisible: false,
-                        presentation: 'transparentModal',
-                        headerTitle: '', 
-                        headerBackVisible: false}}
-                />
-                <Stack.Screen
-                    name="ModalParticipants"
-                    component={ModalScreenParticipants}
                     options={{
                         headerTransparent: true,
                         headerShadowVisible: false,

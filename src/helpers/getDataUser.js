@@ -2,7 +2,6 @@
 import { db } from '../firebase/firebase-config'
 
 export const getDataUser = async ( uid ) => {
-
     const userRef = db.collection('users').doc( uid )
     const doc = await userRef.get()
 

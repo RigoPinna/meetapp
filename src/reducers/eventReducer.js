@@ -93,26 +93,73 @@ export const addNewEvent = ({ name, nameEvent, startDate, description, color, st
     }
 }
 
-// export const getIdEvent = (id, eventId, setEventId) => {
+export const joinEvent = ({ gid, eid, uid, paid }) => {
+    return async ( ) => {
+        const eventRef = await db.collection('groups').doc(gid).collection('event').doc(eid);
+        const event = await eventRef.get();
+        const data = event.data();
 
-//     return async ( dispatch ) => {
-//         const eventRef = db.collection('groups').doc(id).collection('event')
-//         const snapshot = await eventRef.orderBy('startDate', 'desc').limit(1).get()
-//         if(!snapshot.empty){
-//             snapshot.forEach(doc => {
-//                 // console.log(doc.id,'id =>', doc.data())
-//                 setEventId({...eventId,...{id: doc.id}})
-//             })
-//             // setEventVisible(true)
-//             // console.log(eventData)
-//         }
-//         dispatch({
-//             type:'get-event',
-//             payload:[{...eventId.id}]
-//         })
-//     }
+        if(data.participants == undefined){
+            if(paid){
+                const participants = JSON.stringify([{uid, paid: false}]);
+                await eventRef.update({ ...data, participants })
+            } else {
+                const participants = JSON.stringify([uid]);
+                await eventRef.update({ ...data, participants })
+            }
+        } else {
+            const arrayParticipants = JSON.parse(data.participants);
+            if(paid){
+                const participants = JSON.stringify([...arrayParticipants, {uid, paid: false}]);
+                await eventRef.update({ ...data, participants})
+            } else {
+                const participants = JSON.stringify([...arrayParticipants, uid]);
+                await eventRef.update({ ...data, participants})
+            }
+        }
+    }
+}
 
-// }
+export const modifyUserPayment = ({ gid, eid, uid }) => {
+    return async ( ) => {
+        const eventRef = await db.collection('groups').doc(gid).collection('event').doc(eid);
+        const event = await eventRef.get();
+        const data = event.data();
+
+        const arrayParticipants = JSON.parse(data.participants);
+
+        const modifyArray = arrayParticipants.map( p => {
+            return {
+                uid: p.uid,
+                name: p.name,
+                paid: (p.uid == uid ) ? !p.paid : p.paid
+            }
+        });
+        
+        const participants = JSON.stringify(modifyArray);
+        await eventRef.update({ ...data, participants})
+    }
+}
+
+
+export const leaveEvent = ({ gid, eid, idUser, paid }) => {
+    return async ( ) => {
+        const eventRef = await db.collection('groups').doc(gid).collection('event').doc(eid);
+        const event = await eventRef.get();
+        const data = event.data();
+
+        if(data.participants != undefined){
+            const arrayParticipants = JSON.parse(data.participants);
+            if(paid){
+                const participants = JSON.stringify(arrayParticipants.filter( ({uid}) => uid != idUser));
+                await eventRef.update({ ...data, participants})
+            } else {
+                const participants = JSON.stringify(arrayParticipants.filter( p => p != idUser));
+                await eventRef.update({ ...data, participants})
+            }
+        }
+    }
+}
 
 
 export const eventReducer = ( state = initialState, action ) => {

@@ -22,15 +22,15 @@ export const MeetApp = () => {
                     if( userData.uid === null ) {
                         dispatch(setData( uid ))
                         setStatus( true )
+                        
                     } else {
-                        setStatus( true )
+                        setStatus(true)
                     }
                 } else {
                     if( !!userData.uid ) {
                         await AsyncStorage.setItem( 'uid', userData.uid )
                         setStatus( true )
                     } else{
-
                         setStatus( null )
                     }
                 }
