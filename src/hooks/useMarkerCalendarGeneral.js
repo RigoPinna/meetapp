@@ -4,30 +4,25 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
     const [dots, setDots] = useState({})
     useEffect(() => {
         if( !!markerCalendar ) {
-            // console.log('markerCalendar', markerCalendar);
-            // console.log('\n-----------------------------');
-            
             let markers = [];
-            
+
             markerCalendar.forEach( marker => {
-                if(!!marker.recursive) {
-                    const recursive = marker.recursive;
+                if(!!marker.recurrence) {
+                    const {duration, type, when} = JSON.parse(marker.recurrence)[0];
                     const currentDte = new Date();
-                    if(recursive == 1){
+
+                    if(type == 1 ){
                         let startDate = new Date();
                         let limitDate = new Date();
-                        limitDate.setDate(currentDte.getDate() + 150);
+                        limitDate.setDate( currentDte.getDate() + 724 );
 
-                        if(currentDte >= marker.date){
-                            startDate = currentDte;
-                        } else {
-                            startDate = new Date(marker.date); 
+                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
+
+                        if (limitDate > new Date(duration) ){
+                            limitDate = new Date(duration);
                         }
 
-
                         do{
-                            // console.log(startDate);
-                            // console.log(startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate()));
                             markers.push({
                                 dots:[{...marker, startDate: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
                                 selected: true, 
@@ -35,9 +30,77 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
                                 date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
                             });
                             startDate.setDate(startDate.getDate() + 1);
-                        }while(startDate < limitDate);
+                        }while(startDate <= limitDate);
+                    } else if(type == 2) {
+                        let startDate = new Date();
+                        let limitDate = new Date();
+                        limitDate.setDate( currentDte.getDate() + 724 );
+
+                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
+
+                        if (limitDate > new Date(duration) ){
+                            limitDate = new Date(duration);
+                        }
+
+                        
+                        do{
+                            if(type == startDate.getDay()){
+                                markers.push({
+                                    dots:[{...marker, startDate: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
+                                    selected: true, 
+                                    selectedColor: '#F2F2F2',
+                                    date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
+                                });
+                            }
+                            startDate.setDate(startDate.getDate() + 1);
+                        }while(startDate <= limitDate);
+                    } else if(type == 3) {
+                        let startDate = new Date();
+                        let limitDate = new Date();
+                        limitDate.setDate( currentDte.getDate() + 724 );
+
+                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
+
+                        if (limitDate > new Date(duration) ){
+                            limitDate = new Date(duration);
+                        }
+
+                        do{
+                            if(startDate > currentDte){
+                                markers.push({
+                                    dots:[{...marker, startDate: startDate.getFullYear() + "-" + ((startDate.getMonth() < 10 ) ? "0" + startDate.getMonth() : startDate.getUTCMonth()) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
+                                    selected: true, 
+                                    selectedColor: '#F2F2F2',
+                                    date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
+                                });
+                            }
+                            startDate = new Date((startDate.getMonth() != 12) ? startDate.getFullYear() : (startDate.getFullYear() + 1), (startDate.getMonth() != 12) ? (startDate.getMonth() + 1) : 1, startDate.getUTCDate())
+                        }while(startDate <= limitDate);
+
+                    } else if(type == 4){
+                        let startDate = new Date();
+                        let limitDate = new Date();
+                        limitDate.setDate( currentDte.getDate() + 724 );
+
+                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
+
+                        if (limitDate > new Date(duration) ){
+                            limitDate = new Date(duration);
+                        }
+
+                        do{
+                            if(startDate > currentDte){
+                                markers.push({
+                                    dots:[{...marker, startDate: startDate.getFullYear() + "-" + ((startDate.getMonth() < 10 ) ? "0" + startDate.getMonth() : startDate.getUTCMonth()) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
+                                    selected: true, 
+                                    selectedColor: '#F2F2F2',
+                                    date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
+                                });
+                            }
+                            startDate = new Date(startDate.getFullYear() + 1, startDate.getMonth(), startDate.getUTCDate())
+                        }while(startDate <= limitDate);
+
                     }
-                    
                 } else {
                     markers.push({
                         dots:[marker],
@@ -47,9 +110,7 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
                     });
                 }
             } );
-
-            console.log('markers', markers);
-            console.log('\n-----------------------------');
+            
 
             let obDots = {}
             markers.forEach( marker => {
@@ -67,8 +128,7 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
                 }
 
             })
-            // console.log('obDots', obDots);
-            // console.log('\n-----------------------------');
+            
             setDots(obDots)
 
         }
