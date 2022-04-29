@@ -2,106 +2,33 @@ import { useEffect, useState } from 'react'
 
 export const useMarkerCalendarGeneral = ( markerCalendar ) => {
     const [dots, setDots] = useState({})
+
+    const getMarker = (marker, currentDte) =>{
+        const year = currentDte.getFullYear() 
+        const mont = currentDte.getUTCMonth() + 1
+        const day = currentDte.getUTCDate()
+        const m = (mont < 10) ? `0${mont}` : mont
+        const d = (day < 10) ? `0${day}` : day
+
+        return {
+            dots:[{...marker, startDate: `${year}-${m}-${d}`}],
+            selected: true, 
+            selectedColor: '#F2F2F2',
+            date: `${year}-${m}-${d}`
+        };
+    }
+    
     useEffect(() => {
         if( !!markerCalendar ) {
             let markers = [];
+            let currentDte = new Date();
+            let startDate = new Date();
+            let limitDate = new Date();
+
+            limitDate.setDate(limitDate.getDate() + 750);
 
             markerCalendar.forEach( marker => {
-                if(!!marker.recurrence) {
-                    const {duration, type, when} = JSON.parse(marker.recurrence)[0];
-                    const currentDte = new Date();
-
-                    if(type == 1 ){
-                        let startDate = new Date();
-                        let limitDate = new Date();
-                        limitDate.setDate( currentDte.getDate() + 724 );
-
-                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
-
-                        if (limitDate > new Date(duration) ){
-                            limitDate = new Date(duration);
-                        }
-
-                        do{
-                            markers.push({
-                                dots:[{...marker, startDate: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
-                                selected: true, 
-                                selectedColor: '#F2F2F2',
-                                date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
-                            });
-                            startDate.setDate(startDate.getDate() + 1);
-                        }while(startDate <= limitDate);
-                    } else if(type == 2) {
-                        let startDate = new Date();
-                        let limitDate = new Date();
-                        limitDate.setDate( currentDte.getDate() + 724 );
-
-                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
-
-                        if (limitDate > new Date(duration) ){
-                            limitDate = new Date(duration);
-                        }
-
-                        
-                        do{
-                            if(type == startDate.getDay()){
-                                markers.push({
-                                    dots:[{...marker, startDate: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
-                                    selected: true, 
-                                    selectedColor: '#F2F2F2',
-                                    date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
-                                });
-                            }
-                            startDate.setDate(startDate.getDate() + 1);
-                        }while(startDate <= limitDate);
-                    } else if(type == 3) {
-                        let startDate = new Date();
-                        let limitDate = new Date();
-                        limitDate.setDate( currentDte.getDate() + 724 );
-
-                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
-
-                        if (limitDate > new Date(duration) ){
-                            limitDate = new Date(duration);
-                        }
-
-                        do{
-                            if(startDate > currentDte){
-                                markers.push({
-                                    dots:[{...marker, startDate: startDate.getFullYear() + "-" + ((startDate.getMonth() < 10 ) ? "0" + startDate.getMonth() : startDate.getUTCMonth()) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
-                                    selected: true, 
-                                    selectedColor: '#F2F2F2',
-                                    date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
-                                });
-                            }
-                            startDate = new Date((startDate.getMonth() != 12) ? startDate.getFullYear() : (startDate.getFullYear() + 1), (startDate.getMonth() != 12) ? (startDate.getMonth() + 1) : 1, startDate.getUTCDate())
-                        }while(startDate <= limitDate);
-
-                    } else if(type == 4){
-                        let startDate = new Date();
-                        let limitDate = new Date();
-                        limitDate.setDate( currentDte.getDate() + 724 );
-
-                        startDate = (currentDte > marker.date ) ? currentDte : new Date(marker.date);
-
-                        if (limitDate > new Date(duration) ){
-                            limitDate = new Date(duration);
-                        }
-
-                        do{
-                            if(startDate > currentDte){
-                                markers.push({
-                                    dots:[{...marker, startDate: startDate.getFullYear() + "-" + ((startDate.getMonth() < 10 ) ? "0" + startDate.getMonth() : startDate.getUTCMonth()) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())}],
-                                    selected: true, 
-                                    selectedColor: '#F2F2F2',
-                                    date: startDate.getFullYear() + "-" + (((startDate.getUTCMonth() + 1) < 10 ) ? "0" + (startDate.getUTCMonth() + 1) : (startDate.getUTCMonth() + 1)) + "-" + ((startDate.getUTCDate() < 10 ) ? "0" + startDate.getUTCDate() : startDate.getUTCDate())
-                                });
-                            }
-                            startDate = new Date(startDate.getFullYear() + 1, startDate.getMonth(), startDate.getUTCDate())
-                        }while(startDate <= limitDate);
-
-                    }
-                } else {
+                if(!(!!marker.recurrence)){
                     markers.push({
                         dots:[marker],
                         selected: true, 
@@ -109,8 +36,46 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
                         date: marker.date
                     });
                 }
-            } );
-            
+            });
+
+            do{
+                markerCalendar.forEach( marker => {
+                    if(!!marker.recurrence){
+                        const {duration, type, when} = JSON.parse(marker.recurrence)[0];
+
+                        let limitEventDate = new Date(duration);
+                        limitEventDate.setDate(limitEventDate.getDate() + 1);
+                        startDate = (currentDte >= new Date(marker.date) ? currentDte : new Date(marker.date));
+
+                        if(currentDte >= startDate && currentDte < limitEventDate){
+                            switch (type) {
+                                case 1:
+                                    markers.push(getMarker(marker, currentDte));
+                                    break;
+                                case 2:
+                                    if (when.includes(currentDte.getDay())) {
+                                        markers.push(getMarker(marker, currentDte));
+                                    }
+                                    break;
+                                case 3:
+                                    if(currentDte.getUTCDate() == when){
+                                        markers.push(getMarker(marker, currentDte));
+                                    }
+                                    break;
+                                case 4:
+                                    const whenDate = new Date(when);
+                                    if((currentDte.getUTCDate() == whenDate.getUTCDate()) && (currentDte.getUTCMonth() == whenDate.getUTCMonth())){
+                                        markers.push(getMarker(marker, currentDte));
+                                    }
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                });
+                currentDte.setDate(currentDte.getDate() + 1);
+            }while(currentDte < limitDate);
 
             let obDots = {}
             markers.forEach( marker => {
