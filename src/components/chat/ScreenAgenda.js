@@ -4,18 +4,15 @@ import { View } from 'react-native'
 import { styles } from '../../theme/appTheme'
 import { AgendaApp } from '../elements/AgendaApp'
 import { ButtonGradient } from '../elements/ButtonGradient'
-import { CalendarApp } from '../elements/CalendarApp'
-import { Textapp } from '../elements/Textapp'
-import { IconClose } from '../icons/IconClose'
 import { COLORS_APP } from '../ui/COLORS_APP'
-import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import * as Progress from 'react-native-progress';
 import { db } from '../../firebase/firebase-config'
+import { Modal } from 'react-native'
+import { styleCalendar } from '../../theme/appTheme'
+import { IconClose } from '../icons/IconClose'
 
-export const ScreenAgenda = ({route}) => {
+export const ScreenAgenda = ({id, calendarVisible, setCalendarVisible}) => {
     const [state, setstate] = useState('')
-    const {params} = route;
-    const {id} = params
     const[ loading, setLoading ] = useState( true );
     const navigation = useNavigation()
     const [events, setEvents] = useState(undefined)
@@ -31,44 +28,39 @@ export const ScreenAgenda = ({route}) => {
                 }
             });
             setEvents(eventsGet)
-            console.log('evento',events)
        })
     }, [])
+    
     return (
-        <>
-        {
-            (loading === true ) 
-            ?   <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
-                    <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
-                </View>
-            :   <>
-                <View style={{width: '100%',height: '94%'}}>
-                    {
-                        !!events && <AgendaApp event = {events}/>
-                    }
+        <Modal animationType="slide" transparent={true} visible={calendarVisible} onRequestClose={() => {setCalendarVisible(false)}}>
+            <View style={ styleCalendar.backgroundModal }>
+                <View style={ styleCalendar.wrapperModal }>
+                {
+                    (loading === true ) 
+                    ?   <View style={{flex:1, justifyContent: 'center', alignItems: 'center'}}>
+                            <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
+                        </View>
+                    :   <>
+                        <View style={{width: '100%',height: '94%'}}>
+                            {
+                                !!events && <AgendaApp event = {events}/>
+                            }
 
+                        </View>
+                        <View style={{position: 'absolute', top:8, right:8,}}>
+                            <ButtonGradient 
+                                gradient={['#F3F7FE','#F3F7FE']}
+                                sizeGradient = {{ width:35, height:35 }}
+                                styleButton = {{ width:35, height:35, alignItems: 'center',justifyContent: 'center'}}
+                                IconLeft = { IconClose }
+                                hanldeOnPress = {() => setCalendarVisible(false) }
+                                colorIcon = {COLORS_APP.black2}    
+                            />
+                        </View>
+                        </>
+                }
                 </View>
-                <View style={{...styles.header, justifyContent: 'center', backgroundColor: '#F5F7FA'}}>
-                                
-                    <ButtonGradient
-                                        gradient={['#FF3838','#FF3838']}
-                                        sizeGradient = {{ width:205, height:45 }}
-                                        styleButton = {{ width:205, height:45, alignItems: 'center',justifyContent: 'center'}}
-                                        // IconLeft = { IconClose }
-                                        textButton={'Close'}
-                                        styleText={{color:'white',fontWeight:'bold'}}
-                                        hanldeOnPress = { () => { 
-                                            navigation.goBack(); 
-                                            // (!!handle) && handle()
-                                        } }
-                                        colorIcon = {COLORS_APP.black2}    
-                    />
-                                
-                </View>
-                </>
-        }
-        
-        </>
-
+            </View>
+        </Modal>
     )
 }

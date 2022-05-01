@@ -22,7 +22,7 @@ export const WrapperInfoCalendar = ({ groups }) => {
             })
         }
     };
-
+    
     return (
         <>
             <Calendar
@@ -54,7 +54,7 @@ export const WrapperInfoCalendar = ({ groups }) => {
                 </ScrollView>
             </View>
             {
-                modalMarker.modalView && <ModalViewDetailsEvent modalMarker={ modalMarker } setmodalMarker={ setmodalMarker }/>
+                modalMarker.modalView && <ModalViewDetailsEvent modalMarker={ modalMarker } setmodalMarker={ setmodalMarker } needGoTo={true}/>
             }
         </>
     )
