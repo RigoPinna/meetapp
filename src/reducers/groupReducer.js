@@ -122,7 +122,7 @@ export const groupReducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case 'create-group': 
             return { 
-                listGroup:[...state.listGroup,...action.payload ], 
+                listGroup:[...state.listGroup ], 
                 groupCreated:action.payload[0]
             };
         case 'clean-group': 
