@@ -11,7 +11,7 @@ import { IconArrowRightBlue } from '../icons/IconArrowRightBlue'
 
 export const ItemModalEvent = ( evt ) => {
     const navigation = useNavigation();
-    const {modalMarker, setmodalMarker} = evt;
+    const {modalMarker, setmodalMarker, needGoTo} = evt;
 
     const goToEventInfo = () => {
         if(evt !== undefined) {
@@ -40,7 +40,7 @@ export const ItemModalEvent = ( evt ) => {
                 }}
             />
             <Text>{evt.description}</Text>
-            <View style={{ alignItems: 'flex-end', marginTop: 10}}>
+            { needGoTo && <View style={{ alignItems: 'flex-end', marginTop: 10}}>
                 <ButtonGradient
                     gradient={['#fff','#fff']}
                     sizeGradient = {{width:120, height:20}}
@@ -50,7 +50,7 @@ export const ItemModalEvent = ( evt ) => {
                     IconRight = { IconArrowRightBlue }
                     hanldeOnPress = { () => {goToEventInfo()} }
                 />
-            </View>
+            </View>}
         </View>
     )
 }

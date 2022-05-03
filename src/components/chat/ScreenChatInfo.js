@@ -26,11 +26,12 @@ import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LeftArrow } from '../icons/IconLeft'
 import { formatDateCustom } from '../../helpers/formatDateCustom'
 import moment from 'moment'
+import { ScreenAgenda } from './ScreenAgenda'
 
 
 export const ScreenChatInfo = ({ navigation, route }) => {
     const { params } = route;
-    const { name,description,participants, image, id} = params;
+    const { name,participants, id} = params;
     const {groupReducer} = useSelector(state => state)
     const [codeF, setCodeF] = useState('')
     const userLoged = useSelector(state => state.authRed )
@@ -40,6 +41,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const { activeEvent } = useActiveEvent({ id })
     const [activeEvents, setActiveEvents] = useState([])
     const [star, setStar] = useState(true)
+    const [ calendarVisible, setCalendarVisible ] = useState(false)
 
     const getCode = async () => {
         if( userLoged.uid !== null ) {
@@ -106,11 +108,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 })
         }
     }, [activeEvents.length])
-
-    const hanldeGoToModal = () => {
-        navigation.navigate('ModalParticipants',{participants})
-    }
-
+    
     return (
         <View style={{flex: 1,backgroundColor: 'white'}}>
             
@@ -124,7 +122,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomRightRadius:25,
                }} 
                 source = {{ uri: infoGroup.image }} />
-                <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF} hanldeEditGroup={handleModalEdit}/>
+                <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF} hanldeEditGroup={handleModalEdit} setCalendarVisible={setCalendarVisible}/>
             <ScrollView style={{flex:1, marginTop: (codeF === '') ? 50 : 10, paddingBottom: 10}} nestedScrollEnabled = {true}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
@@ -221,6 +219,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                                 ))
                 }
             </ScrollView>
+            { calendarVisible && <ScreenAgenda id={id} calendarVisible={calendarVisible} setCalendarVisible={setCalendarVisible}/>}
         </View>
     )
 }
