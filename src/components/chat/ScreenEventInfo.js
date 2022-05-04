@@ -23,7 +23,7 @@ export const ScreenEventInfo = ({ route }) => {
     const info = JSON.parse((recurrence != undefined) ? recurrence : '[]');
     const [recurrenceInfo, setRecurrenceInfo] = useState({startDate: startDate, startTime: startTime,type: info[0].type, typeDuration: info[0].typeDuration, repeat: info[0].repeatTimes, duration: info[0].duration, when: info[0].when});
 
-    // const {type} = recurrence
+    console.log('eid',eid)
     const [ isCreator, setIsCreator ] = useState(false);
 
     useEffect(()=> {

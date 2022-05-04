@@ -7,9 +7,10 @@ import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
 export const RecurrenceInfo = ({recurrence}) => {
     const [recu, setRecu] = useState(recurrence)
-    const [data, setData] = useState({repeat: recu.repeat, startTime: recu.startTime})
+    const [data, setData] = useState({startTime: recu.startTime})
     useEffect(() => {
       getType(recu.type)
+      getTypeDuration(recu.typeDuration)
     }, [])
     
     const getType = (type) => {
@@ -28,10 +29,16 @@ export const RecurrenceInfo = ({recurrence}) => {
                 break;
         }
     }
+
+    const getFormatDate = (date) => {
+        const dateTemp = new Date(date)
+        let format = ('0'+ dateTemp.getDate()).slice(-2) + "/" + ('0'+ (dateTemp.getMonth() + 1)).slice(-2) + "/" + dateTemp.getFullYear()
+        return format
+    } 
     const getTypeDuration = (type) => {
         switch (type) {
             case 0:
-                setData({...data,...{typeDuration: 'Always'}})
+                setData({...data,...{duration: 'Always'}})
             case 1:
                 setData({...data,...{duration: `Until ${getFormatDate(recu.duration)}`}})
         }

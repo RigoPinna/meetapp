@@ -126,21 +126,6 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                 route.params.setEventData(data)
                 navigation.goBack();
             }
-            // } else if(){
-            //                 setShowError(true)
-            // } else {
-            //     setShowError(false)
-            //     route.params.setEventData(data)
-            //     navigation.goBack();
-            // }
-
-            // if(data.recurrence.type === 2 && ()) {
-            //             setShowError(true)
-            // } else {
-            //     setShowError(false)
-            //     route.params.setEventData(data)
-            //     navigation.goBack();
-            // }
         } else {
             route.params.setEventData(data)
             navigation.goBack();
@@ -148,10 +133,8 @@ export const ModalScreenPreferences = ({navigation, route}) => {
 
     }
     const handleOnChange = ( text ) => {
-        // ({...route.params.eventData, ...{repeatTimes:text}})
         setData({...data, ...{repeatTimes: text}})
     }
-    // const handleOnChangeTimes = ( text ) => setData(setData({...data, ...{...endless, ...{times: text }}}))
     const handleOnTimes = ( text ) => setData({...data, ...{repeatTimes: text}})
     return (
 
@@ -332,20 +315,6 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                         styles={{marginTop: 5}}
                                     /> 
                                 </View>
-                                {/* <ButtonGradient
-                                    gradient={['white','white']}
-                                    sizeGradient = {{width:350, height:50}}
-                                    textButton={`Repeat every ${data.day}`}
-                                    styleText={{color:'#48C6EF', fontWeight:'bold'}}
-                                    styleButton={{justifyContent: 'center',height: 35,
-                                    width: 200,
-                                    borderRadius: 25,
-                                    borderColor: 'black',
-                                    borderWidth: 2,
-                                    alignSelf: 'center',
-                                    marginBottom: 20}}
-                                    hanldeOnPress = { handleDayMonthClick }
-                                /> */}
                                 <DatePickerApp 
                                     eventData= {data} 
                                     setEventData={setData}
