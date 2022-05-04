@@ -15,7 +15,7 @@ export const ModalViewDetailsEvent = ({ modalMarker, setmodalMarker, needGoTo })
                 <View style={ styleCalendar.wrapperModal }>
                     <ScrollView>
                         {
-                            modalMarker.events.map( ( evt, i ) => <ItemModalEvent key={`modal-${i}`} i={i} {...evt } setmodalMarker={setmodalMarker} modalMarker={modalMarker} needGoTo={needGoTo}/>)
+                            modalMarker.events.map( ( evt, key ) => <ItemModalEvent key={`modal-${key}`} i={key} {...evt } setmodalMarker={setmodalMarker} modalMarker={modalMarker} needGoTo={needGoTo}/>)
                         }
                     </ScrollView>
                     <View style={{position: 'absolute', top:16, right:20,}}>
