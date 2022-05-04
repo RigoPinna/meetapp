@@ -26,11 +26,13 @@ export const ListGroup = ({ navigation }) => {
                     const data = doc.data();
                     const gid = doc.id;
                     const createdat =  data.createdat.toDate();
+                    const code = data.code;
+                    const creator = data.creator;
                     //Se hace el parse porque en la BD los participantes estan guardados como un **string**
                     const participants = JSON.parse( data.participants );
                     const isSuscribed = participants.some( pr => pr.uid === userLoged.uid )
                     //Si el usuario no esta suscrito, se retornará un false
-                    return isSuscribed && { gid, ...data, participants, createdat }
+                    return isSuscribed && { gid, ...data, participants, createdat, code, creator }
                 })
                 //Se limpia el array de valores false y se establece como state
                 // setGroups2( groups.filter( group => group !== false ) )
@@ -49,7 +51,7 @@ export const ListGroup = ({ navigation }) => {
                     : ( groupReducer.listGroup?.length > 0 ) 
                         ? <ScrollView>
                             {
-                                groupReducer.listGroup.map( ({ gid, name,image,createdat,participants, description }) =>{
+                                groupReducer.listGroup.map( ({ gid, name,image,createdat,participants, description, code, creator }) =>{
                                     return ( 
                                         !!gid 
                                             ? <ItemListGroup
@@ -61,6 +63,8 @@ export const ListGroup = ({ navigation }) => {
                                                     participants = { participants }
                                                     description = { description}
                                                     navigation = { navigation }
+                                                    code = { code }
+                                                    creator = { creator }
                                                     tokenNotification = { tokenNotification }
                                                 /> 
                                         :<></>

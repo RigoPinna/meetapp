@@ -10,7 +10,7 @@ import { IconCalendar } from '../icons/IconCalendar';
 import { IconCalendarGradient } from '../icons/IconCalendarGradient';
 import { IconEdith } from '../icons/IconEdith';
 
-export const MenuScreenChat = ({navigation, name, id, code, hanldeEditGroup, setCalendarVisible}) => {
+export const MenuScreenChat = ({navigation, name, isAdmin, hanldeEditGroup, setCalendarVisible}) => {
     const { top } = useSafeAreaInsets();
     const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
     const hanldeNavigatorCalendar = () => {setCalendarVisible(true)};
@@ -39,7 +39,7 @@ export const MenuScreenChat = ({navigation, name, id, code, hanldeEditGroup, set
                         hanldeOnPress = { hanldeNavigatorCalendar }
                     />
                     {
-                        (!!code) && <ButtonGradient
+                        isAdmin &&  <ButtonGradient
                                         gradient ={['#F3F7FE','#F3F7FE']}
                                         textButton = {'New event'}
                                         styleText = {{color:'#35A8FD',fontWeight:'bold', fontSize:12}}
@@ -54,7 +54,7 @@ export const MenuScreenChat = ({navigation, name, id, code, hanldeEditGroup, set
                 </View>
                 </LinearGradient>
                 <LinearGradient colors={['rgba(0,0,0,0)', 'transparent']} style={{alignItems: 'flex-end', width:'97%', marginTop: 120}} >
-                    {(code !== '') &&   <ButtonGradient
+                    {isAdmin &&   <ButtonGradient
                         gradient ={['#F3F7FE','#F3F7FE']}
                         styleText = {{color:'#35A8FD',fontWeight:'bold', fontSize:12}}
                         styleButton = {{width:65, height:35}}
