@@ -25,7 +25,7 @@ export const AgendaApp = ({event}) => {
     
     useEffect(()=> {
         if(!!events) {
-            const formatEvents = events.map( evt => ({ key: evt.eid, date: evt.startDate, color:evt.color, ...evt }))
+            const formatEvents = events.map( evt => ({ key: evt.mid, date: evt.startDate, color:evt.color, ...evt }))
             setMarkerEvents([...markerEvents, ...formatEvents])
         }
     }, [ events ])
