@@ -29,11 +29,12 @@ export const ScreenAgenda = ({id, calendarVisible, setCalendarVisible}) => {
             });
             setEvents(eventsGet)
        })
+       console.log(events)
     }, [])
     
     return (
         <Modal animationType="slide" transparent={true} visible={calendarVisible} onRequestClose={() => {setCalendarVisible(false)}}>
-            <View style={ styleCalendar.backgroundModal }>
+            <View style={ styleCalendar.backgroundAgenda }>
                 <View style={ styleCalendar.wrapperModal }>
                 {
                     (loading === true ) 
