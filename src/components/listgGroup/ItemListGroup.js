@@ -23,10 +23,52 @@ export const ItemListGroup = ( props ) => {
 
     const {  hanldeNavigatorChat, onLongPressButton } = useItemListGroup( props )
     
-    // const time = useTimeAgo(  props.createdat )
     const tempDate = new Date(props.createdat)
-    let fDate = ('0'+ tempDate.getDate()).slice(-2) + "/" + ('0'+ (tempDate.getMonth() + 1)).slice(-2) + "/" + tempDate.getFullYear()
 
+    const formatDate = () => {
+        let month = ''
+        
+        switch ( tempDate.getMonth() ) {
+            case 0:
+                month = 'Jan'
+                break;
+            case 1:
+                month = 'Feb'
+                break;
+            case 2:
+                month = 'Mar'
+                break;
+            case 3:
+                month = 'Apr'
+                break;
+            case 4:
+                month = 'May'
+                break;
+            case 5:
+                month = 'Jun'
+                break;
+            case 6:
+                month = 'Jul'
+                break;
+            case 7:
+                month = 'Aug'
+                break;
+            case 8:
+                month = 'Sep'
+                break;
+            case 9:
+                month = 'Oct'
+                break;
+            case 10:
+                month = 'Nov'
+                break;
+            case 11:
+                month = 'Dec'
+                break;
+        }
+
+        return `${tempDate.getDate()} ${month} ${tempDate.getFullYear()}`
+    }
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } onLongPress={onLongPressButton}>
             <View style ={ {...styleListGroups.wrapperItem,...{backgroundColor:'#EEEEEC' }} }>
@@ -41,7 +83,7 @@ export const ItemListGroup = ( props ) => {
                 <Textapp 
                     size={TEXTS_SIZE.small} 
                     weight='200' 
-                    text ={`Created on ${fDate}`} 
+                    text ={`Created on ${formatDate()}`} 
                     styles = {{marginTop:2}} 
                 />
                 <ListParticipants participants={  props.participants } colorColorBordersAvatars = {'#EEEEEC'} />
