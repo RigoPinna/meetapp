@@ -31,6 +31,7 @@ import { ScreenAgenda } from './ScreenAgenda'
 
 export const ScreenChatInfo = ({ navigation, route }) => {
     const { params } = route;
+
     const { name,participants, id} = params;
     const {groupReducer} = useSelector(state => state)
     const [codeF, setCodeF] = useState('')
@@ -42,23 +43,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     const [activeEvents, setActiveEvents] = useState([])
     const [star, setStar] = useState(true)
     const [ calendarVisible, setCalendarVisible ] = useState(false)
-
-    const getCode = async () => {
-        if( userLoged.uid !== null ) {
-            const groupRef = db.collection('groups').doc(id);
-            const doc = await groupRef.get();
-            if(doc.exists){
-                const data = doc.data();
-                const participants = JSON.parse( data.participants );
-                const {uid,name,image} = participants[0];
-
-                if(userLoged.uid === uid) {
-                    const code = data.code;
-                    setCodeF(code)
-                }
-            }
-        } 
-    }
+    const [ isAdmin, setIsAdmin ] = useState(false)
     
     const handleListEvents =  () => {
         navigation.navigate('ScreenListEvents', {gid: id});
@@ -73,11 +58,15 @@ export const ScreenChatInfo = ({ navigation, route }) => {
         setVisible(true)
         setMessages([...messages, 'Code copied!' + Math.random()])
     }
-
-
+    
     useEffect(() => {
-        getCode();
-    }, [])
+        setCodeF(infoGroup.code)
+        if( userLoged.uid !== null ) {
+            if(userLoged.uid === infoGroup.creator) {
+                setIsAdmin(true)
+            }
+        } 
+    }, [infoGroup.code, infoGroup.creator])
 
     useEffect(() => {
         if(!!groupReducer.listGroup){
@@ -122,7 +111,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                 borderBottomRightRadius:25,
                }} 
                 source = {{ uri: infoGroup.image }} />
-                <MenuScreenChat navigation={navigation} name = {name} id={id} code={codeF} hanldeEditGroup={handleModalEdit} setCalendarVisible={setCalendarVisible}/>
+                <MenuScreenChat navigation={navigation} name = {name} isAdmin={isAdmin} hanldeEditGroup={handleModalEdit} setCalendarVisible={setCalendarVisible}/>
             <ScrollView style={{flex:1, marginTop: (codeF === '') ? 50 : 10, paddingBottom: 10}} nestedScrollEnabled = {true}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
