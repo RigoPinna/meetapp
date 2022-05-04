@@ -11,11 +11,11 @@ export const ModalViewDetailsEvent = ({ modalMarker, setmodalMarker, needGoTo })
     
     return (
         <Modal animationType="slide" transparent={true} visible={modalMarker.modalVisible} onRequestClose={() => { setmodalMarker({...modalMarker, modalVisible: false}) }}>
-            <View style={ styleCalendar.backgroundModal }>
+            <View style={ styleCalendar.backgroundAgenda }>
                 <View style={ styleCalendar.wrapperModal }>
                     <ScrollView>
                         {
-                            modalMarker.events.map( ( evt, i ) => <ItemModalEvent key={`modal-${i}`} i={i} {...evt } setmodalMarker={setmodalMarker} modalMarker={modalMarker} needGoTo={needGoTo}/>)
+                            modalMarker.events.map( ( evt, key ) => <ItemModalEvent key={`modal-${key}`} i={key} {...evt } setmodalMarker={setmodalMarker} modalMarker={modalMarker} needGoTo={needGoTo}/>)
                         }
                     </ScrollView>
                     <View style={{position: 'absolute', top:16, right:20,}}>

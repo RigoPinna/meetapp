@@ -108,7 +108,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             />
                         </View>
                         {
-                            (eventData.color == '#74BBE3')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
+                            (eventData.color == '')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
                                                 <ButtonGradient
                                                     gradient={['#48C6EF','#48C6EF']}
                                                     sizeGradient = {{width:350, height:50}}
