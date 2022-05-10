@@ -1,7 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
 import React from 'react'
+import { TouchableOpacity } from 'react-native';
 import { Image, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+// import { TouchableOpacity } from 'react-native-gesture-handler';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useActiveEvent } from '../../hooks/useActiveEvent';
 import { ButtonGradient } from '../elements/ButtonGradient';
