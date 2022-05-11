@@ -45,8 +45,12 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
 
                         let limitEventDate = new Date(duration);
                         limitEventDate.setDate(limitEventDate.getDate() + 1);
-                        startDate = (currentDte >= new Date(marker.date) ? currentDte : new Date(marker.date));
+                        if(duration == 0){
+                            limitEventDate = limitDate;
+                        }
 
+                        startDate = (currentDte >= new Date(marker.date) ? currentDte : new Date(marker.date));
+                        
                         if(currentDte >= startDate && currentDte < limitEventDate){
                             switch (type) {
                                 case 1:

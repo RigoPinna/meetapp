@@ -21,27 +21,28 @@ export const addNewEvent = ({ id, nameEvent, startDate, description, color, star
    
         const userLoged = getState().authRed
         let array = []
+        const dat = new Date()
 
         if(checkedDays.mon){
-            array.push(0)
-        }
-        if(checkedDays.tue){
             array.push(1)
         }
-        if(checkedDays.wed){
+        if(checkedDays.tue){
             array.push(2)
         }
-        if(checkedDays.thu){
+        if(checkedDays.wed){
             array.push(3)
         }
-        if(checkedDays.fri){
+        if(checkedDays.thu){
             array.push(4)
         }
-        if(checkedDays.sat){
+        if(checkedDays.fri){
             array.push(5)
         }
-        if(checkedDays.sun){
+        if(checkedDays.sat){
             array.push(6)
+        }
+        if(checkedDays.sun){
+            array.push(0)
         }
         // console.log('array',userLoged.uid)
         // console.log(recurrence)
@@ -73,7 +74,7 @@ export const addNewEvent = ({ id, nameEvent, startDate, description, color, star
                 description,
                 color,
                 paid,
-                participants: (admin) ? JSON.stringify([{uid: userLoged.uid}] ) : JSON.stringify([{}] ),
+                participants: (admin) ? JSON.stringify([{uid: userLoged.uid}] ) : JSON.stringify([] ),
                 recurrence: (recurrence.type === 1) 
                                 ?   JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.timeSttgs, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
                                 : (recurrence.type === 2)

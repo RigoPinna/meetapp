@@ -4,7 +4,7 @@ import { Platform, View } from "react-native";
 import { COLORS_APP } from "../ui/COLORS_APP";
 import { ButtonGradient } from "./ButtonGradient";
 
-export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style,evento=false, texty = `Select ${mode}...`, month=false}) => {
+export const DatePickerApp = ({eventData, setEventData, decision='start', mode='date', style,evento=false, texty = `Select ${mode}...`, year=false}) => {
     const [visible, setVisible] = useState( false )
     const [text, setText] = useState(texty)
     const [date, setDate] = useState(new Date())
@@ -28,14 +28,14 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
                 if(decision==='start'){
     
                     if(evento){
-                        if(month) {
+                        if(year) {
                             setText(`Repeat every ${('0'+ tempDate.getDate()).slice(-2)}/${('0'+ (tempDate.getMonth() + 1)).slice(-2)}`)
                         } else {
                             setText(`Repeat every ${('0'+ tempDate.getDate()).slice(-2)}`)
                         }
                         setEventData({...eventData, day:('0'+ tempDate.getDate()).slice(-2) ,
                                                     month: ('0'+ (tempDate.getMonth() + 1)).slice(-2),
-                                                    recurrence: {...eventData.recurrence, when: FDateState}})
+                                                    recurrence: {...eventData.recurrence, when: year ? FDateState : tempDate.getUTCDate()}})
                     }else {
                         setEventData({...eventData, ...{startDate: FDateState}}) 
                     }
