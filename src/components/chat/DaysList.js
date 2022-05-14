@@ -4,7 +4,6 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
 
 export const DaysList = ({data, setData = () => {}}) => {
-
     const iconStyle = (borderColor) => ({
         height: 35,
         width: 35,
@@ -53,7 +52,7 @@ export const DaysList = ({data, setData = () => {}}) => {
                 iconStyle={iconStyle("black")} 
                 isChecked={data.checkedDays.wed}
                 onPress={() => {setData({...data, ...{checkedDays: {...data.checkedDays, wed: !data.checkedDays.wed}}})}}
-                textComponent={<Text style={{position: 'absolute', left: 13, fontSize: TEXTS_SIZE.medium, color: ((!data.checkedDays.wed) ? 'black' : 'white')}}>M</Text>}
+                textComponent={<Text style={{position: 'absolute', left: 13, fontSize: TEXTS_SIZE.medium, color: ((!data.checkedDays.wed) ? 'black' : 'white')}}>W</Text>}
                 checkIconImageSource={<Image></Image>}
             />
             <BouncyCheckbox

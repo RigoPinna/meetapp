@@ -11,7 +11,7 @@ export const ModalViewDetailsEvent = ({ modalMarker, setmodalMarker, needGoTo })
     
     return (
         <Modal animationType="slide" transparent={true} visible={modalMarker.modalVisible} onRequestClose={() => { setmodalMarker({...modalMarker, modalVisible: false}) }}>
-            <View style={ styleCalendar.backgroundModal }>
+            <View style={ styleCalendar.backgroundAgenda }>
                 <View style={ styleCalendar.wrapperModal }>
                     <ScrollView>
                         {

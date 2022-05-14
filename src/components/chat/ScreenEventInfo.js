@@ -11,14 +11,19 @@ import { useDispatch, useSelector } from 'react-redux'
 import { joinEvent } from '../../reducers/eventReducer'
 import { leaveEvent } from '../../reducers/eventReducer'
 import { MenuProvider } from 'react-native-popup-menu';
+import { RecurrenceInfo } from './RecurrenceInfo';
 
 export const ScreenEventInfo = ({ route }) => {
     const { gid, event, navigation, origin } = route.params;
     const dispatch = useDispatch();
     const user = useSelector( state => state.authRed )
     const [ suscribed, setSuscribed ] = useState(false)
-    const {eid, nameEvent, color, description, paid } = event;
+    const {eid, nameEvent, color, description, paid, startDate, startTime, recurrence} = event;
     const [participants, setParticipants] = useState([]);
+    const info = JSON.parse((recurrence != undefined) ? recurrence : '[]');
+    const [recurrenceInfo, setRecurrenceInfo] = useState({startDate: startDate, startTime: startTime,type: info[0].type, typeDuration: info[0].typeDuration, repeat: info[0].repeatTimes, duration: info[0].duration, when: info[0].when});
+
+    console.log('eid',eid)
     const [ isCreator, setIsCreator ] = useState(false);
 
     useEffect(()=> {
@@ -30,6 +35,7 @@ export const ScreenEventInfo = ({ route }) => {
             db.collection('groups').doc(gid).collection('event').doc(eid).onSnapshot( querySnapshot => {
                 const data = querySnapshot.data();
                 if(data != undefined){
+                    // setRecurrence(data.recurrence)
                     const participantes = JSON.parse((data.participants != undefined) ? data.participants : '[]');
                     if(participantes.length != 0){
                         if(paid){
@@ -45,6 +51,7 @@ export const ScreenEventInfo = ({ route }) => {
                 } 
             } )
         }
+        console.log(recurrenceInfo)
     }, [gid, eid, user.uid])
 
     const jEvent = () => {
@@ -107,13 +114,15 @@ export const ScreenEventInfo = ({ route }) => {
                                 text ={description} 
                                 styles={{width:'95%', padding: 10, textAlign: 'justify'}} 
                             />
-                        <View style={{backgroundColor: '#F3F7FE', width: '95%', height: 250, borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}>
-                            <Textapp 
+                        <View style={{backgroundColor: '#F3F7FE', width: '95%', height: 250, borderRadius: 10}}>
+                            {/* <Textapp 
                                     size = { TEXTS_SIZE.small } 
                                     text ='Datos de fecha por definir' 
                                     styles={{padding: 10, fontWeight: 'bold'}} 
-                                />
+                                /> */}
+                                <RecurrenceInfo recurrence = {recurrenceInfo} />
                         </View>
+                        
                         <Textapp 
                             size = { TEXTS_SIZE.small } 
                             weight='bold' 

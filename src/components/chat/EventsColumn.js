@@ -14,7 +14,7 @@ export const EventsColumn = ( evtList ) => {
     const user = useSelector(state => state.authRed )
     const { gid } = evtList;
 
-    useEffect(()=> {setEvents(evtList.events)} , [evtList])
+    useEffect(()=> {setEvents(evtList.events)}  , [evtList])
 
     const isParticipant = (participants, idUser, paid) => {
         if(participants != undefined){
@@ -40,7 +40,7 @@ export const EventsColumn = ( evtList ) => {
             }
         })
     }
-
+    console.log('events', events)
     return (
         <View style={{width:'100%'}}>
             { events != undefined &&

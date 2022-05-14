@@ -16,6 +16,7 @@
     "@react-navigation/native": "^6.0.2",
     "@react-navigation/native-stack": "^6.1.0",
     "@react-navigation/stack": "^6.0.6",
+    "async-limiter": "^2.0.0",
     "expo": "~42.0.1",
     "expo-blur": "^9.0.3",
     "expo-constants": "~11.0.1",
