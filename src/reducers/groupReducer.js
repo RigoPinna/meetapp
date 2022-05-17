@@ -32,12 +32,10 @@ export const addNewGroup = ({ name, image='', description }) => {
         const userLoged = getState().authRed
         const date = moment().format('DD-MM-YYYY')
         let code = generateCode();
-        //TODO: hacer chequeo de codigo
         const groupRefQuery = db.collection('groups');
         const snapshot = await groupRefQuery.where('code', '==', code).get();
         if(!snapshot.empty) {
             code = generateCode()
-            console.log('code =>', code)
         } 
         const groupRef = db.collection('groups').doc();
         const imageURL = !!image && await uploadImage( image, name,'img_group' );
@@ -46,7 +44,6 @@ export const addNewGroup = ({ name, image='', description }) => {
             code, 
             creator:  userLoged.uid, 
             createdat: firebase.firestore.Timestamp.fromDate(new Date()),
-            // createdat: date,
             description,
             image: !!image ? imageURL : IMG_DEFAULT, 
             name: name.trim() !== '' ?name.trim() : "Group Name" ,
@@ -74,8 +71,6 @@ export const updateGroup = ({ name,image, description, id }) => {
         try {
             const {groupReducer} = getState()
             const group = groupReducer.listGroup.find(g => id == g.gid)
-
-            // console.log(group)
             if( name.trim() !== "" || image.trim() !== "" || description.trim() !== ""){
                 const groupRef = db.collection('groups').doc( id )
                 if( name !== group.name ) {

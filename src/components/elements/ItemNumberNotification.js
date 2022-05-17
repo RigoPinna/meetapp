@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import { useSelector} from 'react-redux'
 import { Text, View } from 'react-native'
-import { COLORS_APP } from '../ui/COLORS_APP'
-import { addNewMessageNumber } from '../../reducers/notificationsReducer'
-import { db } from '../../firebase/firebase-config'
 export const ItemNumberNotification = ({ id }) => {
    
     const isMounted = useRef(null)

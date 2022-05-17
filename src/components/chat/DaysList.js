@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Image, Text, View } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';

@@ -1,9 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { View } from 'react-native'
-import { CellPiece } from '../elements/CellPiece'
-import { TableApp } from '../elements/TableApp'
-import { Textapp } from '../elements/Textapp'
-import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 
 export const RecurrenceInfo = ({recurrence}) => {
     const [recu, setRecu] = useState(recurrence)
@@ -44,7 +39,6 @@ export const RecurrenceInfo = ({recurrence}) => {
         }
     }
   return (
-    //   <TableApp data ={data}/>
     <></>
   )
 }

@@ -6,7 +6,6 @@ import React, {
 
 import {
   Animated,
-  Button,
   Text,
   View,
 } from 'react-native';

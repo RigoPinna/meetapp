@@ -1,11 +1,8 @@
 import React, { useEffect } from 'react'
 import { useState } from 'react'
-import { View, Text } from 'react-native';
-import { log } from 'react-native-reanimated';
+import { View, TouchableOpacity } from 'react-native';
 import { styleListGroups } from '../../theme/appTheme'
 import { Textapp } from '../elements/Textapp';
-import { TEXTS_SIZE } from '../ui/TEXTS_SIZE';
-import { TouchableOpacity } from 'react-native-gesture-handler'
 import { LeftArrow } from '../icons/IconLeft'
 import { useSelector } from 'react-redux'
 
@@ -40,7 +37,6 @@ export const EventsColumn = ( evtList ) => {
             }
         })
     }
-    console.log('events', events)
     return (
         <View style={{width:'100%'}}>
             { events != undefined &&

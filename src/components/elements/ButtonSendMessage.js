@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
 import { TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
 import{ LinearGradient } from 'expo-linear-gradient'

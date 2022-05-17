@@ -1,18 +1,3 @@
-// static useAsyncStorage(key: string): {  
-//     getItem: (    
-//         callback?: ?(error: ?Error, result: string | null) => void,  
-//     ) => Promise<string | null>,  
-//     setItem: (    
-//         value: string,    
-//         callback?: ?(error: ?Error) => void,  
-//     ) => Promise<null>,  
-    // mergeItem: (    
-    //     value: string,    
-    //     callback?: ?(error: ?Error) => void,  
-    // ) => Promise<null>, 
-    // removeItem: (callback?: ?(error: ?Error) => void) => Promise<null>,
-// }
-
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useEffect, useState } from 'react';
 
@@ -35,23 +20,16 @@ const storeData = async (key,value) => {
     }
 }
 
-
 export const useAsyncStorage = (key, decision, value) => {
   const [state, setstate] = useState('')
   useEffect(() => {
     if(decision === 'get') {
       getData(key).then(resp => {
-        // console.log(resp)
         setstate(resp)
       })
-        // console.log(resp),
-        // setstate(resp))
     } else if (decision === 'set') {
         storeData(key,value)
-        // console.log('asadasdasdasd',value)
     }
   }, [])
-  // console.log('asdasdasdadasdasd',state)
   return state
 }
-// export default useAsyncStorage

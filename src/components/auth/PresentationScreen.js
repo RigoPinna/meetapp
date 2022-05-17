@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Animated, SafeAreaView, ScrollView, View } from 'react-native';
+import { Animated, ScrollView, View } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { styles2 } from '../../theme/appTheme';
 import { StepInfoProfile } from './StepInfoProfile.js';

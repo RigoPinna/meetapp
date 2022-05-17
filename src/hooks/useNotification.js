@@ -1,5 +1,5 @@
 import * as Notifications from 'expo-notifications';
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -38,7 +38,6 @@ export const useNotification = () => {
         });
       }
       const token = (await Notifications.getExpoPushTokenAsync()).data;
-      console.log(token);
       return token;
   
     }

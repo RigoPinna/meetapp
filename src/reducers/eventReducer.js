@@ -1,14 +1,4 @@
-import moment from "moment-timezone";
-import { db, userStatic } from "../firebase/firebase-config";
-import { uploadImage } from '../helpers/uploadImage';
-import { generateCode } from '../helpers/generateCode';
-//OBJETO PARA UN EVENTO
-// {
-//     gid:'',
-//     name:'',
-//     description: '',
-//     startDate:'',
-// }
+import { db } from "../firebase/firebase-config";
 
 export const initialState = {
     listEvent:[], 
@@ -43,8 +33,6 @@ export const addNewEvent = ({ id, nameEvent, startDate, description, color, star
         if(checkedDays.sun){
             array.push(6)
         }
-        // console.log('array',userLoged.uid)
-        // console.log(recurrence)
         db.collection('groups').doc(id).collection('event').doc().set({
             nameEvent,
             startDate,

@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux'
 import { db } from '../firebase/firebase-config';
-import { sendNotification } from '../helpers/sendNotification';
 import { addMessages } from '../reducers/chatReducer';
-import { addNotification } from '../reducers/notificationsReducer';
 
 
 export const useItemListGroup = ({navigation, id, image, name, participants, description, tokenNotification }) => {
@@ -39,7 +37,6 @@ export const useItemListGroup = ({navigation, id, image, name, participants, des
             if(doc.exists){
                 const data = doc.data();
                 const participants = JSON.parse( data.participants );
-                //TODO: cambiar forma en la que verifica su eliminación
                 const { uid } = participants[0];
 
                 if(userLoged.uid === uid) {

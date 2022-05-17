@@ -1,5 +1,4 @@
 import React, { useRef, useState } from 'react'
-import { Buttonapp } from '../elements/Buttonapp'
 import * as Animatable from 'react-native-animatable';
 import { View } from 'react-native';
 import { ButtonGradient } from '../elements/ButtonGradient';

@@ -30,7 +30,6 @@ export const addNameAndImg = ({ name, image='' }) => {
 }
 export const registerUser = ({ name, image='', countryCode, phone, uid }) => {
     return async ( dispatch ) => {
-        // console.log('NOMBRE=',name )
         const phoneNumber = `+${countryCode}${phone}`;
         const imageURL =  await uploadImage( image, name,'profile_photo' );
         await db.collection('users').doc( uid ).set({ 

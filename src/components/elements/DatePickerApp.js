@@ -66,8 +66,6 @@ export const DatePickerApp = ({eventData, setEventData, decision='start', mode='
         <>
             <ButtonGradient 
                 gradient={['#F0F0F0','#F0F0F0']}
-                // sizeGradient = {{width:'120%', height:50}}
-                // textButton={ (evento && eventData.end.time !== undefined) ? eventData.end.time : text }
                 textButton={text}
                 styleText={{ 
                     color:COLORS_APP.black2, 

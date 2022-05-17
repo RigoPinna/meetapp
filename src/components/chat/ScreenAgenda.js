@@ -1,7 +1,6 @@
 import { useNavigation } from '@react-navigation/native'
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { styles } from '../../theme/appTheme'
 import { AgendaApp } from '../elements/AgendaApp'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { COLORS_APP } from '../ui/COLORS_APP'
@@ -29,7 +28,6 @@ export const ScreenAgenda = ({id, calendarVisible, setCalendarVisible}) => {
             });
             setEvents(eventsGet)
        })
-       console.log(events)
     }, [])
     
     return (

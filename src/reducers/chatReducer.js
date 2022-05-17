@@ -19,7 +19,6 @@ export const addMessages = ({ gid, messages, tokenNotification, groupName }) => 
                 const userLoged = getState().authRed 
                 const { uid, message } = messages[messages.length-1]
                 const { name } = await getDataUser( uid )
-                console.log("NUEVO MENSAJE",userLoged.uid, uid, userLoged.uid !== uid, "Token:",tokenNotification )
                 if(userLoged.uid !== uid) {
                     await sendNotification( tokenNotification, groupName, `${name}: ${message}` )
                     dispatch( addNotification( gid ) )
@@ -36,7 +35,6 @@ export const addMessages = ({ gid, messages, tokenNotification, groupName }) => 
 export const chatReducer = ( state = initState, action ) => {
     switch ( action.type ) {
         case 'add-msg':
-            console.log('adding messages')
             return [ ...state, action.payload ]
     
         default:

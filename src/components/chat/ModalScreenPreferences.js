@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import BouncyCheckboxGroup from 'react-native-bouncy-checkbox-group';
 import { stylesChat } from '../../theme/appTheme';
 import { ButtonGradient } from '../elements/ButtonGradient';
@@ -162,26 +162,21 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                         switch (selectedItem.text) {
                             case 'No Repeat':
                                 setData({...data, ...{textInformation: 'This event will not repeat', choose: selectedItem.text, recurrence: {type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
-                                console.log(data.recurrence)
                                 setshowSettings(false)
                                 break;
                             case 'Daily':
-                                console.log(data.recurrence)
                                 setData({...data, ...{textInformation: 'This event will repeat daily', choose: selectedItem.text, recurrence: {type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
                                 setshowSettings(true)
                                 break;
                             case 'Weekly':
-                                console.log(data.recurrence)
                                 setData({...data, ...{textInformation: 'This event will repeat weekly', choose: selectedItem.text, recurrence: { type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
                                 setshowSettings(true)
                                 break;
                             case 'Montly':
-                                console.log(data.recurrence)
                                 setData({...data, ...{textInformation: 'This event will repeat montly', choose: selectedItem.text, recurrence: { type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
                                 setshowSettings(true)
                             break;
                             case 'Annually':
-                                console.log(data.recurrence)
                                 setData({...data, ...{textInformation: 'This event will repeat annually', choose: selectedItem.text, recurrence: { type: selectedItem.id,when: undefined, timeSttgs: undefined, duration: undefined}, end: {}}})
                                 setshowSettings(true)
                             break;
