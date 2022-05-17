@@ -29,7 +29,6 @@ export const ScreenAgenda = ({id, calendarVisible, setCalendarVisible}) => {
             });
             setEvents(eventsGet)
        })
-       console.log(events)
     }, [])
     
     return (
