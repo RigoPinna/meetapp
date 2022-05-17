@@ -69,6 +69,7 @@ export const ItemListGroup = ( props ) => {
 
         return `${tempDate.getDate()} ${month} ${tempDate.getFullYear()}`
     }
+    
     return (
         <TouchableOpacity onPress={ hanldeNavigatorChat } onLongPress={onLongPressButton}>
             <View style ={ {...styleListGroups.wrapperItem,...{backgroundColor:'#EEEEEC' }} }>

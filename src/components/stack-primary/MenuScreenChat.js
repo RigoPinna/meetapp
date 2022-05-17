@@ -10,7 +10,7 @@ import { IconCalendar } from '../icons/IconCalendar';
 import { IconCalendarGradient } from '../icons/IconCalendarGradient';
 import { IconEdith } from '../icons/IconEdith';
 
-export const MenuScreenChat = ({navigation, name, isAdmin, hanldeEditGroup, setCalendarVisible}) => {
+export const MenuScreenChat = ({navigation, name, isAdmin, hanldeEditGroup, setCalendarVisible, id}) => {
     const { top } = useSafeAreaInsets();
     const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name, id});
     const hanldeNavigatorCalendar = () => {setCalendarVisible(true)};

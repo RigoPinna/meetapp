@@ -28,21 +28,21 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
             limitDate.setDate(limitDate.getDate() + 750);
 
             markerCalendar.forEach( marker => {
-                if(!(!!marker.recurrence)){
+                if(marker.recurrence == "[]"){
                     markers.push({
                         dots:[marker],
                         selected: true, 
                         selectedColor: '#F2F2F2',
                         date: marker.date
-                    });
+                    }); 
                 }
             });
-
+            
             do{
                 markerCalendar.forEach( marker => {
-                    if(!!marker.recurrence){
+                    if(marker.recurrence != "[]"){
                         const {duration, type, when} = JSON.parse(marker.recurrence)[0];
-
+                        
                         let limitEventDate = new Date(duration);
                         limitEventDate.setDate(limitEventDate.getDate() + 1);
                         if(duration == 0){
