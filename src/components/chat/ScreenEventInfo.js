@@ -11,15 +11,27 @@ import { useDispatch, useSelector } from 'react-redux'
 import { joinEvent } from '../../reducers/eventReducer'
 import { leaveEvent } from '../../reducers/eventReducer'
 import { MenuProvider } from 'react-native-popup-menu';
+import { RecurrenceInfo } from './RecurrenceInfo';
 
 export const ScreenEventInfo = ({ route }) => {
     const { gid, event, navigation, origin } = route.params;
     const dispatch = useDispatch();
     const user = useSelector( state => state.authRed )
     const [ suscribed, setSuscribed ] = useState(false)
-    const {eid, nameEvent, color, description, paid } = event;
+    const {eid, nameEvent, color, description, paid, startDate, startTime, recurrence} = event;
     const [participants, setParticipants] = useState([]);
+    const [recurrenceInfo, setRecurrenceInfo] = useState();
+
     const [ isCreator, setIsCreator ] = useState(false);
+
+    useEffect(() => {
+        const info = JSON.parse((recurrence != undefined) ? recurrence : '[]');
+        if(info.length != 0){
+            setRecurrenceInfo({startDate: startDate, startTime: startTime, type: info[0].type, typeDuration: info[0].typeDuration, repeat: info[0].repeatTimes, duration: info[0].duration, when: info[0].when, description: description})
+        } else {
+            setRecurrenceInfo({startDate: startDate, startTime: startTime, type: 0, description: description})
+        }
+    } , [recurrence])
 
     useEffect(()=> {
         if(gid != undefined && user.uid != undefined && eid != undefined) {
@@ -30,6 +42,7 @@ export const ScreenEventInfo = ({ route }) => {
             db.collection('groups').doc(gid).collection('event').doc(eid).onSnapshot( querySnapshot => {
                 const data = querySnapshot.data();
                 if(data != undefined){
+                    // setRecurrence(data.recurrence)
                     const participantes = JSON.parse((data.participants != undefined) ? data.participants : '[]');
                     if(participantes.length != 0){
                         if(paid){
@@ -73,9 +86,14 @@ export const ScreenEventInfo = ({ route }) => {
                                 navigation.goBack();
                             } }
                         />
-                    <View style={{backgroundColor: color, height: 25, width: 25, borderRadius: 50, marginLeft: 10, marginTop: 8}}></View>
-                    <Text numberOfLines={1} style={{fontWeight:'bold', height: 30, textAlignVertical: 'center', fontSize: 20, marginTop: 5, marginLeft: 8}}>{nameEvent}</Text> 
-                    <View style={{position: 'absolute', right: 10, height:60, justifyContent: 'center'}}>
+                    <View style={{backgroundColor: color, height: 25, width: 25, borderRadius: 50, marginLeft: 10, marginTop: 6}}></View>
+                        <Textapp 
+                            size = { 16 } 
+                            weight='bold' 
+                            text ={(nameEvent.length > 20) ? `${nameEvent.substring(0,20)}...` : nameEvent} 
+                            styles={{marginTop: 6, marginLeft: 6}} 
+                        />
+                    <View style={{position: 'absolute', right: 10, height:65, justifyContent: 'center'}}>
                         {suscribed ?
                             <ButtonGradient
                                 styleOpacity={{alignSelf: 'flex-end'}}
@@ -102,18 +120,7 @@ export const ScreenEventInfo = ({ route }) => {
                 <ScrollView style={{flex:1, marginTop:0, paddingTop:10, paddingBottom: 10}}>
                     {paid && <View style={{marginLeft: 10, backgroundColor: '#C9E8FF', width: 168, borderRadius: 10, justifyContent: 'center', height: 25}}><Textapp text={'This event is payable'} styles={{marginLeft: 10, color: '#158BFC', fontSize: 14}} weight={'bold'}/></View>}
                     <View style={{alignItems: 'center', width: '100%'}}>
-                        <Textapp 
-                                size = { 16 } 
-                                text ={description} 
-                                styles={{width:'95%', padding: 10, textAlign: 'justify'}} 
-                            />
-                        <View style={{backgroundColor: '#F3F7FE', width: '95%', height: 250, borderRadius: 10, alignItems: 'center', justifyContent: 'center'}}>
-                            <Textapp 
-                                    size = { TEXTS_SIZE.small } 
-                                    text ='Datos de fecha por definir' 
-                                    styles={{padding: 10, fontWeight: 'bold'}} 
-                                />
-                        </View>
+                        { !!recurrenceInfo && <RecurrenceInfo recurrence = {recurrenceInfo} />}
                         <Textapp 
                             size = { TEXTS_SIZE.small } 
                             weight='bold' 

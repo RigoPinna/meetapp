@@ -10,9 +10,9 @@ import { IconCalendar } from '../icons/IconCalendar';
 import { IconCalendarGradient } from '../icons/IconCalendarGradient';
 import { IconEdith } from '../icons/IconEdith';
 
-export const MenuScreenChat = ({navigation, name, isAdmin, hanldeEditGroup, setCalendarVisible}) => {
+export const MenuScreenChat = ({navigation, name, isAdmin, hanldeEditGroup, setCalendarVisible, id}) => {
     const { top } = useSafeAreaInsets();
-    const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name});
+    const hanldeNavigatorChat = () => navigation.navigate('ModalCreateEvent', {name, id});
     const hanldeNavigatorCalendar = () => {setCalendarVisible(true)};
     return (
             // <BlurView intensity={80} tint="dark" style={{flexDirection:'row',width:'100%', height:60, marginTop:top,justifyContent:'space-between'}}>

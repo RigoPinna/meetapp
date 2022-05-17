@@ -17,13 +17,14 @@ import BouncyCheckbox from 'react-native-bouncy-checkbox'
 export const ModalScreenCreateEvent = ({navigation, route}) => {
     const dispatch = useDispatch();
     const {params} = route;
-    const {name, user} = params
+    const {name, id} = params
     const date = new Date()
     const day = ('0'+ date.getDate()).slice(-2)
     const month = ('0'+ (date.getMonth() + 1)).slice(-2)
     const [stepColor, setStepColor] = useState({stepGo: false, stepBack: true})
    const [ eventData, setEventData ] = useState({
         name: name, 
+        id: id,
         nameEvent:'', 
         description:'',
         startDate:'',
@@ -40,7 +41,6 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
         recurrence: {type: undefined,when: undefined, timeSttgs: undefined, duration: undefined},
         checkedDays: {sun: false, mon: false, tue: false, wed: false, thu: false, fri: false, sat: false}});
 
-    const {uid} = useSelector(state => state.authRed )
 
     const handleOnChange = ( text ) => {
         setEventData({...eventData, ...{nameEvent:text}})
@@ -51,7 +51,6 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
     const handleCreateEvent = () => {
         dispatch( addNewEvent( eventData ) );
         navigation.goBack()
-        // console.log(eventData)
     }
     const handleColorClick = () => {
         if(eventData.color != ''){
@@ -108,7 +107,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             />
                         </View>
                         {
-                            (eventData.color == '#74BBE3')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
+                            (eventData.color == '')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
                                                 <ButtonGradient
                                                     gradient={['#48C6EF','#48C6EF']}
                                                     sizeGradient = {{width:350, height:50}}
@@ -210,7 +209,6 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                     />
                                 </View>
                         }
-
                     </View>
                 </ModalApp>
                 </>

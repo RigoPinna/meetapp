@@ -551,6 +551,11 @@ export const styleCalendar = {
         marginTop: 22,
         backgroundColor:"#00000078" 
     },
+    backgroundAgenda: { 
+        flex: 1,justifyContent: "center",
+        alignItems: "center",
+        backgroundColor:"#00000078" 
+    },
     wrapperModal: {
         width:'80%',
         maxHeight:400,

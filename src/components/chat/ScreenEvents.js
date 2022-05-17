@@ -36,7 +36,6 @@ export const ScreenEvents = ({ navigation, route }) => {
                     setActiveEvents(events);
                 })
         }
-
     }, [navigation, route, isFocused])
 
     return (
