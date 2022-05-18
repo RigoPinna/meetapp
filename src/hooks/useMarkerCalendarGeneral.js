@@ -34,19 +34,23 @@ export const useMarkerCalendarGeneral = ( markerCalendar ) => {
                         selected: true, 
                         selectedColor: '#F2F2F2',
                         date: marker.date
-                    });
+                    }); 
                 }
             });
-
+            
             do{
                 markerCalendar.forEach( marker => {
                     if(marker.recurrence != "[]"){
                         const {duration, type, when} = JSON.parse(marker.recurrence)[0];
-
+                        
                         let limitEventDate = new Date(duration);
                         limitEventDate.setDate(limitEventDate.getDate() + 1);
-                        startDate = (currentDte >= new Date(marker.date) ? currentDte : new Date(marker.date));
+                        if(duration == 0){
+                            limitEventDate = limitDate;
+                        }
 
+                        startDate = (currentDte >= new Date(marker.date) ? currentDte : new Date(marker.date));
+                        
                         if(currentDte >= startDate && currentDte < limitEventDate){
                             switch (type) {
                                 case 1:

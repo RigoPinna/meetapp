@@ -10,7 +10,6 @@ import { ModalViewDetailsEvent } from './ModalViewDetailsEvent';
 export const WrapperInfoCalendar = ({ groups }) => {
     const [ markerEvents, setMarkerEvents] = useState([]);
     const dots = useMarkerCalendarGeneral( markerEvents )
-    const date = new Date()
     const RANGE = 24;
     const [modalMarker, setmodalMarker] = useState({ modalView:false, events:[]})
     const onDayPress = day => {
@@ -26,7 +25,6 @@ export const WrapperInfoCalendar = ({ groups }) => {
     return (
         <>
             <Calendar
-                current={date}
                 pastScrollRange={RANGE}
                 futureScrollRange={RANGE}
                 onDayPress={onDayPress}

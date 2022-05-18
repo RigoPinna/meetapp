@@ -6,7 +6,6 @@ import { ModalViewDetailsEvent } from '../Calendar/ModalViewDetailsEvent';
 
 
 export const AgendaApp = ({event}) => {
-    const date = new Date() 
     const RANGE = 24;
     const [ markerEvents, setMarkerEvents] = useState([]);
     const dots = useMarkerCalendarGeneral( markerEvents )
@@ -32,7 +31,6 @@ export const AgendaApp = ({event}) => {
     return (
         <View style={{flex: 1, marginTop: 20}}>
             <Calendar
-                current={date}
                 pastScrollRange={RANGE}
                 futureScrollRange={RANGE}
                 onDayPress={onDayPress}

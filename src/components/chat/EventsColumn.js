@@ -37,6 +37,7 @@ export const EventsColumn = ( evtList ) => {
             }
         })
     }
+    
     return (
         <View style={{width:'100%'}}>
             { events != undefined &&

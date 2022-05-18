@@ -14,8 +14,8 @@ export const HeaderChat = ({ route }) => {
     const { activeEvent } = useActiveEvent( params )
     const { top } = useSafeAreaInsets();
     const handleGoToInfoGroup = () => {
-        const { name, description, participants, image, id } = params;
-        navigation.navigate('ScreenChatInfo',{ name,description,participants, image, id })
+        const { name, description, participants, image, id, code, creator } = params;
+        navigation.navigate('ScreenChatInfo',{ name,description,participants, image, id, code, creator })
     }
     return (
         <>

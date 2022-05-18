@@ -5,7 +5,7 @@ import { db } from '../firebase/firebase-config';
 import { addMessages } from '../reducers/chatReducer';
 
 
-export const useItemListGroup = ({navigation, id, image, name, participants, description, tokenNotification }) => {
+export const useItemListGroup = ({navigation, id, image, name, participants, description, tokenNotification, code, creator }) => {
 
     const dispatch = useDispatch()
     const { authRed: userLoged } = useSelector( state => state )
@@ -55,7 +55,9 @@ export const useItemListGroup = ({navigation, id, image, name, participants, des
                 participants, 
                 description, 
                 tokenNotification,
-                messages:[] 
+                messages:[],
+                code, 
+                creator
             }
         )
     }

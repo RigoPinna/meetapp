@@ -369,7 +369,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                             borderWidth: 2,
                                             alignSelf: 'center',
                                             marginBottom: 20}}
-                                    month={true}
+                                    year={true}
                                 />
                             </View>
                     </View>

@@ -5,11 +5,12 @@ export const initialState = {
     eventCreated:null
 };
 
-export const addNewEvent = ({ id, nameEvent, startDate, description, color, startTime, admin, end, repeatTimes, paid, recurrence, checkedDays }) => {
+export const addNewEvent = ({ name, nameEvent, startDate, description, color, startTime, admin, end, repeatTimes, paid, recurrence, checkedDays }) => {
     
     return async ( dispatch, getState ) => {
-   
-        const userLoged = getState().authRed
+        const groupRef = db.collection('groups')
+        const snapshot = await groupRef.where('name','==',name).get()
+        
         let array = []
 
         if(checkedDays.mon){
@@ -33,35 +34,19 @@ export const addNewEvent = ({ id, nameEvent, startDate, description, color, star
         if(checkedDays.sun){
             array.push(6)
         }
-        db.collection('groups').doc(id).collection('event').doc().set({
-            nameEvent,
-            startDate,
-            startTime,
-            description,
-            color,
-            paid,
-            participants: (admin) ? JSON.stringify([{uid: userLoged.uid, paid: false}] ) : JSON.stringify([] ),
-            recurrence: (recurrence.type === 1) 
-                            ?   JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.timeSttgs, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
-                            : (recurrence.type === 2)
-                                ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: array, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
-                                : (recurrence.type === 3)
-                                    ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.when, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
-                                    : (recurrence.type === 4)
-                                        ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.when, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
-                                        : (recurrence.type === 0)
-                                            && JSON.stringify([{}] )
 
-        }, {merge: false})
-        dispatch({
-            type:'create-event',
-            payload:[{nameEvent,
+        snapshot.forEach(doc => {
+            const gid = doc.id;
+            const userLoged = getState().authRed
+
+            db.collection('groups').doc(gid).collection('event').doc().set({
+                nameEvent,
                 startDate,
                 startTime,
                 description,
                 color,
                 paid,
-                participants: (admin) ? JSON.stringify([{uid: userLoged.uid}] ) : JSON.stringify([{}] ),
+                participants: (admin) ? JSON.stringify([{uid: userLoged.uid, paid: false}] ) : JSON.stringify([] ),
                 recurrence: (recurrence.type === 1) 
                                 ?   JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.timeSttgs, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
                                 : (recurrence.type === 2)
@@ -71,7 +56,29 @@ export const addNewEvent = ({ id, nameEvent, startDate, description, color, star
                                         : (recurrence.type === 4)
                                             ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.when, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
                                             : (recurrence.type === 0)
-                                                && JSON.stringify([{}] )}]
+                                                && JSON.stringify([] )
+
+            }, {merge: false})
+          });
+        dispatch({
+            type:'create-event',
+            payload:[{nameEvent,
+                startDate,
+                startTime,
+                description,
+                color,
+                paid,
+                participants: (admin) ? JSON.stringify([{uid: userLoged.uid}] ) : JSON.stringify([] ),
+                recurrence: (recurrence.type === 1) 
+                                ?   JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.timeSttgs, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
+                                : (recurrence.type === 2)
+                                    ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: array, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
+                                    : (recurrence.type === 3)
+                                        ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.when, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
+                                        : (recurrence.type === 4)
+                                            ? JSON.stringify([{type: recurrence.type, repeatTimes: repeatTimes, when: recurrence.when, typeDuration: end.type, duration: (end.type === 0) ? '' : recurrence.duration }] )
+                                            : (recurrence.type === 0)
+                                                && JSON.stringify([] )}]
         })
     }
 }
