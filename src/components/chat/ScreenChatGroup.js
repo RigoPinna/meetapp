@@ -3,16 +3,14 @@ import { KeyboardAvoidingView, ScrollView,View } from 'react-native'
 
 import { db } from '../../firebase/firebase-config'
 
-import { useDispatch, useSelector } from 'react-redux'
-import { addNotification, removeBadge } from '../../reducers/notificationsReducer'
+import { useDispatch } from 'react-redux'
+import { removeBadge } from '../../reducers/notificationsReducer'
 
 import { HeaderChat } from './HeaderChat'
 import { ItemMessage } from './ItemMessage'
 import { FooterChat } from './FooterChat'
 
 import { stylesChat } from '../../theme/appTheme'
-import { sendNotification } from '../../helpers/sendNotification'
-import { addMessages } from '../../reducers/chatReducer'
 
 
 

@@ -1,14 +1,4 @@
-import moment from "moment-timezone";
-import { db, userStatic } from "../firebase/firebase-config";
-import { uploadImage } from '../helpers/uploadImage';
-import { generateCode } from '../helpers/generateCode';
-//OBJETO PARA UN EVENTO
-// {
-//     gid:'',
-//     name:'',
-//     description: '',
-//     startDate:'',
-// }
+import { db } from "../firebase/firebase-config";
 
 export const initialState = {
     listEvent:[], 

@@ -254,7 +254,6 @@ export const styles2 = StyleSheet.create({
         alignItems:'center',
         overflow:'hidden',
         position:'relative',
-        // marginHorizontal: 10,
     },
     buttonSeconday: {
         flexDirection:'row',

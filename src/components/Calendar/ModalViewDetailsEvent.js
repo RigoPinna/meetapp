@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { ScrollView, View } from 'react-native'
 import { Modal } from 'react-native'
 import { styleCalendar } from '../../theme/appTheme'

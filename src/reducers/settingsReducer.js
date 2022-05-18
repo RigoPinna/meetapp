@@ -1,7 +1,5 @@
 import { db, userStatic } from "../firebase/firebase-config";
 
-import { uploadImage } from '../helpers/uploadImage';
-
 export const initialState = {
     listGroup:[], 
     groupCreated:null

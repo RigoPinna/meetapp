@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState} from 'react'
 import { ModalApp } from '../elements/ModalApp'
 import { cleanGroup, updateGroup } from '../../reducers/groupReducer';
 import { useDispatch } from 'react-redux';
@@ -22,7 +22,6 @@ export const ModalScreenEditInfo = ({navigation, route}) => {
     const dispatch = useDispatch();
     const handleOnChange = ( variable, text ) => setDataGroup({...dataGroup, [variable]: text})
     const hanldeSaveGroup = () => {
-        console.log(dataGroup.image)
         dispatch( updateGroup( dataGroup ) );
         navigation.goBack()
     }

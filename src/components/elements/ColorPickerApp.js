@@ -1,8 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { View } from 'react-native'
-import { ColorPicker, fromHsv, toHsv } from 'react-native-color-picker'
-import { COLORS_APP } from '../ui/COLORS_APP'
-import { ButtonGradient } from './ButtonGradient'
+import { ColorPicker, fromHsv } from 'react-native-color-picker'
 
 export const ColorPickerApp = ({ eventData, setEventData }) => {
     const [ color, setColor ] = useState("#74BBE3")

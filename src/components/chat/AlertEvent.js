@@ -1,7 +1,6 @@
 import { LinearGradient } from 'expo-linear-gradient'
 import React, { useState, useEffect } from 'react'
 import { View } from 'react-native'
-import { styles } from '../../theme/appTheme'
 import { Textapp } from '../elements/Textapp'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'

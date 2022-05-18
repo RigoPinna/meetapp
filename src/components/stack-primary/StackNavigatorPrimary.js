@@ -8,7 +8,6 @@ import { ModalScreenCreateGroup } from '../listgGroup/ModalScreenCreateGroup';
 import { ModalScreenColorChooser } from '../listgGroup/ModalScreenColorChooser';
 import { ModalScreenJoinGroup } from '../listgGroup/ModalScreenJoinGroup';
 import { ModalScreenEliminateGroup } from '../listgGroup/ModalScreenEliminateGroup';
-import { ModalCalendar } from '../chat/ModalCalendar';
 import { ScreenAgenda } from '../chat/ScreenAgenda';
 import { PresentationScreen } from '../auth/PresentationScreen';
 import { ModalScreenEditInfo } from '../chat/ModalScreenEditInfo';

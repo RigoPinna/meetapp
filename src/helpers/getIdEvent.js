@@ -4,7 +4,6 @@ export const getIdEvent = async ( id, eventId, setEventId, eventData, setEventDa
     const eventRef = db.collection('groups').doc(id).collection('event')
     const date = new Date()
     let FDateState = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + ('0'+ date.getDate()).slice(-2)
-    // const snapshot = await eventRef.orderBy('startDate', 'desc').limit(1).get()
     const snapshot = await eventRef.where('startDate','>=', FDateState).orderBy('startDate', 'asc').limit(1).get()
     if(!snapshot.empty){
         snapshot.forEach(doc => {

@@ -23,7 +23,6 @@ export const ItemEvent = ({ group, events }) => {
                         <Text style={styleCalendar.nameEventText}>{ events.nameEvent }</Text>
                         <View style={{flexDirection:'row'}}>
                             <Text style={styleCalendar.groupNameText}>Group: { group.name }</Text>
-                            {/* <Text style={styleCalendar.autorText}>by autor</Text> */}
                         </View>
                     </View>
                 </View>

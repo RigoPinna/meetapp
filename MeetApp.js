@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import AsyncStorage  from "@react-native-async-storage/async-storage";
-import { StatusBar } from 'react-native';
 
 import { setData } from './src/reducers/authReducer';
 import { AppRoot } from './src/components/App/AppRoot';
@@ -17,7 +16,6 @@ export const MeetApp = () => {
                 // await AsyncStorage.removeItem('uid')
                 // await AsyncStorage.setItem('uid','NUC9BCOZZKV2rRLdVFf46sN3jDC2')
                 const uid = await AsyncStorage.getItem('uid')
-                console.log( uid )
                 if( uid ) {
                     if( userData.uid === null ) {
                         dispatch(setData( uid ))

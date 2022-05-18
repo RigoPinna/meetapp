@@ -1,7 +1,7 @@
 import React from 'react'
 import { useRef } from 'react'
 import { TextInput, View } from 'react-native'
-import { styles, styles2 } from '../../theme/appTheme'
+import { styles2 } from '../../theme/appTheme'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 

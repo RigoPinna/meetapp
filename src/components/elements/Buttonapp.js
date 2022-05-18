@@ -1,8 +1,6 @@
 import React from 'react'
 import { Text, TouchableNativeFeedback, TouchableOpacity, View } from 'react-native'
 import { styles2 } from '../../theme/appTheme'
-import { IconArrowRight } from '../icons/IconArrowRight'
-import { IconEdit } from '../icons/IconEdit'
 
 export const Buttonapp = ({ text , onPress = ()=>{}, typeButton = 'primary',disabled = false ,Icon,styleT}) => {
     const ios = () => {

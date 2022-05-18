@@ -12,12 +12,10 @@ import { COLORS_APP } from '../ui/COLORS_APP'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { fetchGetFlagCountry } from '../../services/fetchGetFlagCountry'
 import { useEffect } from 'react'
-import { db, userStatic } from '../../firebase/firebase-config'
 import * as Progress from 'react-native-progress';
 import { useDispatch, useSelector } from 'react-redux'
 import { updateUser } from '../../reducers/authReducer'
 import { Toastapp } from '../elements/ToastApp'
-import { firebase } from '../../firebase/firebase-config'
 import { logoutUser } from '../../reducers/authReducer';
 
 export const SettingsScreen = ({route}) => {

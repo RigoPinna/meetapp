@@ -20,8 +20,8 @@ export const ScreenEventInfo = ({ route }) => {
     const [ suscribed, setSuscribed ] = useState(false)
     const {eid, nameEvent, color, description, paid, startDate, startTime, recurrence} = event;
     const [participants, setParticipants] = useState([]);
-    const [recurrenceInfo, setRecurrenceInfo] = useState();
-
+    const info = JSON.parse((recurrence != undefined) ? recurrence : '[]');
+    const [recurrenceInfo, setRecurrenceInfo] = useState({startDate: startDate, startTime: startTime,type: info[0].type, typeDuration: info[0].typeDuration, repeat: info[0].repeatTimes, duration: info[0].duration, when: info[0].when});
     const [ isCreator, setIsCreator ] = useState(false);
 
     useEffect(() => {
@@ -42,7 +42,6 @@ export const ScreenEventInfo = ({ route }) => {
             db.collection('groups').doc(gid).collection('event').doc(eid).onSnapshot( querySnapshot => {
                 const data = querySnapshot.data();
                 if(data != undefined){
-                    // setRecurrence(data.recurrence)
                     const participantes = JSON.parse((data.participants != undefined) ? data.participants : '[]');
                     if(participantes.length != 0){
                         if(paid){

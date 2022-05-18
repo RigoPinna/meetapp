@@ -1,6 +1,6 @@
 
 import React, { useEffect, useRef, useState } from 'react'
-import { Alert, Text, View, ScrollView, SafeAreaView, KeyboardAvoidingView} from 'react-native'
+import { Alert, Text, View, ScrollView, KeyboardAvoidingView} from 'react-native'
 import { ButtonGradient } from '../elements/ButtonGradient'
 import { COLORS_APP } from '../ui/COLORS_APP'
 import { IconApp } from '../IconApp'
@@ -8,7 +8,7 @@ import { Textapp } from '../elements/Textapp'
 import { TEXTS_SIZE } from '../ui/TEXTS_SIZE'
 import { TextInputApp } from '../elements/TextInputApp'
 import { styles2 } from '../../theme/appTheme'
-import { db, firebase,firebaseConfig, phoneProvider } from '../../firebase/firebase-config'
+import { firebase,firebaseConfig, phoneProvider } from '../../firebase/firebase-config'
 import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha'
 import { IconArrowLeft } from '../icons/IconArrowLeft'
 import { InputSelectapp } from '../elements/InputSelectapp'
@@ -17,7 +17,6 @@ import { useDispatch } from 'react-redux'
 import { setData } from '../../reducers/authReducer'
 import { HeaderDecoration } from '../auth/HeaderDecoration'
 import { useSafeAreaInsets } from 'react-native-safe-area-context'
-// import { getAuth } from "firebase/auth";
 
 export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const dispatch = useDispatch();
@@ -28,10 +27,6 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
     const handleGoBack = () => {
         setStepLogin({...stepLogin, ...{stepGo: false, stepBack:true}})
     }
-    // useEffect(() => {
-    //     const countries = dataCountry.map( cty => ({ label: cty.name, value: cty.callingCodes[0], key:cty.alpha2Code }))
-    //     setUserData({...userData, countries })
-    // }, [])
 
     useEffect(() => {
         let controller = new AbortController();
@@ -45,7 +40,6 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
 
             }
         })();
-        // console.log('data', data)
         return () => controller?.abort();
 
     }, [])
@@ -59,9 +53,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                     userData.code
                 );
                 const { user } = await firebase.auth().signInWithCredential( credential )
-                // const userRef = await db.collection('users').where('phone', '==', '+528342542740' );
                 await dispatch( setData( user.uid ) )
-                // console.log(user.uid)
             } else {
                 const verificationId = await phoneProvider.verifyPhoneNumber(
                     phoneNumber,
@@ -124,8 +116,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                                         color = {COLORS_APP.black1}
                                         text = {`+${userData.countryCode}`}
                                         />
-                                        <TextInputApp 
-                                            // value = { +userData.numberPhone }
+                                        <TextInputApp
                                             onChange = { ( value ) => setUserData({...userData,...{phone:+value}}) }
                                             placeholder = { 'Your phone' }
                                             styleT = {{ width:'85%', marginLeft:5, height:'100%'}}
@@ -137,8 +128,7 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                     }
                     {
                         !!userData.verificationId 
-                            && <TextInputApp 
-                                    // value = { +userData.numberPhone }
+                            && <TextInputApp
                                     onChange = { ( value ) => setUserData({...userData,...{ code:value }}) }
                                     placeholder = { 'Verification code' }
                                     styleT = {{ width:'100%',height:50}}

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import { View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { View, KeyboardAvoidingView } from 'react-native';
 import BouncyCheckboxGroup from 'react-native-bouncy-checkbox-group';
 import { stylesChat } from '../../theme/appTheme';
 import { ButtonGradient } from '../elements/ButtonGradient';

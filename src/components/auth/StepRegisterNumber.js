@@ -1,6 +1,6 @@
-import React, { useState, useEffect, useRef, useContext } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { firebaseConfig, phoneProvider} from '../../firebase/firebase-config';
-import { FirebaseRecaptchaVerifierModal, FirebaseRecaptchaBanner } from 'expo-firebase-recaptcha';
+import { FirebaseRecaptchaVerifierModal } from 'expo-firebase-recaptcha';
 
 import { fetchGetCodeAndCountryName } from '../../services/fetchGetCodeAndCountryName';
 import { Image, View } from 'react-native';
@@ -22,7 +22,6 @@ export const StepRegisterUser = () => {
     const [ userData, setUserData ] = useState({ countryCode:undefined, phone:0 });
     const recaptchaVerifier = useRef( null );
     const attemptInvisibleVerification = false;
-    // const data = useAsyncStorag('@MyApp_USER','get')
     useEffect(() => {
         let controller = new AbortController();
         ( async ()=>{
@@ -34,7 +33,6 @@ export const StepRegisterUser = () => {
 
             }
         })();
-        // console.log('data', data)
         return () => controller?.abort();
 
     }, [])
