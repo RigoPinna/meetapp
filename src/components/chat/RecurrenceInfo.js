@@ -56,7 +56,7 @@ export const RecurrenceInfo = ({recurrence}) => {
         
         if(recurrence.duration != undefined){
             if(recurrence.duration == ''){
-                end = '- always'
+                start = 'Always'
             } else {
                 const endDate = new Date(recurrence.duration);
                 end = `- ${getFormatedDate(endDate)}`
@@ -132,21 +132,16 @@ export const RecurrenceInfo = ({recurrence}) => {
             if (add) {
                 eventCard.push(
                     <View key={`${eventCard.length}`} style={{alignItems: 'center', width: '100%', marginBottom: 8}}>
-                        <View style={{width: 110, backgroundColor: (eventCard.length == 0) ? '#A9F1DF' : '#A2DBFA', borderRadius: 10, borderColor: (eventCard.length == 0) ? '#1FAE98' : '#A2DBFA', borderWidth: (eventCard.length == 0) ? 1 : 0}}>
+                        <View style={{width: '90%', alignItems: 'center', backgroundColor: (eventCard.length == 0) ? '#A9F1DF' : '#A2DBFA', borderRadius: 10, borderColor: (eventCard.length == 0) ? '#1FAE98' : '#A2DBFA', borderWidth: (eventCard.length == 0) ? 1 : 0}}>
                             {(eventCard.length == 0) &&  <Textapp 
-                                size = { 12 } 
+                                size = { 14 } 
                                 text ={'Next meeting'} 
-                                styles={{width:'95%', paddingTop: 5, paddingLeft: 10, textAlign: 'justify', color: '#005C4E', fontWeight: 'bold'}} 
+                                styles={{width:'95%', color: '#005C4E', fontWeight: 'bold'}} 
                             />}
                             <Textapp 
-                                size = { 13 } 
+                                size = { 16 } 
                                 text ={`${getFormatedDate(startDate)}`} 
-                                styles={{width:'95%', paddingTop: (eventCard.length == 0) ? 1 : 5, paddingLeft: 10, color: (eventCard.length == 0) ? '#005C4E' : '#0062FF'}} 
-                            />
-                            <Textapp 
-                                size = { 13 } 
-                                text ={`At ${recurrence.startTime}`} 
-                                styles={{width:'95%', paddingTop: 1, paddingLeft: 10, color: (eventCard.length == 0) ? '#005C4E' : '#0062FF', paddingBottom: 5}} 
+                                styles={{width:'95%', color: (eventCard.length == 0) ? '#005C4E' : '#0062FF', paddingBottom: 2, paddingTop: (eventCard.length == 0) ? 0 : 4, paddingBottom: (eventCard.length == 0) ? 0 : 4}} 
                             />
                         </View>
                     </View>
@@ -186,6 +181,19 @@ export const RecurrenceInfo = ({recurrence}) => {
                     
                 </View>
                 <View style={{width: '35%', alignItems: 'center'}}>
+                    <View style={{width: '95%', marginTop: 8}}>
+                        <Textapp 
+                            size = { 14 } 
+                            text ={'Event at:'} 
+                            styles={{width:'75%', paddingLeft: 10, fontWeight: 'bold'}} 
+                        />
+                        <Textapp 
+                            size = { 16 } 
+                            text ={`${recurrence.startTime}`} 
+                            styles={{width:'75%', paddingLeft: 10}} 
+                        />
+                    </View>
+                    <View style={{backgroundColor: '#676568', height: '.7%', width: '85%', marginTop: 5}}></View>
                     <ScrollView style={{flex:1, marginTop:0, paddingTop:10, paddingBottom: 10, width: '95%'}}>
                         {eventCard}
                     </ScrollView>

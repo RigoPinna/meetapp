@@ -21,11 +21,12 @@ export const ScreenEventInfo = ({ route }) => {
     const {eid, nameEvent, color, description, paid, startDate, startTime, recurrence} = event;
     const [participants, setParticipants] = useState([]);
     const info = JSON.parse((recurrence != undefined) ? recurrence : '[]');
-    const [recurrenceInfo, setRecurrenceInfo] = useState({startDate: startDate, startTime: startTime,type: info[0].type, typeDuration: info[0].typeDuration, repeat: info[0].repeatTimes, duration: info[0].duration, when: info[0].when});
+    const [recurrenceInfo, setRecurrenceInfo] = useState();
     const [ isCreator, setIsCreator ] = useState(false);
 
     useEffect(() => {
         const info = JSON.parse((recurrence != undefined) ? recurrence : '[]');
+
         if(info.length != 0){
             setRecurrenceInfo({startDate: startDate, startTime: startTime, type: info[0].type, typeDuration: info[0].typeDuration, repeat: info[0].repeatTimes, duration: info[0].duration, when: info[0].when, description: description})
         } else {
