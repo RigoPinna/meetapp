@@ -12,16 +12,16 @@ const placeholder = {
   };
 export const InputSelectapp = ({ itemsData, setState }) => {
     return (
-        <View style = {{width: '100%', height: 50, position: 'relative', paddingHorizontal:13}}>
-        <View style = {styles2.textSelect} >
-            <IconLocation styles = {{position: 'absolute',left: 8, top:12}}/>
-            <RNPickerSelect
-                placeholder = { placeholder }
-                onValueChange={(value) => { setState(value)  } }
-                items = { itemsData }
-                style = {{inputIOS:{fontWeight:'bold',}}}
-            />
+        <View style = {{width: '100%', height: 60, position: 'relative', paddingHorizontal:13, paddingBottom: 10}}>
+            <View style = {{...styles2.textSelect, paddingTop: 0}} >
+                <IconLocation styles = {{position: 'absolute',left: 12, top:15}}/>
+                <RNPickerSelect
+                    placeholder = { placeholder }
+                    onValueChange={(value) => { setState(value)  } }
+                    items = { itemsData }
+                    style = {{inputIOS:{fontWeight:'bold', backgroundColor: 'red'}}}
+                />
+            </View>
         </View>
-    </View>
     )
 }

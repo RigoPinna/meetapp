@@ -32,9 +32,10 @@ export const StepCreation = ({steps, setStep}) => {
 
     return (
         <>
+            <View style={{width: '100%'}}>
             <Textapp 
                 size= {TEXTS_SIZE.small} 
-                styles = {{marginBottom:13, marginTop: 13, textAlign: 'center'}}
+                styles = {{marginTop: 10, textAlign: 'center'}}
                 color = {COLORS_APP.black2}
                 text = {'Please, select a photo for the group'}
 
@@ -48,10 +49,11 @@ export const StepCreation = ({steps, setStep}) => {
                         />
                     <ButtonCamera onPress={ ( uriImg, file ) => {
                         setDataGroup({...dataGroup, ...{ image:uriImg, imageFile: file }})
-                    }}/>
+                        }}/>
+                </View>
             </View>
-            </View>
-                <View style={{marginTop: 20}}>
+
+                <View >
                     <Textapp 
                         size={TEXTS_SIZE.medium}
                         text={'Group name'}
@@ -110,18 +112,18 @@ export const StepCreation = ({steps, setStep}) => {
                 </View>
                 {
                     ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '' && !nameValidation)
-                    && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
+                    && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10, marginBottom: 10}}>
                             <ButtonGradient
                                 gradient={['#48C6EF','#6F86D6']}
-                                sizeGradient = {{width:350, height:50}}
+                                sizeGradient = {{width:300, height:50}}
                                 textButton={`Create Group`}
                                 styleText={{color:'white', fontWeight:'bold',}}
-                                styleButton={{width:350, height:50}}
+                                styleButton={{width:300, height:50}}
                                 hanldeOnPress = { hanldeSaveGroup }
                             />
                         </View>
                 }
-                
+            </View>
         </>
     )
 }

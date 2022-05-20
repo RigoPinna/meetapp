@@ -29,70 +29,72 @@ export const StepInfoProfile = ({ steps, setStep }) => {
         setStep({...steps, ...{stepInfoProfile: false, stepWelcome:true, stepBack:true }})
     }
     return (
-        <>
-            <View style={{ width:50, height:50, position: 'absolute',top, left: 0}}>
+        <View style={{width: '100%'}}>
+            <View style={{ width:50, height:50, position: 'absolute', top: 10, left: 10}}>
                 <ButtonGradient 
                     gradient={['#F3F7FE','#F3F7FE']}
                     sizeGradient = {{ width:50, height:50 }}
                     styleButton = {{width:50, height:50, alignItems: 'center',justifyContent: 'center' }}
                     IconLeft = { IconArrowLeft }
                     hanldeOnPress = { hanldeGoBack }    
+            />
+            </View>
+
+            <View style={{alignItems: 'center', marginTop: 15}}>
+                <Textapp 
+                    size= {TEXTS_SIZE.medium} 
+                    weight = {'bold'}
+                    styles = {{marginBottom:13, marginTop:top}}
+                    text = {'Verify your information'}
                 />
+                <Textapp 
+                    size= {TEXTS_SIZE.small} 
+                    styles = {{marginBottom:13, marginTop: 13}}
+                    color = {COLORS_APP.black2}
+                    text = {'Please, select a profile photo'}
+                />
+                <View>
+                    <Image
+                            style={styles.tinyLogo}
+                            source = {
+                                    userData.image === '' 
+                                        ? require('../../assets/avatarDefault.png')
+                                        : {uri:userData.image}
+                                    }
+                            
+                        />
+                    <ButtonCamera onPress={ (uriImage) => { setUserData({...userData,...{image:uriImage}})} }/>
+                </View>
+                <Textapp 
+                    size= {TEXTS_SIZE.small} 
+                    styles = {{marginBottom:13, marginTop: 13}}
+                    color = {COLORS_APP.black2}
+                    text = {'What is your name ?'}
+                />
+                <View style={{ width: '90%'}}>
+                    <TextInputApp 
+                        value={ userData.name } 
+                        onChange = { handleOnChange } 
+                        type ={'text'} 
+                        placeholder= {'Your name'}
+                        styleT = {{width:'100%', height:50}}
+                        />
+                </View>
+                {
+                    ( userData.name.trim() !== '' && userData.image.trim() !== '')
+                        && <View style = {{marginTop: 50}}>
+                            <ButtonGradient 
+                                    gradient={['#48C6EF','#6F86D6']}
+                                    sizeGradient = {{width:200, height:40}}
+                                    textButton={`Next`}
+                                    styleText={{color:'white', fontWeight:'bold',}}
+                                    styleButton={{width:200, height:40, backgroundColor:'pink'}}
+                                    IconRight = { IconArrowRight }
+                                    hanldeOnPress = { hanldeGoToNextStep }
+                                />
+                            </View>
+                }
             </View>
-            <Textapp 
-                size= {TEXTS_SIZE.medium} 
-                weight = {'bold'}
-                styles = {{marginBottom:13, marginTop:top}}
-                text = {'Verify your information'}
-            />
-            <Textapp 
-                size= {TEXTS_SIZE.small} 
-                styles = {{marginBottom:13, marginTop: 13}}
-                color = {COLORS_APP.black2}
-                text = {'Please, select a profile photo'}
-            />
-            <View>
-                <Image
-                        style={styles.tinyLogo}
-                        source = {
-                                userData.image === '' 
-                                    ? require('../../assets/avatarDefault.png')
-                                    : {uri:userData.image}
-                                }
-                        
-                    />
-                <ButtonCamera onPress={ (uriImage) => { setUserData({...userData,...{image:uriImage}})} }/>
-            </View>
-            <Textapp 
-                size= {TEXTS_SIZE.small} 
-                styles = {{marginBottom:13, marginTop: 13}}
-                color = {COLORS_APP.black2}
-                text = {'What is your name ?'}
-            />
-            <View style={{ width:320}}>
-                <TextInputApp 
-                    value={ userData.name } 
-                    onChange = { handleOnChange } 
-                    type ={'text'} 
-                    placeholder= {'Your name'}
-                    styleT = {{width:'100%', height:50}}
-                    />
-            </View>
-            {
-                ( userData.name.trim() !== '' && userData.image.trim() !== '')
-                    && <View style = {{flex:1, width:'100%', justifyContent:'flex-end', alignItems:'flex-end', padding:20, bottom: 150}}>
-                           <ButtonGradient 
-                                gradient={['#48C6EF','#6F86D6']}
-                                sizeGradient = {{width:200, height:40}}
-                                textButton={`Next`}
-                                styleText={{color:'white', fontWeight:'bold',}}
-                                styleButton={{width:200, height:40, backgroundColor:'pink'}}
-                                IconRight = { IconArrowRight }
-                                hanldeOnPress = { hanldeGoToNextStep }
-                            />
-                        </View>
-            }
-            
-        </>
+        </View>
     )
 }

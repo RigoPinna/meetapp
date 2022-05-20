@@ -49,7 +49,7 @@ export const ListGroup = ({ navigation }) => {
                     <Progress.CircleSnail spinDuration={1000} color={[COLORS_APP.primary, COLORS_APP.skyblue1]} />
                 </View>
                     : ( groupReducer.listGroup?.length > 0 ) 
-                        ? <ScrollView>
+                        ? <ScrollView style={{paddingTop: 140}}>
                             {
                                 groupReducer.listGroup.map( ({ gid, name,image,createdat,participants, description, code, creator }) =>{
                                     return ( 

@@ -22,26 +22,28 @@ export const TextInputApp = ({size = (TEXTS_SIZE.extraSmall),weight = 'normal', 
                 }}
             >
                 { !!IconPerson && <IconPerson pathColor={colorIcon}/>}
-                {
-                   type === 'numeric'
-                    ?   <TextInput
-                            ref = { inputRef }
-                            onChangeText = {(text)=> { onChange(text) } }
-                            value = { value }
-                            placeholder = { placeholder } 
-                            style = {{...styles2.textInput, fontSize: size, fontWeight:weight, color: color}}
-                            keyboardType = { type }
-                        />
-                    :   <TextInput
-                            ref = { inputRef }
-                            onChangeText = {(text)=> {onChange(text)} }
-                            value = { value }
-                            placeholder = { placeholder } 
-                            style = {{...styles2.textInput, fontSize: size, fontWeight:weight, color: color}}
-                            multiline={multiline}
-                            editable={editable}
-                        />
-                }
+                <View style={{width: '57%'}}>
+                    {
+                    type === 'numeric'
+                        ?   <TextInput
+                                ref = { inputRef }
+                                onChangeText = {(text)=> { onChange(text) } }
+                                value = { value }
+                                placeholder = { placeholder } 
+                                style = {{...styles2.textInput, fontSize: size, fontWeight:weight, color: color}}
+                                keyboardType = { type }
+                            />
+                        :   <TextInput
+                                ref = { inputRef }
+                                onChangeText = {(text)=> {onChange(text)} }
+                                value = { value }
+                                placeholder = { placeholder } 
+                                style = {{...styles2.textInput, fontSize: size, fontWeight:weight, color: color}}
+                                multiline={multiline}
+                                editable={editable}
+                            />
+                    }
+                </View>
             </View>
     )
 }

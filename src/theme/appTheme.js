@@ -309,7 +309,6 @@ export const styles2 = StyleSheet.create({
     },
     textSelect: {
         width: '100%',
-        height:50,
         borderRadius: 100,
         backgroundColor:'#F0F0F0',
         paddingLeft:30,

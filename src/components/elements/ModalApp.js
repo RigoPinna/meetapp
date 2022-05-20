@@ -33,7 +33,7 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
         }
     };
     return (
-        <Modal transparent visible={showModal} >
+        <Modal transparent visible={showModal}>
             <BlurView  tint="dark" intensity={85} style={[{alignItems: 'center', flex: 1, justifyContent:'flex-end',}]}>
                 <Animated.View style={[{...styles.modalContainer,...styleContainer}, {transform: [{scale: scaleValue}]}]}>
                     <View style={styles.header}>
@@ -59,7 +59,7 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
                     </View>
                     {
                         needScroll ?
-                        <ScrollView style={{flex:1}} bounces={ false }>
+                        <ScrollView style={{flex:1, width: '100%'}} bounces={ false }>
                             {children}
                         </ScrollView>
                         :

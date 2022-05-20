@@ -20,7 +20,7 @@ export default function App() {
         }, [])
 
   return (
-    <Provider store = { store } >
+    <Provider store = { store }>
         <MeetApp />
     </Provider>
   );
