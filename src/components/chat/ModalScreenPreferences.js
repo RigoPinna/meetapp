@@ -138,7 +138,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
     const handleOnTimes = ( text ) => setData({...data, ...{repeatTimes: text}})
     return (
 
-                             <>
+                             <View>
         <KeyboardAvoidingView
         ref={isMounted} 
         style={ stylesChat.wrapperKeyboard }
@@ -148,7 +148,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                 
         <ModalApp styleContainer={{height: '100%',}} navigation={navigation} textTitle={'Repeat'} needScroll={true}>
 
-                                <View style={{width: 350, height: '80%', marginTop: 10}}>
+                                <View style={{width: '100%', height: '80%', marginTop: 10}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
                             text={data.textInformation}
@@ -209,7 +209,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                                         setEventData={setData}
                                                         mode={'time'}
                                                         evento={true}
-                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '25%', marginLeft: 20}}
+                                                        style={{justifyContent: 'center', marginTop: 10, marginBottom: 10, width: '40%', marginLeft: 20}}
                                                         texty={data.recurrence.timeSttgs}
                                                     />
                                                     <Textapp 
@@ -315,7 +315,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                     setEventData={setData}
                                     evento={true}
                                     texty={`Repeat every ${data.day}`}
-                                    style={{justifyContent: 'center',height: 35,
+                                    style={{justifyContent: 'center',height: 45,
                                     width: 200,
                                     borderRadius: 25,
                                     borderColor: 'black',
@@ -362,7 +362,7 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                                     setEventData={setData}
                                     evento={true}
                                     texty={`Repeat every ${data.day}/${data.month}`}
-                                    style={{justifyContent: 'center',height: 35,
+                                    style={{justifyContent: 'center',height: 45,
                                             width: 200,
                                             borderRadius: 25,
                                             borderColor: 'black',
@@ -437,18 +437,17 @@ export const ModalScreenPreferences = ({navigation, route}) => {
                    {
                        (data.end.type !== undefined || data.recurrence.type === 0) &&                 <ButtonGradient
                                                             gradient={['#48C6EF','#6F86D6']}
-                                                            sizeGradient = {{width:350, height:50}}
+                                                            sizeGradient = {{width:'110%', height:50}}
                                                             textButton={`Save`}
                                                             styleText={{color:'white', fontWeight:'bold'}}
-                                                            styleButton={{justifyContent: 'center',width:350, height:50, marginTop: 25, marginBottom: 20}}
+                                                            styleButton={{justifyContent: 'center',width:'100%', height:50, marginTop: 25, marginBottom: 20}}
                                                             hanldeOnPress = { handleSavePreferences }
                                                         />
                    }
-
             </View>
         </ModalApp>    
         </KeyboardAvoidingView>
-        </>
+        </View>
        
         
     );

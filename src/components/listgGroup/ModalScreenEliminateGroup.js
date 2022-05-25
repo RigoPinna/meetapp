@@ -44,13 +44,13 @@ export const ModalScreenEliminateGroup = ({route}) => {
                 color={"#FF4646"}
                 styles={{marginTop: 20, marginBottom: 50, textAlign: 'center'}}
             />
-            <View style={{flexDirection: 'row',justifyContent:'space-between'}}>
+            <View style={{flexDirection: 'row', justifyContent: 'center'}}>
                 <ButtonGradient
                     gradient={['#F5F7FA','#F5F7FA']}
                     sizeGradient = {{width:190, height:50}}
                     textButton={`Cancel`}
                     styleText={{color:'#A3AAB6'}}
-                    styleButton={{width:180, height:50,justifyContent:'center',fontWeight:'bold'}}
+                    styleButton={{maxwidth: 180, height:50,justifyContent:'center',fontWeight:'bold'}}
                     hanldeOnPress = { () => {navigation.goBack()} }
                 />
                 <ButtonGradient
@@ -58,7 +58,7 @@ export const ModalScreenEliminateGroup = ({route}) => {
                     sizeGradient = {{width:190, height:50}}
                     textButton={`Yes, delete`}
                     styleText={{color:'white',fontWeight:'bold'}}
-                    styleButton={{width:180, height:50,justifyContent:'center', }}
+                    styleButton={{maxwidth: 180, height:50,justifyContent:'center', marginLeft: 20}}
                     hanldeOnPress = { () =>{eliminateGroup()} }
                 />
             </View>

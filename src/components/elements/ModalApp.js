@@ -59,11 +59,11 @@ export const ModalApp = ({navigation,children,textTitle, closeModal=true,styleCo
                     </View>
                     {
                         needScroll ?
-                        <ScrollView style={{flex:1}} bounces={ false }>
+                        <ScrollView style={{flex:1, width: '100%'}} bounces={ false }>
                             {children}
                         </ScrollView>
                         :
-                        <View style={{flex:1}} bounces={ false }>
+                        <View style={{flex:1, width: '100%'}} bounces={ false }>
                             {children}
                         </View>
                     }

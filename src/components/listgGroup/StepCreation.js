@@ -31,7 +31,7 @@ export const StepCreation = ({steps, setStep}) => {
 
 
     return (
-        <>
+        <View style={{}}>
             <Textapp 
                 size= {TEXTS_SIZE.small} 
                 styles = {{marginBottom:13, marginTop: 13, textAlign: 'center'}}
@@ -108,20 +108,20 @@ export const StepCreation = ({steps, setStep}) => {
                     />
                     
                 </View>
+                <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10, marginBottom: 10}}>
                 {
                     ( dataGroup.name.trim() !== '' && dataGroup.description.trim() !== '' && !nameValidation)
-                    && <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 10,}}>
-                            <ButtonGradient
-                                gradient={['#48C6EF','#6F86D6']}
-                                sizeGradient = {{width:350, height:50}}
-                                textButton={`Create Group`}
-                                styleText={{color:'white', fontWeight:'bold',}}
-                                styleButton={{width:350, height:50}}
-                                hanldeOnPress = { hanldeSaveGroup }
-                            />
-                        </View>
+                    && 
+                    <ButtonGradient
+                        gradient={['#48C6EF','#6F86D6']}
+                        sizeGradient = {{width:'110%', height:50}}
+                        textButton={`Create Group`}
+                        styleText={{color:'white', fontWeight:'bold'}}
+                        styleButton={{width:'100%', height:50}}
+                        hanldeOnPress = { hanldeSaveGroup }
+                    />
                 }
-                
-        </>
+                </View>
+        </View>
     )
 }

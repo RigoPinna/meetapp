@@ -40,9 +40,9 @@ export const ItemModalEvent = ( evt ) => {
                 }}
             />
             <Text>{evt.description}</Text>
-            { needGoTo && <View style={{ alignItems: 'flex-end', marginTop: 10}}>
+            { needGoTo && <View style={{ alignItems: 'flex-end', marginTop: 10, marginBottom: 5}}>
                 <ButtonGradient
-                    gradient={['#fff','#fff']}
+                    gradient={['transparent','transparent']}
                     sizeGradient = {{width:120, height:20}}
                     textButton={`More info`}
                     styleText={{color:'#04BEFE', fontWeight:'bold', fontSize:15}}

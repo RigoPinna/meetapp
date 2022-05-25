@@ -22,8 +22,8 @@ export const PresentationScreen = () => {
     }, [])
     return (
         <Animated.View style = {{...styles2.wrapperPresentation, opacity:opacity}}>
-                <SafeAreaProvider>
-                    <ScrollView>
+                <SafeAreaProvider style={{width: '100%'}}>
+                    <ScrollView >
                             {
                                 steps.stepWelcome 
                                     && <View style={{flex:1,alignItems:'center', position:'relative'}}>
@@ -33,13 +33,13 @@ export const PresentationScreen = () => {
                             {
                                 
                                 steps.stepInfoProfile 
-                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700,top: 20}}>
+                                    && <View style={{alignItems:'center', position:'relative', width: '100%', height: 700,top: 20}}>
                                             <StepInfoProfile steps = { steps } setStep = { setStep } />
                                         </View>
                             }
                             {
                                 steps.stepVerifyPhone 
-                                    && <View style={{alignItems:'center', position:'relative', width: 400, height: 700,top: 20}}>
+                                    && <View style={{alignItems:'center', position:'relative', width: '100%', height: 700,top: 20}}>
                                             <StepRegisterUser />
                                         </View>
                             }

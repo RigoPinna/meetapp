@@ -10,8 +10,8 @@ export const ButtonTabBarMessage = ({ focused }) => {
         <ButtonGradient 
             gradient={ focused ? ['#4481EB','#04BEFE']:['#FFFFFF','#FFFFFF']}
             textButton = {focused ? 'Messages': ''}
-            styleButton = {{height:50,width:130}}
-            sizeGradient = {{width:200, height:100}}
+            styleButton = {{height:50,width:'90%'}}
+            sizeGradient = {{width:'200%', height:100}}
             hanldeOnPress = { () => nav.navigate( 'ListGroup' ) }
             IconLeft = {IconMessage}
             colorIcon = {focused ? '#FFFFFF' : COLORS_APP.black3}

@@ -52,7 +52,7 @@ export const StepJoin = ({steps, setStep}) => {
     }
 
     return (
-        <View style={{width: 350, marginTop: (code!=='') ? 40 : 80}}>
+        <View style={{width: '100%', marginTop: (code!=='') ? 40 : 80}}>
                 <View style={{marginTop: 20}}>
                     <Textapp 
                         size={TEXTS_SIZE.small}
@@ -81,10 +81,10 @@ export const StepJoin = ({steps, setStep}) => {
                     (code!=='') &&  <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 35}}>
                                         <ButtonGradient
                                             gradient={['#BA48EF','#E75551','#C86FD6']}
-                                            sizeGradient = {{width:350, height:50}}
+                                            sizeGradient = {{width:'110%', height:50}}
                                             textButton={`Join Group`}
                                             styleText={{color:'white', fontWeight:'bold',}}
-                                            styleButton={{width:350, height:50}}
+                                            styleButton={{width:'100%', height:50}}
                                             hanldeOnPress = { hanldeGoToNextStep }
                                         />
                                     </View>

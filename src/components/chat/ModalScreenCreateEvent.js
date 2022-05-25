@@ -66,7 +66,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
             {
                 stepColor.stepBack && <>
                 <ModalApp navigation={navigation} textTitle={'Create New Event'}>
-                    <View style={{width: 350}}>
+                    <View style={{width: '100%'}}>
                         <Textapp 
                             size={TEXTS_SIZE.small}
                             text={'Event Name'}
@@ -78,11 +78,11 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             value={ eventData.nameEvent } 
                             onChange = { handleOnChange }
                             styleT={{
-                                width: '95%',
+                                width: '100%',
                                 borderRadius:100,
                             }}
                         />
-                        <View style={{marginTop: 20, }}>
+                        <View style={{marginTop: 20, width: '100%'}}>
                             <Textapp 
                                 size={TEXTS_SIZE.small}
                                 text={'Description'}
@@ -95,7 +95,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                 onChange = { handleOnChangeDescription }
                                 height={150}
                                 styleT={{
-                                    width: '95%',
+                                    width: '100%',
                                     borderTopRightRadius: 20,
                                     borderBottomRightRadius: 20,
                                     borderBottomLeftRadius: 20,
@@ -108,10 +108,10 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                             (eventData.color == '')   ? <View style={{ flex: 1,justifyContent: 'flex-end', alignItems:'center',marginTop: 20,}}>
                                                 <ButtonGradient
                                                     gradient={['#48C6EF','#48C6EF']}
-                                                    sizeGradient = {{width:350, height:50}}
+                                                    sizeGradient = {{width:'110%', height:50}}
                                                     textButton={`Choose a color for the event`}
                                                     styleText={{color:'white', fontWeight:'bold',}}
-                                                    styleButton={{width:350, height:50}}
+                                                    styleButton={{width:'100%', height:50}}
                                                     hanldeOnPress = { handleColorClick }
                                                 />
                                             </View>
@@ -144,7 +144,7 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                             color={COLORS_APP.black2}
                                             styles={{margin: 10}}
                                         />
-                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', }}>
+                                        <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
                                             <DatePickerApp 
                                                 eventData= {eventData} 
                                                 setEventData={setEventData}
@@ -154,16 +154,15 @@ export const ModalScreenCreateEvent = ({navigation, route}) => {
                                                     eventData= {eventData} 
                                                     setEventData={setEventData}
                                                     mode={'time'}
-                                                    texty={(eventData.startTime.trim()!== '') ? eventData.startTime : 'Select the Time...'}
-                                            />
-                                            
+                                                    texty={(eventData.startTime.trim()!== '') ? eventData.startTime : 'Time...'}
+                                        />
                                         </View>
                                             <ButtonGradient
                                                 gradient={['#F0F0F0','#F0F0F0']}
-                                                sizeGradient = {{width:300, height:50}}
+                                                sizeGradient = {{width:'110%', height:50}}
                                                 textButton={eventData.choose}
                                                 styleText={{color:'black', fontWeight:'bold',justifyContent: 'flex-start'}}
-                                                styleButton={{width:300, height:50, margin: 10,borderTopWidth: 2, borderBottomWidth: 2}}
+                                                styleButton={{width:'100%', height:50, margin: 10,borderTopWidth: 2, borderBottomWidth: 2}}
                                                 hanldeOnPress = { handleRepeatPreferences }
                                             />
 

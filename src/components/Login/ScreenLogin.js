@@ -48,18 +48,24 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
         try {
             const phoneNumber = `+${userData.countryCode}${userData.phone}`;
             if( !!userData.verificationId ) {
+                console.log('1');
                 const credential = await firebase.auth.PhoneAuthProvider.credential(
                     userData.verificationId,
                     userData.code
                 );
+                console.log('credential', credential);
                 const { user } = await firebase.auth().signInWithCredential( credential )
+                console.log('user', user);
                 await dispatch( setData( user.uid ) )
             } else {
+                console.log('2');
                 const verificationId = await phoneProvider.verifyPhoneNumber(
                     phoneNumber,
                     recaptchaVerifier.current
-                  );
-                  setUserData({...userData, verificationId });
+                );
+                console.log('verificationId', verificationId);
+                setUserData({...userData, verificationId });
+                console.log('userData', userData);
             }
         } catch( err ) {
             Alert.alert(
@@ -68,17 +74,14 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                 [
                   { text: "OK", onPress: () => console.log("OK Pressed") }
                 ]
-              );
+            );
         }
     }
 
 
 
     return (
-
-
         <View>
-                       
             <KeyboardAvoidingView style={{flex:1}} behavior={Platform.OS === "ios" ? "padding" : "height"} keyboardVerticalOffset={90}>
              <HeaderDecoration />
             <IconApp position={{position:'absolute',top:0,left:0, marginTop:150}} />
@@ -102,11 +105,14 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                         }
                         
                     </Text>
-                    
-                    <InputSelectapp 
-                        itemsData = { userData.countries } 
-                        setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
-                    />
+
+                    <View style={{alignItems: 'center'}}>
+                        <InputSelectapp 
+                            itemsData = { userData.countries } 
+                            setState = {( value ) =>{setUserData({...userData,...{countryCode:value}})}}  
+                        />
+                    </View>
+
                     {
                         userData.countryCode && <>
                                     <View style = { styles2.wrapperRegisterNumberPhone }>
@@ -126,15 +132,20 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                                 </>
                                 
                     }
+                    
+                    <View style={{alignItems: 'center', paddingTop: 10}}>
                     {
                         !!userData.verificationId 
                             && <TextInputApp
                                     onChange = { ( value ) => setUserData({...userData,...{ code:value }}) }
                                     placeholder = { 'Verification code' }
-                                    styleT = {{ width:'100%',height:50}}
+                                    styleT = {{ width:'95%',height:50}}
                                     type = {'numeric'}
                                 />
                     }
+                    </View>
+                    
+                    <View style={{alignItems: 'center', paddingTop: 10}}>
                     {
                         (userData.phone !== 0) 
                         && <ButtonGradient 
@@ -142,11 +153,11 @@ export const ScreenLogin = ({ stepLogin, setStepLogin }) => {
                                 sizeGradient = {{width:'110%', height:40}}
                                 textButton={!!userData.verificationId ? "Login" : "Verify"}
                                 styleText={{color:'white', fontWeight:'bold',}}
-                                styleButton={{width:'100%', height:40,marginTop:30}}
+                                styleButton={{width:'95%', height:40,marginTop:30}}
                                 hanldeOnPress = { login }
                             />
                     }   
-                        
+                    </View>
 
                     </View>
                 </ScrollView>

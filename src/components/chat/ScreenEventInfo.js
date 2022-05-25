@@ -98,20 +98,20 @@ export const ScreenEventInfo = ({ route }) => {
                             <ButtonGradient
                                 styleOpacity={{alignSelf: 'flex-end'}}
                                 gradient={['#FFDCDC','#FFDCDC']}
-                                sizeGradient = {{width:120, height:30}}
+                                sizeGradient = {{width:120, height:40}}
                                 textButton={`Leave event`}
                                 styleText={{color:'red', fontWeight:'bold'}}
-                                styleButton={{width:120,height:30, justifyContent:'center'}}
+                                styleButton={{width:120,height:40, justifyContent:'center'}}
                                 hanldeOnPress = { () => lEvent()}
                             />
                             :
                         <ButtonGradient
                                 styleOpacity={{alignSelf: 'flex-end'}}
                                 gradient={['#E3F0EF','#E3F0EF']}
-                                sizeGradient = {{width:160, height:30}}
+                                sizeGradient = {{width:160, height: 40}}
                                 textButton={`Subsribe to event`}
                                 styleText={{color:'#36ACA5', fontWeight:'bold'}}
-                                styleButton={{width:160,height:30, justifyContent:'center'}}
+                                styleButton={{width:160,height: 40, justifyContent:'center'}}
                                 hanldeOnPress = { () => jEvent()}
                             />
                         }

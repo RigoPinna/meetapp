@@ -119,14 +119,13 @@ export const SettingsScreen = ({route}) => {
                                 weight={'bold'}
                             />
                         </View>
-                        <View style={{flex: 1,paddingBottom:10 ,justifyContent:'flex-end', flexDirection:'column'}}>
+                        <View style={{flex: 1,paddingBottom:10 ,justifyContent:'flex-end', flexDirection:'column', width: '100%', alignItems: 'center'}}>
                             <ButtonGradient
                                     gradient={['#0BA360','#3CBA92']}
-                                    sizeGradient = {{width:400, height:50}}
+                                    sizeGradient = {{width:'110%', height:50}}
                                     textButton={`Save`}
                                     styleText={{color:'white', fontWeight:'bold'}}
-                                    styleButton={{width:400,height:50, justifyContent:'center'}}
-                                    IconLeft = { IconSave }
+                                    styleButton={{width:'100%',height:50}}
                                     hanldeOnPress = { hanldeUpdateUser }
                                 />
                         </View> 

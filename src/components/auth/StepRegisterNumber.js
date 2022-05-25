@@ -51,7 +51,7 @@ export const StepRegisterUser = () => {
         }
     }
     return (
-        <>
+        <View style={{alignItems: 'center', width: '100%', height: '100%'}}>
             <Textapp 
                 size= {TEXTS_SIZE.medium} 
                 weight = {'bold'}
@@ -102,13 +102,13 @@ export const StepRegisterUser = () => {
                                                 sizeGradient = {{width:'110%', height:40}}
                                                 textButton={`Register`}
                                                 styleText={{color:'white', fontWeight:'bold',}}
-                                                styleButton={{width:'100%', height:40,marginTop:30}}
+                                                styleButton={{width:'90%', height:40,marginTop:30}}
                                                 // IconRight = { IconArrowRight }
                                                 hanldeOnPress = { hanldeSeendCode }
                                             />
             }   
             { viewModal && <ModalFinallyRegister closeModal={viewModal} /> }
    
-        </>
+        </View>
     )
 }

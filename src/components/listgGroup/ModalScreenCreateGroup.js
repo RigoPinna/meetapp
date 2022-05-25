@@ -1,4 +1,4 @@
-import React, { useState, useReducer } from 'react'
+import React, { useState, useReducer, View } from 'react'
 import { ModalApp } from '../elements/ModalApp'
 import { StepCreation } from './StepCreation'
 import { StepCreated } from './StepCreated'
@@ -15,14 +15,14 @@ export const ModalScreenCreateGroup = ({navigation}) => {
     }
      return (
         <ModalApp navigation={navigation} textTitle={'Create New Group'} handle = {clean}>
-                {
-                    steps.stepCreation 
-                        && <StepCreation steps = { steps } setStep = { setStep } />
-                }
-                {
-                    steps.stepCreated 
-                        && <StepCreated />
-                }
+            {
+                steps.stepCreation 
+                    && <StepCreation steps = { steps } setStep = { setStep } />
+            }
+            {
+                steps.stepCreated 
+                    && <StepCreated />
+            }
         </ModalApp>    
     );
 }

@@ -40,12 +40,15 @@ export const WrapperInfoCalendar = ({ groups }) => {
                     {
                         groups.map( group => { 
                             return (
-                                <ItemInfoCalendar 
-                                    key = {`${group.gid}-cle`} 
-                                    markerEvents = { markerEvents } 
-                                    setMarkerEvents = { setMarkerEvents }
-                                    {...group}  
-                                />
+                                <>
+                                    { (!!group.gid) && <ItemInfoCalendar 
+                                        key = {`${group.gid}-cle`} 
+                                        markerEvents = { markerEvents } 
+                                        setMarkerEvents = { setMarkerEvents }
+                                        {...group}  
+                                    />}
+                                </>
+                                
                             ) 
                     })
                     }

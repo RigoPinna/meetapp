@@ -91,7 +91,6 @@ export const ScreenChatInfo = ({ navigation, route }) => {
     
     return (
         <View style={{flex: 1,backgroundColor: 'white'}}>
-            
             <Image style = {{
                 position: 'absolute',
                 top:0,
@@ -103,7 +102,7 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                }} 
                 source = {{ uri: infoGroup.image }} />
                 <MenuScreenChat navigation={navigation} name = {name} isAdmin={isAdmin} hanldeEditGroup={handleModalEdit} setCalendarVisible={setCalendarVisible}/>
-            <ScrollView style={{flex:1, marginTop: (codeF === '') ? 50 : 10, paddingBottom: 10}} nestedScrollEnabled = {true}>
+            <ScrollView style={{flex:1, marginTop: (isAdmin) ? 10 : 50, paddingBottom: 10}} nestedScrollEnabled = {true}>
                 <View style={{alignItems: 'center', paddingHorizontal:13}}>
                     <View style={{flexDirection: 'row', justifyContent: 'space-evenly'}}>
                         <Textapp 
@@ -140,19 +139,8 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                         </View>
                     </TouchableOpacity>
                 </View>
-                <Textapp 
-                    size = { TEXTS_SIZE.small } 
-                    weight='bold' 
-                    text ={participants.length +' Participants'} 
-                    styles={{paddingTop:13, paddingLeft: 13}} 
-                />
-
-                <ScrollView nestedScrollEnabled = {true} style={{flex:1, height: 220}}>
-                    <ParticipantsColumn groupMembers={participants} colorColorBordersAvatars = {'white'} type={'members'}/>
-                </ScrollView>
-
                 {
-                        (codeF !== '') &&   <View style={{alignItems: 'center'}}>
+                        (isAdmin) &&   <View style={{alignItems: 'center'}}>
                                                 <TextInputApp 
                                                     placeholder={codeF}
                                                     height={110}
@@ -198,6 +186,15 @@ export const ScreenChatInfo = ({ navigation, route }) => {
                                     />
                                 ))
                 }
+
+                <Textapp 
+                    size = { TEXTS_SIZE.small } 
+                    weight='bold' 
+                    text ={participants.length +' Participants'} 
+                    styles={{paddingTop:13, paddingLeft: 13}} 
+                />
+                <ParticipantsColumn groupMembers={participants} colorColorBordersAvatars = {'white'} type={'members'}/>
+                
             </ScrollView>
             { calendarVisible && <ScreenAgenda id={id} calendarVisible={calendarVisible} setCalendarVisible={setCalendarVisible}/>}
         </View>

@@ -29,8 +29,8 @@ export const StepInfoProfile = ({ steps, setStep }) => {
         setStep({...steps, ...{stepInfoProfile: false, stepWelcome:true, stepBack:true }})
     }
     return (
-        <>
-            <View style={{ width:50, height:50, position: 'absolute',top, left: 0}}>
+        <View style={{alignItems: 'center', width: '100%', height: '100%'}}>
+            <View style={{ width:50, height:50, position: 'absolute',top, left: 10}}>
                 <ButtonGradient 
                     gradient={['#F3F7FE','#F3F7FE']}
                     sizeGradient = {{ width:50, height:50 }}
@@ -69,7 +69,7 @@ export const StepInfoProfile = ({ steps, setStep }) => {
                 color = {COLORS_APP.black2}
                 text = {'What is your name ?'}
             />
-            <View style={{ width:320}}>
+            <View style={{ width: '80%' }}>
                 <TextInputApp 
                     value={ userData.name } 
                     onChange = { handleOnChange } 
@@ -78,21 +78,22 @@ export const StepInfoProfile = ({ steps, setStep }) => {
                     styleT = {{width:'100%', height:50}}
                     />
             </View>
-            {
-                ( userData.name.trim() !== '' && userData.image.trim() !== '')
-                    && <View style = {{flex:1, width:'100%', justifyContent:'flex-end', alignItems:'flex-end', padding:20, bottom: 150}}>
-                           <ButtonGradient 
-                                gradient={['#48C6EF','#6F86D6']}
-                                sizeGradient = {{width:200, height:40}}
-                                textButton={`Next`}
-                                styleText={{color:'white', fontWeight:'bold',}}
-                                styleButton={{width:200, height:40, backgroundColor:'pink'}}
-                                IconRight = { IconArrowRight }
-                                hanldeOnPress = { hanldeGoToNextStep }
-                            />
-                        </View>
-            }
-            
-        </>
+            <View style = {{width: '100%', alignItems: 'center', marginTop: 20}}>
+                {
+                    ( userData.name.trim() !== '' && userData.image.trim() !== '')
+                        && 
+                            <ButtonGradient 
+                                    gradient={['#48C6EF','#6F86D6']}
+                                    sizeGradient = {{width:200, height:40}}
+                                    textButton={`Next`}
+                                    styleText={{color:'white', fontWeight:'bold',}}
+                                    styleButton={{width:200, height:40, backgroundColor:'pink'}}
+                                    IconRight = { IconArrowRight }
+                                    hanldeOnPress = { hanldeGoToNextStep }
+                                />
+                            
+                }
+            </View>
+        </View>
     )
 }
